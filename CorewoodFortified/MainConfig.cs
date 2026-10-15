@@ -48,6 +48,7 @@ namespace CorewoodFortified
         public static ConfigEntry<int> turretRange;
         public static ConfigEntry<bool> turretPredictiveAim;
         public static ConfigEntry<bool> turretHomingBolts;
+        public static ConfigEntry<bool> turretSpareBuildings;
         public static ConfigEntry<bool> turretTargetPlayers;
         public static ConfigEntry<bool> turretTargetTamed;
         public static ConfigEntry<bool> turretTargetEnemies;
@@ -103,6 +104,7 @@ namespace CorewoodFortified
             turretRange = config.BindConfigInOrder("Fortified Ballista", "Range", defaultValue: 30, "How far away the fortified ballista finds and shoots at targets, in metres. The range circle matches it. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(3, 50));
             turretPredictiveAim = config.BindConfigInOrder("Fortified Ballista", "Predictive Aiming", defaultValue: true, "If On, the fortified ballista aims where a moving target will be when the bolt reaches it, and allows for the bolt dropping on the way. If Off, it aims like the vanilla ballista. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretHomingBolts = config.BindConfigInOrder("Fortified Ballista", "Homing Bolts", defaultValue: true, "If On, bolts from the fortified ballista turn in flight towards the target they were fired at, once within 25 m of it. They turn only so fast, so a dodging target can still be missed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            turretSpareBuildings = config.BindConfigInOrder("Fortified Ballista", "Spare Buildings", defaultValue: true, "If On, bolts from the fortified ballista that miss do no damage to building pieces, including other ballistas. If Off, they damage whatever they hit, like the vanilla ballista. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretTargetPlayers = config.BindConfigInOrder("Fortified Ballista", "Target Players", defaultValue: false, "If On, the fortified ballista can shoot at players. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretTargetTamed = config.BindConfigInOrder("Fortified Ballista", "Target Tames", defaultValue: false, "If On, the fortified ballista can shoot at tamed creatures. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretTargetEnemies = config.BindConfigInOrder("Fortified Ballista", "Target Enemies", defaultValue: true, "If On, the fortified ballista shoots at enemies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);

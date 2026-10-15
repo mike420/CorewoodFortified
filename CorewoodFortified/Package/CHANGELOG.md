@@ -7,6 +7,15 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.0.4</td>
+    <td>
+        <ul>
+            <li>Fixed the turret range marker flooding the log with "The Object you want to instantiate is null" errors while placing turrets</li>
+            <li>Fortified Ballista: Spare Buildings. Bolts that miss no longer damage building pieces, so the ballista cannot shoot down your own walls, towers, braziers or other ballistas. On by default.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.0.3</td>
     <td>
         <ul>

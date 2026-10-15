@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -1460,23 +1461,50 @@ internal class AddFortified
         turret.m_lostTargetEffect = vanilla.m_lostTargetEffect;
         turret.m_setTargetEffect = vanilla.m_setTargetEffect;
 
-        // The turret sets the marker's radius to its view distance when it wakes, so only the look is copied
-        CircleProjector marker = piece.GetComponentInChildren<CircleProjector>(includeInactive: true);
-        if (!marker)
+        turret.m_markerHideTime = vanilla.m_markerHideTime;
+        SetTurretMarker(piece, turret, vanilla);
+    }
+
+    // The turret sets the marker's radius to its view distance when it wakes, so only the look is copied.
+    // A CircleProjector without a segment prefab throws every frame it is active (on the placement ghost too),
+    // so a marker that cannot get one is removed, and the vanilla turret null-checks m_marker everywhere
+    private static void SetTurretMarker(GameObject piece, Turret turret, Turret vanilla)
+    {
+        turret.m_marker = null;
+        CircleProjector[] markers = piece.GetComponentsInChildren<CircleProjector>(includeInactive: true);
+        if (markers.Length == 0)
         {
             Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no AreaMarker, its range will not be shown.");
             return;
         }
-        if (vanilla.m_marker)
+
+        CircleProjector source = vanilla.m_marker;
+        if (!source || !source.m_prefab)
         {
-            marker.m_prefab = vanilla.m_marker.m_prefab;
-            marker.m_mask = vanilla.m_marker.m_mask;
-            marker.m_nrOfSegments = vanilla.m_marker.m_nrOfSegments;
-            marker.m_speed = vanilla.m_marker.m_speed;
-            marker.m_sliceLines = vanilla.m_marker.m_sliceLines;
+            source = vanilla.GetComponentsInChildren<CircleProjector>(includeInactive: true).FirstOrDefault(projector => projector.m_prefab);
         }
-        turret.m_marker = marker;
-        turret.m_markerHideTime = vanilla.m_markerHideTime;
+
+        foreach (CircleProjector marker in markers)
+        {
+            if (source)
+            {
+                marker.m_prefab = source.m_prefab;
+                marker.m_mask = source.m_mask;
+                marker.m_nrOfSegments = source.m_nrOfSegments;
+                marker.m_speed = source.m_speed;
+                marker.m_sliceLines = source.m_sliceLines;
+            }
+            if (!marker.m_prefab)
+            {
+                Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " marker '" + marker.name + "' has no segment prefab, removing it so its range will not be shown.");
+                UnityEngine.Object.DestroyImmediate(marker, allowDestroyingAssets: true);
+                continue;
+            }
+            if (!turret.m_marker)
+            {
+                turret.m_marker = marker;
+            }
+        }
     }
 
     // The vanilla ballista is silent while it looks for a target, so it is given its own scanning loop

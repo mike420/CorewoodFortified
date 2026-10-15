@@ -167,6 +167,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * **Predictive Aiming:** it aims where a moving target will be when the bolt arrives, and allows for the bolt dropping on the way.
   * **Fast Turning:** it gets up to speed and settles on its aim quickly, so it keeps up with moving targets and fires sooner.
   * **Homing Bolts:** within 25 m of the target, bolts turn in flight towards it. They turn only so fast, so a dodging target can still be missed.
+  * **Spare Buildings:** bolts that miss do no damage to building pieces, so it cannot shoot down your own walls, towers or other ballistas.
   * **Auto Reload:** when it is not full, it takes bolts from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open, and only the kind of bolt already loaded. Graves, carts and ships are left alone.
   * A scanning sound plays while it sweeps looking for a target.
   * By default it shoots only at enemies, not at players or tames.
@@ -236,6 +237,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Range** (default `30`): how far away it finds and shoots at targets, in metres, from 3 to 50.
   * **Predictive Aiming** (default `true`): aim where a moving target will be when the bolt arrives. If off, it aims like the vanilla ballista.
   * **Homing Bolts** (default `true`): bolts turn in flight towards their target once within 25 m of it.
+  * **Spare Buildings** (default `true`): bolts that miss do no damage to building pieces, including other ballistas. If off, they damage whatever they hit, like the vanilla ballista.
   * **Target Players** (default `false`): it can shoot at players.
   * **Target Tames** (default `false`): it can shoot at tamed creatures.
   * **Target Enemies** (default `true`): it shoots at enemies.
