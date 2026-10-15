@@ -1,0 +1,1517 @@
+using System.Collections.Generic;
+using Jotunn.Configs;
+using Jotunn.Entities;
+using Jotunn.Managers;
+using UnityEngine;
+using static CorewoodFortified.PieceAssets;
+
+namespace CorewoodFortified;
+
+internal class AddFortified
+{
+    public static void LoadPieces()
+    {
+        PieceAssets.Init();
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntrance);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceDrawbridge);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWall);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairs);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairsAlt);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedTjunction);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCorner);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCornerAlt);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCornerCurved);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallElevator);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWatchtower);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceDrawbridgeRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairsRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairsAltRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedTjunctionRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCornerRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCornerAltRoofed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedCornerCurvedRoofed);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedGates);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedDrawbridge);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedLiftGate);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceInternalWall);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceInternalDoorway);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceInternalCorner);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceInternalCurvedCorner);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceInternalTjunction);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFence);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceLarge);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceWindowed);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceGate);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikes);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBronze);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesIron);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBlackMetal);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesFlametal);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBloodgold);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierSmall);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierLarge);
+
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerSmall);
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerMedium);
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerLarge);
+
+        CorewoodFortifiedMod.TryAddPiece(ZiplineSetup.AddPieceZiplinePost);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
+    }
+
+    public static void AddPieceFortifiedEntrance()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_entrance");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedEntranceDrawbridge()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge_large");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Chain",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, fortifiedOpen, fortifiedClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWall(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallStairs(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallStairsAlt(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_alt");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedTjunction()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_tjunction");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCorner(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCornerAlt(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_alt");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCornerCurved()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_curved");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallElevator()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_elevator");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 35,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        ElevatorSetup.Prepare(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWatchtower()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_tower");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 60,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 3,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        ElevatorSetup.Prepare(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceFortifiedEntranceRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_entrance_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 10,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedEntranceDrawbridgeRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[4]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Chain",
+                    Amount = 8,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, fortifiedOpen, fortifiedClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallStairsRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 45,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedWallStairsAltRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_alt_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 45,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedTjunctionRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_tjunction_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 50,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 16,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCornerRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 10,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCornerAltRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_roofed_alt");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedCornerCurvedRoofed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_curved_roofed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceFortifiedGates()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_gates");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 1,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, doorOpen, doorClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedDrawbridge(){
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[4]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 8,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Chain",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 4,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, drawBridgeOC, drawBridgeOC);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedLiftGate()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_liftgate");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, fortifiedOpen, fortifiedClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceInternalWall()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_wall");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceInternalDoorway()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_doorway");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 15,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceInternalCorner()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_corner");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceInternalCurvedCorner()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_corner_curved");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceInternalTjunction()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_tjunction");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 30,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceFortifiedFence()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 4,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedFenceLarge()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_large");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 8,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedFenceWindowed()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_windowed");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 6,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedFenceGate()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_gate");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 4,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 1,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, doorOpen, doorClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceFortifiedSpikes()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedSpikesBronze()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_bronze");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedSpikesIron()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_iron");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedSpikesBlackMetal()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_blackmetal");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_artisanstation",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "BlackMetal",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedSpikesFlametal()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_flametal");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "blackforge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Flametal",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedSpikesBloodgold()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_gold");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_FrostFoundry",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Gold",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceFortifiedBrazierSmall()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_brazier_small");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Lighting },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Coal",
+                    Amount = 5,
+                    Recover = false
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        Fireplace component2 = gameObject.GetComponent<Fireplace>();
+        if (component2)
+        {
+            component2.m_fuelItem = fuelCoal;
+            component2.m_fuelAddedEffects = addFuel;
+            //component2.m_firePrefab = firePrefab;
+        }
+        else
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] mm_corewood_fortified_brazier_small has no Fireplace component, skipping its fuel setup.");
+        }
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedBrazierLarge()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_brazier_large");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Lighting },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 4,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Coal",
+                    Amount = 5,
+                    Recover = false
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        Fireplace component2 = gameObject.GetComponent<Fireplace>();
+        if (component2)
+        {
+            component2.m_fuelItem = fuelCoal;
+            component2.m_fuelAddedEffects = addFuel;
+        }
+        else
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] mm_corewood_fortified_brazier_large has no Fireplace component, skipping its fuel setup.");
+        }
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedBallista()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_turret");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_fortified_turret",
+            Description = "$piece_mm_corewood_fortified_turret_description",
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "BlackMetal",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "YggdrasilWood",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "MechanicalSpring",
+                    Amount = 3,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetTurretFromVanilla(gameObject);
+        TurretSettings.Init(gameObject);
+        TurretAutoReload.Init(gameObject);
+        AddTurretScanSound(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // Copies the ammo, targets, effects and marker look from the vanilla ballista. Only data is copied, so the
+    // prefab's own model and positions (its taller ballista_base) are kept
+    private static void SetTurretFromVanilla(GameObject piece)
+    {
+        Turret turret = piece.GetComponent<Turret>();
+        if (!turret)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no Turret component, skipping its turret setup.");
+            return;
+        }
+        GameObject vanillaPrefab = PrefabManager.Cache.GetPrefab<GameObject>("piece_turret");
+        Turret vanilla = vanillaPrefab ? vanillaPrefab.GetComponent<Turret>() : null;
+        if (!vanilla)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] Vanilla piece_turret not found, " + piece.name + " will have no ammo or effects.");
+            return;
+        }
+
+        turret.m_name = piece.GetComponent<Piece>().m_name;
+        turret.m_defaultAmmo = vanilla.m_defaultAmmo;
+        turret.m_ammoType = vanilla.m_ammoType;
+        // Each ammo shows a bolt model on the turret, so the visual is this prefab's child of the same name,
+        // not the vanilla turret's
+        turret.m_allowedAmmo = new List<Turret.AmmoType>();
+        foreach (Turret.AmmoType ammo in vanilla.m_allowedAmmo)
+        {
+            Transform visual = ammo.m_visual ? Utils.FindChild(piece.transform, ammo.m_visual.name) : null;
+            if (ammo.m_visual && !visual)
+            {
+                Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no '" + ammo.m_visual.name + "' child, " + ammo.m_ammo.name + " will not show on the turret.");
+            }
+            turret.m_allowedAmmo.Add(new Turret.AmmoType
+            {
+                m_ammo = ammo.m_ammo,
+                m_visual = visual ? visual.gameObject : null
+            });
+        }
+        turret.m_configTargets = new List<Turret.TrophyTarget>(vanilla.m_configTargets);
+        turret.m_maxConfigTargets = vanilla.m_maxConfigTargets;
+
+        turret.m_shootEffect = vanilla.m_shootEffect;
+        turret.m_addAmmoEffect = vanilla.m_addAmmoEffect;
+        turret.m_reloadEffect = vanilla.m_reloadEffect;
+        turret.m_warmUpStartEffect = vanilla.m_warmUpStartEffect;
+        turret.m_newTargetEffect = vanilla.m_newTargetEffect;
+        turret.m_lostTargetEffect = vanilla.m_lostTargetEffect;
+        turret.m_setTargetEffect = vanilla.m_setTargetEffect;
+
+        // The turret sets the marker's radius to its view distance when it wakes, so only the look is copied
+        CircleProjector marker = piece.GetComponentInChildren<CircleProjector>(includeInactive: true);
+        if (!marker)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no AreaMarker, its range will not be shown.");
+            return;
+        }
+        if (vanilla.m_marker)
+        {
+            marker.m_prefab = vanilla.m_marker.m_prefab;
+            marker.m_mask = vanilla.m_marker.m_mask;
+            marker.m_nrOfSegments = vanilla.m_marker.m_nrOfSegments;
+            marker.m_speed = vanilla.m_marker.m_speed;
+            marker.m_sliceLines = vanilla.m_marker.m_sliceLines;
+        }
+        turret.m_marker = marker;
+        turret.m_markerHideTime = vanilla.m_markerHideTime;
+    }
+
+    // The vanilla ballista is silent while it looks for a target, so it is given its own scanning loop
+    private static void AddTurretScanSound(GameObject piece)
+    {
+        GameObject soundPrefab = PrefabManager.Instance.GetPrefab("sfx_turret_scan_cwf");
+        if (!soundPrefab)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] Sound prefab 'sfx_turret_scan_cwf' not found, " + piece.name + " will scan silently.");
+            return;
+        }
+        piece.AddComponent<TurretScanSound>().m_soundPrefab = soundPrefab;
+    }
+
+    private static void SetWearEffects(GameObject piece, EffectList hit, EffectList destroyed)
+    {
+        WearNTear wearNTear = piece.GetComponent<WearNTear>();
+        if (!wearNTear)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no WearNTear component, skipping its hit and break effects.");
+            return;
+        }
+        wearNTear.m_destroyedEffect = destroyed;
+        wearNTear.m_hitEffect = hit;
+    }
+
+    private static void SetDoorEffects(GameObject piece, EffectList open, EffectList close)
+    {
+        Door door = piece.GetComponent<Door>();
+        if (!door)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no Door component, skipping its open and close effects.");
+            return;
+        }
+        door.m_openEffects = open;
+        door.m_closeEffects = close;
+    }
+}

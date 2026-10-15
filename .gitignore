@@ -1,0 +1,16 @@
+# Build output
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Machine-specific paths
+Environment.props
+
+# Release packages (publish to Thunderstore/Nexus instead)
+CorewoodFortified/ThunderStore/
+*.zip
+
+# Logs
+*.log
