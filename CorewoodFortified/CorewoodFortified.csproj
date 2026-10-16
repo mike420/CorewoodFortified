@@ -90,6 +90,8 @@
     <Compile Include="Ziplines\RopeCarry.cs" />
     <Compile Include="Ziplines\RopeGrab.cs" />
     <Compile Include="Ziplines\RopePath.cs" />
+    <Compile Include="Traps\TrapController.cs" />
+    <Compile Include="Traps\TrapEnabler.cs" />
     <Compile Include="Ziplines\RopeTube.cs" />
     <Compile Include="Ziplines\ZiplineAnchor.cs" />
     <Compile Include="Ziplines\ZiplineMessages.cs" />

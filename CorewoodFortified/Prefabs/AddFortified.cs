@@ -68,6 +68,11 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(ZiplineSetup.AddPieceZiplinePost);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFlameTrap);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceSpikeFloor);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -1371,6 +1376,7 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
+
     public static void AddPieceFortifiedBallista()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_turret");
@@ -1411,6 +1417,140 @@ internal class AddFortified
         TurretAutoReload.Init(gameObject);
         AddTurretScanSound(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFlameTrap()
+    {
+        AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6);
+    }
+
+    public static void AddPieceSawWall()
+    {
+        AddTrapPiece("mm_corewood_saw_wall", "BlackMetal", 4, "Wood", 6);
+    }
+
+    public static void AddPieceSpikeFloor()
+    {
+        AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8);
+    }
+
+    // The traps' damage, animation and sound are already on the prefab (Aoe, ProximityState, ZSFX);
+    // TrapEnabler only switches them on and off. They clank like a workbench being placed as they do
+    private static void AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2)
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_" + prefabName,
+            Description = "$piece_" + prefabName + "_description",
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = item1,
+                    Amount = amount1,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = item2,
+                    Amount = amount2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
+        SetWearEffects(gameObject, hitMetal, breakMetal);
+        GameObject workbench = PrefabManager.Cache.GetPrefab<GameObject>("piece_workbench");
+        EffectList switchEffect = workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
+        TrapEnabler.AddTo(gameObject, switchEffect, switchEffect);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // Takes its on and off effects and its area marker's look from the vanilla ward
+    public static void AddPieceTrapController()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_trap_controller");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_trap_controller",
+            Description = "$piece_mm_corewood_trap_controller_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "Stone",
+                    Amount = 4,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 6,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+
+        TrapController controller = gameObject.AddComponent<TrapController>();
+        GameObject wardPrefab = PrefabManager.Cache.GetPrefab<GameObject>("guard_stone");
+        PrivateArea ward = wardPrefab ? wardPrefab.GetComponent<PrivateArea>() : null;
+        if (ward)
+        {
+            controller.m_activateEffect = ward.m_activateEffect;
+            controller.m_deactivateEffect = ward.m_deactivateEffect;
+        }
+        else
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] Vanilla guard_stone not found, the trap controller will switch silently.");
+        }
+        controller.m_areaMarker = SetMarkerFrom(gameObject, ward ? ward.m_areaMarker : null);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // Gives the piece's area markers the look of the source marker. A CircleProjector without a segment prefab
+    // throws every frame it is active, so a marker that cannot get one is removed. Returns the first one kept
+    private static CircleProjector SetMarkerFrom(GameObject piece, CircleProjector source)
+    {
+        CircleProjector kept = null;
+        CircleProjector[] markers = piece.GetComponentsInChildren<CircleProjector>(includeInactive: true);
+        if (markers.Length == 0)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no AreaMarker, its range will not be shown.");
+            return null;
+        }
+        foreach (CircleProjector marker in markers)
+        {
+            if (source && source.m_prefab)
+            {
+                marker.m_prefab = source.m_prefab;
+                marker.m_mask = source.m_mask;
+                marker.m_nrOfSegments = source.m_nrOfSegments;
+                marker.m_speed = source.m_speed;
+                marker.m_sliceLines = source.m_sliceLines;
+            }
+            if (!marker.m_prefab)
+            {
+                Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " marker '" + marker.name + "' has no segment prefab, removing it so its range will not be shown.");
+                UnityEngine.Object.DestroyImmediate(marker, allowDestroyingAssets: true);
+                continue;
+            }
+            if (!kept)
+            {
+                kept = marker;
+            }
+        }
+        return kept;
     }
 
     // Copies the ammo, targets, effects and marker look from the vanilla ballista. Only data is copied, so the

@@ -76,6 +76,12 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Fortified Spikes[/b]: 2 Core Wood, 2 Wood
 [/list]
 
+[b]Traps[/b]
+
+[list]
+[*][b]Trap Controller[/b]: 4 Stone, 6 Wood
+[/list]
+
 [b]Forge[/b]
 
 [list]
@@ -121,6 +127,14 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 
 [list]
 [*][b]Fortified Ballista[/b]: 10 Black Metal, 10 Yggdrasil Wood, 3 Mechanical Springs
+[/list]
+
+[b]Traps[/b]
+
+[list]
+[*][b]Flame Trap[/b]: 4 Black Metal, 6 Wood
+[*][b]Saw Wall[/b]: 4 Black Metal, 6 Wood
+[*][b]Spike Floor[/b]: 4 Black Metal, 8 Stone
 [/list]
 
 
@@ -195,6 +209,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [*][b]Predictive Aiming:[/b] it aims where a moving target will be when the bolt arrives, and allows for the bolt dropping on the way.
 [*][b]Fast Turning:[/b] it gets up to speed and settles on its aim quickly, so it keeps up with moving targets and fires sooner.
 [*][b]Homing Bolts:[/b] within 25 m of the target, bolts turn in flight towards it. They turn only so fast, so a dodging target can still be missed.
+[*][b]Spare Buildings:[/b] bolts that miss do no damage to building pieces, so it cannot shoot down your own walls, towers or other ballistas.
 [*][b]Auto Reload:[/b] when it is not full, it takes bolts from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open, and only the kind of bolt already loaded. Graves, carts and ships are left alone.
 [*]A scanning sound plays while it sweeps looking for a target.
 [*]By default it shoots only at enemies, not at players or tames.
@@ -202,6 +217,25 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [/list]
 
 [b]Note:[/b] Auto Reload is safe in multiplayer, but every player and the server need this mod installed for chests to hand over bolts.
+
+
+[size=5][b]Traps[/b][/size]
+
+[list]
+[*][b]Flame Trap:[/b] a floor trap that bursts into flame when something steps near it. It burns anyone, players included.
+[*][b]Saw Wall:[/b] a wall of saw blades that spin up when anyone comes close, and cut enemies.
+[*][b]Spike Floor:[/b] a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
+[*]Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
+[/list]
+
+[b]Trap Controller:[/b] switches the traps within 15 m of it.
+
+[list]
+[*]Its traps are on only while someone (a player, creature or tame) is near the controller, and off when nobody is.
+[*]Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
+[*]Its range shows while you place it, while you look at it, and while you place a trap inside it.
+[*]Traps with no controller in range are always on.
+[/list]
 
 
 [size=5][b]Configuration[/b][/size]
@@ -275,6 +309,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Range[/b] (default [b]30[/b]): how far away it finds and shoots at targets, in metres, from 3 to 50.
 [*][b]Predictive Aiming[/b] (default [b]true[/b]): aim where a moving target will be when the bolt arrives. If off, it aims like the vanilla ballista.
 [*][b]Homing Bolts[/b] (default [b]true[/b]): bolts turn in flight towards their target once within 25 m of it.
+[*][b]Spare Buildings[/b] (default [b]true[/b]): bolts that miss do no damage to building pieces, including other ballistas. If off, they damage whatever they hit, like the vanilla ballista.
 [*][b]Target Players[/b] (default [b]false[/b]): it can shoot at players.
 [*][b]Target Tames[/b] (default [b]false[/b]): it can shoot at tamed creatures.
 [*][b]Target Enemies[/b] (default [b]true[/b]): it shoots at enemies.
@@ -315,6 +350,7 @@ For Nexus downloads you will need to install manually.
 [*][url=https://thunderstore.io/c/valheim/p/MagicMike/CorewoodAdditions/]Corewood Additions[/url]
 [*][url=https://thunderstore.io/c/valheim/p/MagicMike/MyDirtyHoe/]My Dirty Hoe[/url]
 [*][url=https://thunderstore.io/c/valheim/p/MagicMike/ChestPreview/]Chest Preview[/url]
+[*][url=https://thunderstore.io/c/valheim/p/MagicMike/YabbaDabbaDoo/]YabbaDabbaDoo[/url]
 [/list]
 
 

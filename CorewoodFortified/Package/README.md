@@ -70,6 +70,10 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 
   * **Fortified Spikes**: 2 Core Wood, 2 Wood
 
+**Traps**
+
+  * **Trap Controller**: 4 Stone, 6 Wood
+
 ### Forge
 
   * **Fortified Gates**: 10 Core Wood, 6 Wood, 1 Bronze
@@ -104,6 +108,12 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 **Defence**
 
   * **Fortified Ballista**: 10 Black Metal, 10 Yggdrasil Wood, 3 Mechanical Springs
+
+**Traps**
+
+  * **Flame Trap**: 4 Black Metal, 6 Wood
+  * **Saw Wall**: 4 Black Metal, 6 Wood
+  * **Spike Floor**: 4 Black Metal, 8 Stone
 
 
 ### Artisan Table
@@ -174,6 +184,22 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * Each feature can be turned off, and the range, scan arc, turning, targets and ammo can all be changed in the config. The ballista can also be turned off entirely.
 
 **Note:** Auto Reload is safe in multiplayer, but every player and the server need this mod installed for chests to hand over bolts.
+
+<br>
+
+## 🪤 Traps:
+
+  * **Flame Trap:** a floor trap that bursts into flame when something steps near it. It burns anyone, players included.
+  * **Saw Wall:** a wall of saw blades that spin up when anyone comes close, and cut enemies.
+  * **Spike Floor:** a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
+  * Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
+
+**Trap Controller:** switches the traps within 15 m of it.
+
+  * Its traps are on only while someone (a player, creature or tame) is near the controller, and off when nobody is.
+  * Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
+  * Its range shows while you place it, while you look at it, and while you place a trap inside it.
+  * Traps with no controller in range are always on.
 
 <br>
 
@@ -273,6 +299,7 @@ For Nexus downloads you will need to install manually.
   * <a href="https://thunderstore.io/c/valheim/p/MagicMike/CorewoodAdditions/">Corewood Additions</a>
   * <a href="https://thunderstore.io/c/valheim/p/MagicMike/MyDirtyHoe/">My Dirty Hoe</a>
   * <a href="https://thunderstore.io/c/valheim/p/MagicMike/ChestPreview/">Chest Preview</a>
+  * <a href="https://thunderstore.io/c/valheim/p/MagicMike/YabbaDabbaDoo/">YabbaDabbaDoo</a>
 
 <br>
 
