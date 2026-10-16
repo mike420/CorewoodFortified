@@ -200,7 +200,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * Its traps stay on, whether or not anyone is nearby, until you turn them off.
   * Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
   * Its range shows while you place it, while you look at it, and while you place a trap inside it.
-  * Traps with no controller in range are always on.
+  * Traps only work within range of a Trap Controller. A trap with no controller in range stays off and says so when you look at it.
 
 <br>
 

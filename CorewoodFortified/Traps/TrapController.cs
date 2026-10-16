@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CorewoodFortified;
 
 // An on/off switch for the traps within its radius: they stay on until it is turned off by hand, and then stay
-// off until it is turned on again. A trap with no controller in range is always on
+// off until it is turned on again. A trap with no controller in range never works
 internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 {
 	public static float Radius => MainConfig.trapControllerRadius.Value;

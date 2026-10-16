@@ -5,8 +5,8 @@ using UnityEngine;
 namespace CorewoodFortified;
 
 // A trap keeps its moving parts and damage area under an inactive _enabled child, so the placement ghost
-// stays still and harmless. A placed trap is armed while it has no trap controller in range, or while any
-// controller in range is active, and never while traps are turned off in the config; the trap's owner decides
+// stays still and harmless. A placed trap is armed only while an active trap controller is in range, and never
+// while traps are turned off in the config; the trap's owner decides
 // and stores it, so every player sees the same. An armed trap turns _enabled on only while a character is inside
 // its Trigger, and for a moment after. _enabled can sit anywhere in the prefab, such as on a moving blade. An
 // Animator outside _enabled with an "Enabled" bool is told the same, so it can play a running and a resting animation
@@ -122,20 +122,26 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		{
 			return false;
 		}
-		bool anyInRange = false;
 		foreach (TrapController controller in TrapController.s_all)
 		{
-			if (!controller || !controller.InRange(transform.position))
-			{
-				continue;
-			}
-			if (controller.IsActive())
+			if (controller && controller.InRange(transform.position) && controller.IsActive())
 			{
 				return true;
 			}
-			anyInRange = true;
 		}
-		return !anyInRange;
+		return false;
+	}
+
+	private bool HasControllerInRange()
+	{
+		foreach (TrapController controller in TrapController.s_all)
+		{
+			if (controller && controller.InRange(transform.position))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private bool IsEnabled()
@@ -193,6 +199,10 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		if (!MainConfig.enableTraps.Value)
 		{
 			return Localization.instance.Localize(m_piece.m_name + "\n$text_traps_disabled");
+		}
+		if (!HasControllerInRange())
+		{
+			return Localization.instance.Localize(m_piece.m_name + "\n$text_trap_needs_controller");
 		}
 		return Localization.instance.Localize(m_piece.m_name + " (" + (IsEnabled() ? "$piece_guardstone_active" : "$piece_guardstone_inactive") + ")");
 	}
