@@ -229,7 +229,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [*]Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
 [/list]
 
-[b]Trap Controller:[/b] switches the traps within 15 m of it (the radius can be changed in the config).
+[b]Trap Controller:[/b] switches the traps within 50 m of it (the radius can be changed in the config).
 
 [list]
 [*]Its traps stay on, whether or not anyone is nearby, until you turn them off.
@@ -330,7 +330,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 
 [list]
 [*][b]Enable Traps[/b] (default [b]true[/b]): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
-[*][b]Trap Controller Radius[/b] (default [b]15[/b]): how far from a Trap Controller its traps can be, in metres, from 5 to 50. Placed controllers change too.
+[*][b]Trap Controller Radius[/b] (default [b]50[/b]): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
 [/list]
 
 [b]Traps[/b] (each player's own)

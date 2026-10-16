@@ -195,7 +195,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * A trap only runs while someone (a player, creature or tame) is near it, and stops a couple of seconds after they leave.
   * Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
 
-**Trap Controller:** switches the traps within 15 m of it (the radius can be changed in the config).
+**Trap Controller:** switches the traps within 50 m of it (the radius can be changed in the config).
 
   * Its traps stay on, whether or not anyone is nearby, until you turn them off.
   * Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
@@ -280,7 +280,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 **Traps** (synced from the server)
 
   * **Enable Traps** (default `true`): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
-  * **Trap Controller Radius** (default `15`): how far from a Trap Controller its traps can be, in metres, from 5 to 50. Placed controllers change too.
+  * **Trap Controller Radius** (default `50`): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
 
 **Traps** (each player's own)
 
