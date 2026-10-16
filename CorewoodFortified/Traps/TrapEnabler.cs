@@ -2,16 +2,21 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// A trap keeps its moving parts, damage area and sound under an inactive _enabled child, so the placement ghost
-// stays still and harmless. A placed trap turns that child on while it has no trap controller in range, or while
-// any controller in range is active, and never while traps are turned off in the config. The trap's owner
-// decides and stores it, so every player sees the same
+// A trap keeps its moving parts and damage area under an inactive _enabled child, so the placement ghost
+// stays still and harmless. A placed trap is armed while it has no trap controller in range, or while any
+// controller in range is active, and never while traps are turned off in the config; the trap's owner decides
+// and stores it, so every player sees the same. An armed trap turns _enabled on only while a character is inside
+// its Trigger, and for a moment after
 internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 {
 	private const string EnabledChild = "_enabled";
+	private const string ProximityChild = "Trigger";
 	private const string KeyEnabled = "cwf_trap_enabled";
 
 	private const float CheckInterval = 0.5f;
+
+	// How long the trap keeps going after the last character leaves its sphere, so it does not flicker
+	private const float NearHoldTime = 2f;
 
 	public EffectList m_activateEffect = new EffectList();
 	public EffectList m_deactivateEffect = new EffectList();
@@ -23,11 +28,16 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	// Controllers can load after the trap, so the first check after loading changes the state silently
 	private bool m_checkedOnce;
 
+	// A trap without a Trigger runs the whole time it is armed
+	private bool m_hasProximity;
+	private float m_lastNearTime = float.NegativeInfinity;
+
 	private void Awake()
 	{
 		m_piece = GetComponent<Piece>();
 		m_nview = GetComponent<ZNetView>();
 		m_enabledObject = transform.Find(EnabledChild)?.gameObject;
+		m_hasProximity = GetComponentInChildren<TrapProximity>(includeInactive: true);
 		if (!m_nview || !m_nview.IsValid())
 		{
 			return;
@@ -101,9 +111,21 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		return m_nview && m_nview.IsValid() && m_nview.GetZDO().GetBool(KeyEnabled);
 	}
 
+	// Called by TrapProximity every physics step a character is inside the Trigger. Each player's game checks its
+	// own Trigger, so the trap springs at once rather than waiting for the owner
+	public void OnCharacterNear()
+	{
+		if (!m_nview || !m_nview.IsValid())
+		{
+			return;
+		}
+		m_lastNearTime = Time.time;
+		UpdateEnabledObject();
+	}
+
 	private void UpdateEnabledObject()
 	{
-		bool enabled = IsEnabled();
+		bool enabled = IsEnabled() && (!m_hasProximity || Time.time - m_lastNearTime < NearHoldTime);
 		if (m_enabledObject && m_enabledObject.activeSelf != enabled)
 		{
 			m_enabledObject.SetActive(enabled);
@@ -141,6 +163,15 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		{
 			Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no '" + EnabledChild + "' child, it will not work as a trap.");
 			return;
+		}
+		Transform proximity = piece.transform.Find(ProximityChild);
+		if (proximity && proximity.GetComponent<Collider>())
+		{
+			proximity.gameObject.AddComponent<TrapProximity>();
+		}
+		else
+		{
+			Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no '" + ProximityChild + "' trigger, it will run the whole time it is on.");
 		}
 		TrapEnabler enabler = piece.AddComponent<TrapEnabler>();
 		enabler.m_activateEffect = activate;

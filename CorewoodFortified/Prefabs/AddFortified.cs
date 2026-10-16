@@ -1421,7 +1421,8 @@ internal class AddFortified
 
     public static void AddPieceFlameTrap()
     {
-        AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6);
+        GameObject gameObject = AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6);
+        TrapLoopSound.AddTo(gameObject, "sfx_flames_cwf");
     }
 
     public static void AddPieceSawWall()
@@ -1434,9 +1435,9 @@ internal class AddFortified
         AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8);
     }
 
-    // The traps' damage, animation and sound are already on the prefab (Aoe, ProximityState, ZSFX);
+    // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);
     // TrapEnabler only switches them on and off. They clank like a workbench being placed as they do
-    private static void AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2)
+    private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2)
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
@@ -1469,6 +1470,7 @@ internal class AddFortified
         EffectList switchEffect = workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
         TrapEnabler.AddTo(gameObject, switchEffect, switchEffect);
         PieceManager.Instance.AddPiece(customPiece);
+        return gameObject;
     }
 
     // Takes its on and off effects and its area marker's look from the vanilla ward

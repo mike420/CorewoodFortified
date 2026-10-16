@@ -64,6 +64,7 @@ namespace CorewoodFortified
 
         public static ConfigEntry<bool> enableTraps;
         public static ConfigEntry<float> trapControllerRadius;
+        public static ConfigEntry<float> trapSoundVolume;
 
         public static void InitConfigs(ConfigFile config)
         {
@@ -123,6 +124,7 @@ namespace CorewoodFortified
 
             enableTraps = config.BindConfigInOrder("Traps", "Enable Traps", defaultValue: true, "If Off, the traps and the trap controller are hidden from the build menu, and placed traps stay but are switched off and do no damage. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             trapControllerRadius = config.BindConfigInOrder("Traps", "Trap Controller Radius", defaultValue: 15f, "How far from a trap controller its traps can be, in metres. Placed controllers and their range circles change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 50f));
+            trapSoundVolume = config.BindConfigInOrder("Traps", "Trap Sound Volume", defaultValue: 1f, "Volume of the traps' sounds, such as the flame trap's fire, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             CarryOverOldSections(config);
         }

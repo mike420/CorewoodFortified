@@ -222,9 +222,10 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [size=5][b]Traps[/b][/size]
 
 [list]
-[*][b]Flame Trap:[/b] a floor trap that bursts into flame when something steps near it. It burns anyone, players included.
+[*][b]Flame Trap:[/b] a floor trap that bursts into flame, with the roar of fire, when something steps near it. It burns anyone, players included.
 [*][b]Saw Wall:[/b] a wall of saw blades that spin up when anyone comes close, and cut enemies.
 [*][b]Spike Floor:[/b] a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
+[*]A trap only runs while someone (a player, creature or tame) is near it, and stops a couple of seconds after they leave.
 [*]Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
 [/list]
 
@@ -330,6 +331,12 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [list]
 [*][b]Enable Traps[/b] (default [b]true[/b]): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
 [*][b]Trap Controller Radius[/b] (default [b]15[/b]): how far from a Trap Controller its traps can be, in metres, from 5 to 50. Placed controllers change too.
+[/list]
+
+[b]Traps[/b] (each player's own)
+
+[list]
+[*][b]Trap Sound Volume[/b] (default [b]1[/b]): volume of the traps' sounds, such as the Flame Trap's fire, from 0 (silent) to 1 (full).
 [/list]
 
 

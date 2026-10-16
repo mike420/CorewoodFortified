@@ -57,7 +57,7 @@
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
     <Compile Include="FileWatcher.cs" />
     <Compile Include="LocalisedText.cs" />
-    <Compile Include="LoopingSound.cs" />
+    <Compile Include="Elevators\LoopingSound.cs" />
     <Compile Include="MainConfig.cs" />
     <Compile Include="Patches\SoundPatches.cs" />
     <Compile Include="Prefabs\PieceAssets.cs" />
@@ -92,7 +92,9 @@
     <Compile Include="Ziplines\RopePath.cs" />
     <Compile Include="Traps\TrapController.cs" />
     <Compile Include="Traps\TrapEnabler.cs" />
+    <Compile Include="Traps\TrapLoopSound.cs" />
     <Compile Include="Traps\TrapPatches.cs" />
+    <Compile Include="Traps\TrapProximity.cs" />
     <Compile Include="Ziplines\RopeTube.cs" />
     <Compile Include="Ziplines\ZiplineAnchor.cs" />
     <Compile Include="Ziplines\ZiplineMessages.cs" />
