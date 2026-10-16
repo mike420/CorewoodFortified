@@ -58,6 +58,9 @@ namespace CorewoodFortified
         public static ConfigEntry<float> turretAutoReloadRange;
         public static ConfigEntry<float> turretSoundVolume;
 
+        public static ConfigEntry<bool> enableTraps;
+        public static ConfigEntry<float> trapControllerRadius;
+
         public static void InitConfigs(ConfigFile config)
         {
             modEnabled = config.BindConfigInOrder("General Settings", "Enable Plugin", defaultValue: true, "Enable the CorewoodFortified plugin.\n(Restart required. It is read before connecting to a server, so it is a local setting).\n", synced: false, sectionOrder: true, settingOrder: true);
@@ -113,6 +116,9 @@ namespace CorewoodFortified
             turretAutoReload = config.BindConfigInOrder("Fortified Ballista", "Auto Reload", defaultValue: true, "If On, a fortified ballista that is not full takes bolts from chests nearby, every few seconds. It only uses chests its builder may open, never while someone has the chest open, and only the kind of bolt already loaded. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretAutoReloadRange = config.BindConfigInOrder("Fortified Ballista", "Auto Reload Range", defaultValue: 10f, "How far from a fortified ballista a chest can be for it to take bolts from, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 20f));
             turretSoundVolume = config.BindConfigInOrder("Fortified Ballista", "Scan Sound Volume", defaultValue: 0.5f, "Volume of the fortified ballista's sound while it sweeps looking for a target, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+
+            enableTraps = config.BindConfigInOrder("Traps", "Enable Traps", defaultValue: true, "If Off, the traps and the trap controller are hidden from the build menu, and placed traps stay but are switched off and do no damage. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            trapControllerRadius = config.BindConfigInOrder("Traps", "Trap Controller Radius", defaultValue: 15f, "How far from a trap controller its traps can be, in metres. Placed controllers and their range circles change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 50f));
         }
     }
 }

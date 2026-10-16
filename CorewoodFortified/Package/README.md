@@ -194,7 +194,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * **Spike Floor:** a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
   * Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
 
-**Trap Controller:** switches the traps within 15 m of it.
+**Trap Controller:** switches the traps within 15 m of it (the radius can be changed in the config).
 
   * Its traps are on only while someone (a player, creature or tame) is near the controller, and off when nobody is.
   * Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
@@ -275,6 +275,11 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 **Fortified Ballista** (each player's own)
 
   * **Scan Sound Volume** (default `0.5`): volume of the scanning sound, from 0 (silent) to 1 (full).
+
+**Traps** (synced from the server)
+
+  * **Enable Traps** (default `true`): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
+  * **Trap Controller Radius** (default `15`): how far from a Trap Controller its traps can be, in metres, from 5 to 50. Placed controllers change too.
 
 <br>
 

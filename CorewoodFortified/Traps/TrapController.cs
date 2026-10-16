@@ -8,7 +8,7 @@ namespace CorewoodFortified;
 // range is always on
 internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 {
-	public const float Radius = 15f;
+	public static float Radius => MainConfig.trapControllerRadius.Value;
 
 	private const string KeyActive = "cwf_trap_active";
 	private const string KeyTurnedOff = "cwf_trap_turned_off";
@@ -59,6 +59,15 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
 	}
 
+	// The radius is a synced setting, so the marker follows it while it shows
+	private void Update()
+	{
+		if (m_areaMarker && m_areaMarker.gameObject.activeSelf)
+		{
+			m_areaMarker.m_radius = Radius;
+		}
+	}
+
 	private void OnDestroy()
 	{
 		s_all.Remove(this);
@@ -73,7 +82,7 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		}
 		if (m_nview.IsOwner())
 		{
-			bool active = !IsTurnedOff() && Physics.OverlapSphereNonAlloc(transform.position, Radius, s_overlap, s_characterMask) > 0;
+			bool active = MainConfig.enableTraps.Value && !IsTurnedOff() && Physics.OverlapSphereNonAlloc(transform.position, Radius, s_overlap, s_characterMask) > 0;
 			if (active != IsActive())
 			{
 				m_nview.GetZDO().Set(KeyActive, active);
@@ -126,6 +135,10 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 	{
 		ShowAreaMarker();
 		string name = GetHoverName();
+		if (!MainConfig.enableTraps.Value)
+		{
+			return Localization.instance.Localize(name + "\n$text_traps_disabled");
+		}
 		if (!PrivateArea.CheckAccess(transform.position, 0f, flash: false))
 		{
 			return Localization.instance.Localize(name + "\n$piece_noaccess");
@@ -147,7 +160,16 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 
 	public bool Interact(Humanoid user, bool hold, bool alt)
 	{
-		if (hold || !PrivateArea.CheckAccess(transform.position))
+		if (hold)
+		{
+			return true;
+		}
+		if (!MainConfig.enableTraps.Value)
+		{
+			user.Message(MessageHud.MessageType.Center, "$text_traps_disabled");
+			return true;
+		}
+		if (!PrivateArea.CheckAccess(transform.position))
 		{
 			return true;
 		}

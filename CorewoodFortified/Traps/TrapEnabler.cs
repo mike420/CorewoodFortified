@@ -4,7 +4,8 @@ namespace CorewoodFortified;
 
 // A trap keeps its moving parts, damage area and sound under an inactive _enabled child, so the placement ghost
 // stays still and harmless. A placed trap turns that child on while it has no trap controller in range, or while
-// any controller in range is active. The trap's owner decides and stores it, so every player sees the same
+// any controller in range is active, and never while traps are turned off in the config. The trap's owner
+// decides and stores it, so every player sees the same
 internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 {
 	private const string EnabledChild = "_enabled";
@@ -75,6 +76,10 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 
 	private bool ShouldBeEnabled()
 	{
+		if (!MainConfig.enableTraps.Value)
+		{
+			return false;
+		}
 		bool anyInRange = false;
 		foreach (TrapController controller in TrapController.s_all)
 		{
@@ -110,6 +115,10 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		if (!m_piece)
 		{
 			return "";
+		}
+		if (!MainConfig.enableTraps.Value)
+		{
+			return Localization.instance.Localize(m_piece.m_name + "\n$text_traps_disabled");
 		}
 		return Localization.instance.Localize(m_piece.m_name + " (" + (IsEnabled() ? "$piece_guardstone_active" : "$piece_guardstone_inactive") + ")");
 	}
