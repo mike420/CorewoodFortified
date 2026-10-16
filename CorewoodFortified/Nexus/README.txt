@@ -331,12 +331,13 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [list]
 [*][b]Enable Traps[/b] (default [b]true[/b]): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
 [*][b]Trap Controller Radius[/b] (default [b]50[/b]): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
+[*][b]Flame Trap Trigger Radius[/b], [b]Saw Wall Trigger Radius[/b] and [b]Spike Floor Trigger Radius[/b] (default [b]8[/b]): how close a creature or player has to come to a switched-on trap for it to go off, in metres, from 1 to 20. Placed traps change too.
 [/list]
 
 [b]Traps[/b] (each player's own)
 
 [list]
-[*][b]Trap Sound Volume[/b] (default [b]1[/b]): volume of the traps' sounds, such as the Flame Trap's fire, from 0 (silent) to 1 (full).
+[*][b]Flame Trap Sound Volume[/b], [b]Saw Wall Sound Volume[/b] and [b]Spike Floor Sound Volume[/b] (default [b]1[/b]): volume of each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade, from 0 (silent) to 1 (full).
 [/list]
 
 

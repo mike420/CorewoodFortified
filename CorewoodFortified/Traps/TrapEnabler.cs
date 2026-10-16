@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace CorewoodFortified;
@@ -6,12 +8,15 @@ namespace CorewoodFortified;
 // stays still and harmless. A placed trap is armed while it has no trap controller in range, or while any
 // controller in range is active, and never while traps are turned off in the config; the trap's owner decides
 // and stores it, so every player sees the same. An armed trap turns _enabled on only while a character is inside
-// its Trigger, and for a moment after
+// its Trigger, and for a moment after. _enabled can sit anywhere in the prefab, such as on a moving blade. An
+// Animator outside _enabled with an "Enabled" bool is told the same, so it can play a running and a resting animation
 internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 {
 	private const string EnabledChild = "_enabled";
 	private const string ProximityChild = "Trigger";
 	private const string KeyEnabled = "cwf_trap_enabled";
+
+	private static readonly int AnimEnabled = Animator.StringToHash("Enabled");
 
 	private const float CheckInterval = 0.5f;
 
@@ -25,6 +30,8 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	private Piece m_piece;
 	private GameObject m_enabledObject;
 
+	private readonly List<Animator> m_animators = new List<Animator>();
+
 	// Controllers can load after the trap, so the first check after loading changes the state silently
 	private bool m_checkedOnce;
 
@@ -36,7 +43,7 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	{
 		m_piece = GetComponent<Piece>();
 		m_nview = GetComponent<ZNetView>();
-		m_enabledObject = transform.Find(EnabledChild)?.gameObject;
+		m_enabledObject = FindEnabledObject(transform);
 		m_hasProximity = GetComponentInChildren<TrapProximity>(includeInactive: true);
 		if (!m_nview || !m_nview.IsValid())
 		{
@@ -44,6 +51,31 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		}
 		UpdateEnabledObject();
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
+	}
+
+	// Animators only show their parameters once they are running, so they are looked at here rather than in Awake
+	private void Start()
+	{
+		if (!m_nview || !m_nview.IsValid())
+		{
+			return;
+		}
+		foreach (Animator animator in GetComponentsInChildren<Animator>())
+		{
+			if (m_enabledObject && animator.transform.IsChildOf(m_enabledObject.transform))
+			{
+				continue;
+			}
+			foreach (AnimatorControllerParameter parameter in animator.parameters)
+			{
+				if (parameter.nameHash == AnimEnabled && parameter.type == AnimatorControllerParameterType.Bool)
+				{
+					m_animators.Add(animator);
+					break;
+				}
+			}
+		}
+		UpdateEnabledObject();
 	}
 
 	// The placement ghost shows the areas of the controllers it would be in
@@ -130,6 +162,26 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		{
 			m_enabledObject.SetActive(enabled);
 		}
+		foreach (Animator animator in m_animators)
+		{
+			if (animator && animator.isActiveAndEnabled && animator.GetBool(AnimEnabled) != enabled)
+			{
+				animator.SetBool(AnimEnabled, enabled);
+			}
+		}
+	}
+
+	// The first _enabled found anywhere under the trap
+	public static GameObject FindEnabledObject(Transform root)
+	{
+		foreach (Transform child in root.GetComponentsInChildren<Transform>(includeInactive: true))
+		{
+			if (child != root && child.name == EnabledChild)
+			{
+				return child.gameObject;
+			}
+		}
+		return null;
 	}
 
 	public string GetHoverText()
@@ -157,9 +209,9 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 
 	// Checks the prefab once when it is added, so a missing child shows in the log rather than as a trap that
 	// silently does nothing
-	public static void AddTo(GameObject piece, EffectList activate, EffectList deactivate)
+	public static void AddTo(GameObject piece, EffectList activate, EffectList deactivate, ConfigEntry<float> triggerRadius)
 	{
-		if (!piece.transform.Find(EnabledChild))
+		if (!FindEnabledObject(piece.transform))
 		{
 			Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no '" + EnabledChild + "' child, it will not work as a trap.");
 			return;
@@ -167,7 +219,7 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		Transform proximity = piece.transform.Find(ProximityChild);
 		if (proximity && proximity.GetComponent<Collider>())
 		{
-			proximity.gameObject.AddComponent<TrapProximity>();
+			TrapProximity.AddTo(proximity.gameObject, piece.name, triggerRadius);
 		}
 		else
 		{

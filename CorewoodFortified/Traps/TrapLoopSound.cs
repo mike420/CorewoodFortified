@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace CorewoodFortified;
@@ -8,6 +10,9 @@ internal sealed class TrapLoopSound : MonoBehaviour
 {
 	private const float SoundFadeOut = 0.3f;
 
+	// Each trap's volume setting, by prefab name. Unity does not copy a ConfigEntry onto placed copies
+	private static readonly Dictionary<string, ConfigEntry<float>> s_volumeConfigs = new Dictionary<string, ConfigEntry<float>>();
+
 	// The sound prefab whose clip is looped, set up when the piece is added
 	public GameObject m_soundPrefab;
 
@@ -17,16 +22,19 @@ internal sealed class TrapLoopSound : MonoBehaviour
 
 	private float m_soundVolume;
 
+	private ConfigEntry<float> m_volumeConfig;
+
 	private void Start()
 	{
 		ZNetView nview = GetComponent<ZNetView>();
-		m_enabledObject = transform.Find("_enabled")?.gameObject;
+		m_enabledObject = TrapEnabler.FindEnabledObject(transform);
 		// The build preview never switches on, so it gets no sound
 		if (!m_enabledObject || !nview || !nview.IsValid())
 		{
 			enabled = false;
 			return;
 		}
+		s_volumeConfigs.TryGetValue(Utils.GetPrefabName(gameObject), out m_volumeConfig);
 		m_sound = LoopingSound.Create(m_soundPrefab, transform, "trap_loop_sound", out m_soundVolume);
 		if (!m_sound)
 		{
@@ -36,10 +44,10 @@ internal sealed class TrapLoopSound : MonoBehaviour
 
 	private void Update()
 	{
-		LoopingSound.Update(m_sound, m_enabledObject.activeInHierarchy, m_soundVolume * MainConfig.trapSoundVolume.Value, SoundFadeOut);
+		LoopingSound.Update(m_sound, m_enabledObject.activeInHierarchy, m_soundVolume * (m_volumeConfig != null ? m_volumeConfig.Value : 1f), SoundFadeOut);
 	}
 
-	public static void AddTo(GameObject piece, string soundPrefabName)
+	public static void AddTo(GameObject piece, string soundPrefabName, ConfigEntry<float> volumeConfig)
 	{
 		GameObject soundPrefab = Jotunn.Managers.PrefabManager.Instance.GetPrefab(soundPrefabName);
 		if (!soundPrefab)
@@ -48,5 +56,6 @@ internal sealed class TrapLoopSound : MonoBehaviour
 			return;
 		}
 		piece.AddComponent<TrapLoopSound>().m_soundPrefab = soundPrefab;
+		s_volumeConfigs[piece.name] = volumeConfig;
 	}
 }

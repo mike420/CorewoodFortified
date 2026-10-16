@@ -1421,23 +1421,25 @@ internal class AddFortified
 
     public static void AddPieceFlameTrap()
     {
-        GameObject gameObject = AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6);
-        TrapLoopSound.AddTo(gameObject, "sfx_flames_cwf");
+        GameObject gameObject = AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6, MainConfig.flameTrapTriggerRadius);
+        TrapLoopSound.AddTo(gameObject, "sfx_flames_cwf", MainConfig.flameTrapSoundVolume);
     }
 
     public static void AddPieceSawWall()
     {
-        AddTrapPiece("mm_corewood_saw_wall", "BlackMetal", 4, "Wood", 6);
+        GameObject gameObject = AddTrapPiece("mm_corewood_saw_wall", "BlackMetal", 4, "Wood", 6, MainConfig.sawWallTriggerRadius);
+        TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.sawWallSoundVolume);
     }
 
     public static void AddPieceSpikeFloor()
     {
-        AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8);
+        GameObject gameObject = AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8, MainConfig.spikeFloorTriggerRadius);
+        TrapStabSound.AddTo(gameObject, "sfx_spikes_cwf", MainConfig.spikeFloorSoundVolume);
     }
 
     // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);
     // TrapEnabler only switches them on and off. They clank like a workbench being placed as they do
-    private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2)
+    private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2, BepInEx.Configuration.ConfigEntry<float> triggerRadius)
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
@@ -1468,7 +1470,7 @@ internal class AddFortified
         SetWearEffects(gameObject, hitMetal, breakMetal);
         GameObject workbench = PrefabManager.Cache.GetPrefab<GameObject>("piece_workbench");
         EffectList switchEffect = workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
-        TrapEnabler.AddTo(gameObject, switchEffect, switchEffect);
+        TrapEnabler.AddTo(gameObject, switchEffect, switchEffect, triggerRadius);
         PieceManager.Instance.AddPiece(customPiece);
         return gameObject;
     }

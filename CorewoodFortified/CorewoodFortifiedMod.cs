@@ -160,7 +160,9 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
         "sfx_tower_chains_cwf",
         "sfx_elevator_cwf",
         "sfx_turret_scan_cwf",
-        "sfx_flames_cwf"
+        "sfx_flames_cwf",
+        "sfx_saw_cwf",
+        "sfx_spikes_cwf"
     };
 
     // Each sound is loaded on its own so one missing from the bundle does not stop the rest

@@ -64,7 +64,12 @@ namespace CorewoodFortified
 
         public static ConfigEntry<bool> enableTraps;
         public static ConfigEntry<float> trapControllerRadius;
-        public static ConfigEntry<float> trapSoundVolume;
+        public static ConfigEntry<float> flameTrapSoundVolume;
+        public static ConfigEntry<float> sawWallSoundVolume;
+        public static ConfigEntry<float> spikeFloorSoundVolume;
+        public static ConfigEntry<float> flameTrapTriggerRadius;
+        public static ConfigEntry<float> sawWallTriggerRadius;
+        public static ConfigEntry<float> spikeFloorTriggerRadius;
 
         public static void InitConfigs(ConfigFile config)
         {
@@ -124,22 +129,20 @@ namespace CorewoodFortified
 
             enableTraps = config.BindConfigInOrder("Traps", "Enable Traps", defaultValue: true, "If Off, the traps and the trap controller are hidden from the build menu, and placed traps stay but are switched off and do no damage. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             trapControllerRadius = config.BindConfigInOrder("Traps", "Trap Controller Radius", defaultValue: 50f, "How far from a trap controller its traps can be, in metres. Placed controllers and their range circles change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 200f));
-            trapSoundVolume = config.BindConfigInOrder("Traps", "Trap Sound Volume", defaultValue: 1f, "Volume of the traps' sounds, such as the flame trap's fire, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            flameTrapTriggerRadius = config.BindConfigInOrder("Traps", "Flame Trap Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on flame trap for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
+            sawWallTriggerRadius = config.BindConfigInOrder("Traps", "Saw Wall Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on saw wall for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
+            spikeFloorTriggerRadius = config.BindConfigInOrder("Traps", "Spike Floor Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on spike floor for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
+            flameTrapSoundVolume = config.BindConfigInOrder("Traps", "Flame Trap Sound Volume", defaultValue: 1f, "Volume of the flame trap's sound while it burns, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            sawWallSoundVolume = config.BindConfigInOrder("Traps", "Saw Wall Sound Volume", defaultValue: 1f, "Volume of the saw wall's sound while it cuts, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            spikeFloorSoundVolume = config.BindConfigInOrder("Traps", "Spike Floor Sound Volume", defaultValue: 1f, "Volume of the spike floor's sound each time its spikes go up or down, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             CarryOverOldSections(config);
         }
 
-        /// <summary>The sections settings were kept in before, under their new names. None have been renamed yet.</summary>
         private static readonly Dictionary<string, string[]> OldSections = new Dictionary<string, string[]>
         {
         };
 
-        /// <summary>
-        /// Settings left in the file under a section that is no longer used are carried over to where they are now: any section of
-        /// the same name under another number (the numbers in front of the section names change whenever a section is added or
-        /// moved), and any section listed in OldSections. A setting already changed from its default where it is now keeps its
-        /// value. The old entries are then dropped from the file, so it happens once.
-        /// </summary>
         private static void CarryOverOldSections(ConfigFile config)
         {
             Dictionary<ConfigDefinition, string> orphans;
