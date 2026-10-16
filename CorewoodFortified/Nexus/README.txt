@@ -231,7 +231,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [b]Trap Controller:[/b] switches the traps within 15 m of it (the radius can be changed in the config).
 
 [list]
-[*]Its traps are on only while someone (a player, creature or tame) is near the controller, and off when nobody is.
+[*]Its traps stay on, whether or not anyone is nearby, until you turn them off.
 [*]Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
 [*]Its range shows while you place it, while you look at it, and while you place a trap inside it.
 [*]Traps with no controller in range are always on.

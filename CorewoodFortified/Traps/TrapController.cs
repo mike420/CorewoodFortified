@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Switches the traps within its radius on while any character is near it, and off when nobody is. It can be
-// turned off by hand, and then its traps stay off until it is turned on again. A trap with no controller in
-// range is always on
+// An on/off switch for the traps within its radius: they stay on until it is turned off by hand, and then stay
+// off until it is turned on again. A trap with no controller in range is always on
 internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 {
 	public static float Radius => MainConfig.trapControllerRadius.Value;
@@ -17,9 +16,6 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 	private const float MarkerShowTime = 0.5f;
 
 	public static readonly List<TrapController> s_all = new List<TrapController>();
-
-	private static readonly Collider[] s_overlap = new Collider[1];
-	private static int s_characterMask;
 
 	public CircleProjector m_areaMarker;
 	public EffectList m_activateEffect = new EffectList();
@@ -48,10 +44,6 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		if (m_areaMarker)
 		{
 			m_areaMarker.gameObject.SetActive(false);
-		}
-		if (s_characterMask == 0)
-		{
-			s_characterMask = LayerMask.GetMask("character");
 		}
 		m_nview.Register("CWF_ToggleTrapController", RPC_Toggle);
 		s_all.Add(this);
@@ -82,7 +74,7 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		}
 		if (m_nview.IsOwner())
 		{
-			bool active = MainConfig.enableTraps.Value && !IsTurnedOff() && Physics.OverlapSphereNonAlloc(transform.position, Radius, s_overlap, s_characterMask) > 0;
+			bool active = MainConfig.enableTraps.Value && !IsTurnedOff();
 			if (active != IsActive())
 			{
 				m_nview.GetZDO().Set(KeyActive, active);
@@ -143,7 +135,7 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		{
 			return Localization.instance.Localize(name + "\n$piece_noaccess");
 		}
-		string state = IsTurnedOff() ? "$text_trap_controller_off" : (IsActive() ? "$piece_guardstone_active" : "$text_trap_controller_waiting");
+		string state = IsTurnedOff() ? "$text_trap_controller_off" : "$piece_guardstone_active";
 		string action = IsTurnedOff() ? "$piece_guardstone_activate" : "$piece_guardstone_deactivate";
 		return Localization.instance.Localize(name + " (" + state + ")\n[<color=yellow><b>$KEY_Use</b></color>] " + action);
 	}
