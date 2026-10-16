@@ -1,4 +1,8 @@
-﻿using BepInEx.Configuration;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using BepInEx.Configuration;
 using Jotunn.Extensions;
 
 namespace CorewoodFortified
@@ -119,6 +123,81 @@ namespace CorewoodFortified
 
             enableTraps = config.BindConfigInOrder("Traps", "Enable Traps", defaultValue: true, "If Off, the traps and the trap controller are hidden from the build menu, and placed traps stay but are switched off and do no damage. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             trapControllerRadius = config.BindConfigInOrder("Traps", "Trap Controller Radius", defaultValue: 15f, "How far from a trap controller its traps can be, in metres. Placed controllers and their range circles change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 50f));
+
+            CarryOverOldSections(config);
         }
+
+        /// <summary>The sections settings were kept in before, under their new names. None have been renamed yet.</summary>
+        private static readonly Dictionary<string, string[]> OldSections = new Dictionary<string, string[]>
+        {
+        };
+
+        /// <summary>
+        /// Settings left in the file under a section that is no longer used are carried over to where they are now: any section of
+        /// the same name under another number (the numbers in front of the section names change whenever a section is added or
+        /// moved), and any section listed in OldSections. A setting already changed from its default where it is now keeps its
+        /// value. The old entries are then dropped from the file, so it happens once.
+        /// </summary>
+        private static void CarryOverOldSections(ConfigFile config)
+        {
+            Dictionary<ConfigDefinition, string> orphans;
+            try
+            {
+                PropertyInfo property = typeof(ConfigFile).GetProperty("OrphanedEntries", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                orphans = property?.GetValue(config) as Dictionary<ConfigDefinition, string>;
+            }
+            catch (System.Exception e)
+            {
+                Jotunn.Logger.LogWarning("[CorewoodFortified] Could not look for settings under old section names: " + e.Message);
+                return;
+            }
+            if (orphans == null || orphans.Count == 0)
+            {
+                return;
+            }
+
+            int carried = 0, dropped = 0;
+            bool saveOnSet = config.SaveOnConfigSet;
+            config.SaveOnConfigSet = false;
+            try
+            {
+                foreach (ConfigDefinition old in orphans.Keys.ToList())
+                {
+                    string oldName = SectionName(old.Section);
+                    ConfigEntryBase entry = ((IDictionary<ConfigDefinition, ConfigEntryBase>)config).Values.FirstOrDefault(e => e.Definition.Key == old.Key && e.Definition.Section != old.Section
+                        && (SectionName(e.Definition.Section) == oldName || OldSections.TryGetValue(SectionName(e.Definition.Section), out string[] before) && before.Contains(oldName)));
+                    if (entry == null)
+                    {
+                        continue;   // (not one of ours any more: left as it is)
+                    }
+                    if (Equals(entry.BoxedValue, entry.DefaultValue))
+                    {
+                        try
+                        {
+                            entry.SetSerializedValue(orphans[old]);
+                            carried++;
+                        }
+                        catch (System.Exception e)
+                        {
+                            Jotunn.Logger.LogWarning("[CorewoodFortified] Could not carry over " + old.Section + " / " + old.Key + ": " + e.Message);
+                        }
+                    }
+                    orphans.Remove(old);
+                    dropped++;
+                }
+            }
+            finally
+            {
+                config.SaveOnConfigSet = saveOnSet;
+            }
+            if (dropped > 0)
+            {
+                config.Save();
+                Jotunn.Logger.LogInfo("[CorewoodFortified] Carried " + carried + " setting(s) over from old section names in the config file.");
+            }
+        }
+
+        // A section's name without the number in front ("4 - Fortified Ballista": Fortified Ballista)
+        private static string SectionName(string section) => Regex.Replace(section ?? "", @"^\d+\s*-\s*", "");
     }
 }
