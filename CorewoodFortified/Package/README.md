@@ -70,10 +70,6 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 
   * **Fortified Spikes**: 2 Core Wood, 2 Wood
 
-**Traps**
-
-  * **Trap Controller**: 4 Stone, 6 Wood
-
 ### Forge
 
   * **Fortified Gates**: 10 Core Wood, 6 Wood, 1 Bronze
@@ -118,6 +114,7 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 
 **Traps**
 
+  * **Trap Controller**: 20 Stone, 6 Coal
   * **Flame Trap**: 4 Black Metal, 6 Wood
   * **Saw Wall**: 4 Black Metal, 6 Wood
   * **Spike Floor**: 4 Black Metal, 8 Stone

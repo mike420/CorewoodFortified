@@ -76,12 +76,6 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Fortified Spikes[/b]: 2 Core Wood, 2 Wood
 [/list]
 
-[b]Traps[/b]
-
-[list]
-[*][b]Trap Controller[/b]: 4 Stone, 6 Wood
-[/list]
-
 [b]Forge[/b]
 
 [list]
@@ -141,6 +135,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [b]Traps[/b]
 
 [list]
+[*][b]Trap Controller[/b]: 20 Stone, 6 Coal
 [*][b]Flame Trap[/b]: 4 Black Metal, 6 Wood
 [*][b]Saw Wall[/b]: 4 Black Metal, 6 Wood
 [*][b]Spike Floor[/b]: 4 Black Metal, 8 Stone
@@ -151,7 +146,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [list]
 [*][b]Electric Fence 2m[/b]: 2 Core Wood, 2 Eitr
 [*][b]Electric Fence 4m[/b]: 2 Core Wood, 4 Eitr
-[*][b]Fence Controller[/b]: 2 Core Wood, 2 Crystal, 2 Eitr
+[*][b]Fence Controller[/b]: 2 Core Wood, 2 Crystal, 2 Eitr, 4 Iron
 [/list]
 
 [b]Black Forge[/b]

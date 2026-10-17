@@ -1607,7 +1607,7 @@ internal class AddFortified
         {
             Name = "$piece_mm_corewood_trap_controller",
             Description = "$piece_mm_corewood_trap_controller_description",
-            CraftingStation = "piece_workbench",
+            CraftingStation = "piece_artisanstation",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
             Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
