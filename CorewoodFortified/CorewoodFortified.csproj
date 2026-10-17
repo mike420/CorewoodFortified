@@ -99,7 +99,9 @@
     <Compile Include="ElectricFence\ElectricFenceArcs.cs" />
     <Compile Include="ElectricFence\FenceController.cs" />
     <Compile Include="ElectricFence\FencePatches.cs" />
+    <Compile Include="Traps\EntranceTrap.cs" />
     <Compile Include="Traps\TrapController.cs" />
+    <Compile Include="Traps\TrapDamage.cs" />
     <Compile Include="Traps\TrapEnabler.cs" />
     <Compile Include="Traps\TrapLoopSound.cs" />
     <Compile Include="Traps\TrapPatches.cs" />

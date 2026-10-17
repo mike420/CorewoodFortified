@@ -73,6 +73,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceFlameTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSpikeFloor);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
@@ -1497,20 +1498,31 @@ internal class AddFortified
 
     public static void AddPieceFlameTrap()
     {
-        GameObject gameObject = AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6, MainConfig.flameTrapTriggerRadius);
+        GameObject gameObject = AddTrapPiece("mm_corewood_flame_trap", "BlackMetal", 4, "Wood", 6, MainConfig.flameTrapTriggerRadius, MainConfig.flameTrapDamage);
         TrapLoopSound.AddTo(gameObject, "sfx_flames_cwf", MainConfig.flameTrapSoundVolume);
     }
 
     public static void AddPieceSawWall()
     {
-        GameObject gameObject = AddTrapPiece("mm_corewood_saw_wall", "BlackMetal", 4, "Wood", 6, MainConfig.sawWallTriggerRadius);
+        GameObject gameObject = AddTrapPiece("mm_corewood_saw_wall", "BlackMetal", 4, "Wood", 6, MainConfig.sawWallTriggerRadius, MainConfig.sawWallDamage);
         TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.sawWallSoundVolume);
     }
 
     public static void AddPieceSpikeFloor()
     {
-        GameObject gameObject = AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8, MainConfig.spikeFloorTriggerRadius);
+        GameObject gameObject = AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8, MainConfig.spikeFloorTriggerRadius, MainConfig.spikeFloorDamage);
         TrapStabSound.AddTo(gameObject, "sfx_spikes_cwf", MainConfig.spikeFloorSoundVolume);
+    }
+
+    // The spikes are given pivots, which would belong to the menu scene and be destroyed with it if they were put on
+    // the bundle's prefab, so they go on a renamed copy, as with the organ cannon
+    public static void AddPieceFortifiedEntranceTrap()
+    {
+        GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(EntranceTrap.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(EntranceTrap.PrefabName));
+        gameObject.name = EntranceTrap.PrefabName;
+        AddTrapPiece(gameObject, "RoundLog", 30, "BlackMetal", 8, MainConfig.entranceTrapTriggerRadius, MainConfig.entranceTrapDamage);
+        EntranceTrap.Setup(gameObject);
+        TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.entranceTrapSoundVolume);
     }
 
     // Not a trap: it is powered by a fence controller rather than switched by a trap controller
@@ -1643,9 +1655,16 @@ internal class AddFortified
 
     // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);
     // TrapEnabler only switches them on and off. They clank like a workbench being placed as they do
-    private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2, BepInEx.Configuration.ConfigEntry<float> triggerRadius)
+    private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2, BepInEx.Configuration.ConfigEntry<float> triggerRadius, BepInEx.Configuration.ConfigEntry<float> damage)
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
+        AddTrapPiece(gameObject, item1, amount1, item2, amount2, triggerRadius, damage);
+        return gameObject;
+    }
+
+    private static void AddTrapPiece(GameObject gameObject, string item1, int amount1, string item2, int amount2, BepInEx.Configuration.ConfigEntry<float> triggerRadius, BepInEx.Configuration.ConfigEntry<float> damage)
+    {
+        string prefabName = gameObject.name;
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
             Name = "$piece_" + prefabName,
@@ -1674,8 +1693,8 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         EffectList switchEffect = GetWorkbenchPlaceEffect();
         TrapEnabler.AddTo(gameObject, switchEffect, switchEffect, triggerRadius);
+        TrapDamage.AddTo(gameObject, damage);
         PieceManager.Instance.AddPiece(customPiece);
-        return gameObject;
     }
 
     // Takes its on and off effects and its area marker's look from the vanilla ward

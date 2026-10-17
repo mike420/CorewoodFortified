@@ -8,7 +8,8 @@ namespace CorewoodFortified;
 // stays still and harmless. A placed trap is armed only while an active trap controller is in range, and never
 // while traps are turned off in the config; the trap's owner decides
 // and stores it, so every player sees the same. An armed trap turns _enabled on only while a character is inside
-// its Trigger, and for a moment after. _enabled can sit anywhere in the prefab, such as on a moving blade. An
+// its Trigger, and for a moment after. _enabled can sit anywhere in the prefab, such as on a moving blade, and a
+// trap with several moving parts can have one on each. An
 // Animator outside _enabled with an "Enabled" bool is told the same, so it can play a running and a resting animation
 internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 {
@@ -28,7 +29,7 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 
 	private ZNetView m_nview;
 	private Piece m_piece;
-	private GameObject m_enabledObject;
+	private List<GameObject> m_enabledObjects;
 
 	private readonly List<Animator> m_animators = new List<Animator>();
 
@@ -39,11 +40,14 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	private bool m_hasProximity;
 	private float m_lastNearTime = float.NegativeInfinity;
 
+	// Whether _enabled is on now, for parts that move themselves rather than through an Animator
+	public bool IsRunning { get; private set; }
+
 	private void Awake()
 	{
 		m_piece = GetComponent<Piece>();
 		m_nview = GetComponent<ZNetView>();
-		m_enabledObject = FindEnabledObject(transform);
+		m_enabledObjects = FindEnabledObjects(transform);
 		m_hasProximity = GetComponentInChildren<TrapProximity>(includeInactive: true);
 		if (!m_nview || !m_nview.IsValid())
 		{
@@ -63,7 +67,7 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		}
 		foreach (Animator animator in GetComponentsInChildren<Animator>())
 		{
-			if (m_enabledObject && animator.transform.IsChildOf(m_enabledObject.transform))
+			if (m_enabledObjects.Exists(enabledObject => animator.transform.IsChildOf(enabledObject.transform)))
 			{
 				continue;
 			}
@@ -171,9 +175,13 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	private void UpdateEnabledObject()
 	{
 		bool enabled = IsEnabled() && (!m_hasProximity || Time.time - m_lastNearTime < NearHoldTime);
-		if (m_enabledObject && m_enabledObject.activeSelf != enabled)
+		IsRunning = enabled;
+		foreach (GameObject enabledObject in m_enabledObjects)
 		{
-			m_enabledObject.SetActive(enabled);
+			if (enabledObject && enabledObject.activeSelf != enabled)
+			{
+				enabledObject.SetActive(enabled);
+			}
 		}
 		foreach (Animator animator in m_animators)
 		{
@@ -187,14 +195,22 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 	// The first _enabled found anywhere under the trap
 	public static GameObject FindEnabledObject(Transform root)
 	{
+		List<GameObject> found = FindEnabledObjects(root);
+		return found.Count > 0 ? found[0] : null;
+	}
+
+	// Every _enabled anywhere under the trap
+	public static List<GameObject> FindEnabledObjects(Transform root)
+	{
+		List<GameObject> found = new List<GameObject>();
 		foreach (Transform child in root.GetComponentsInChildren<Transform>(includeInactive: true))
 		{
 			if (child != root && child.name == EnabledChild)
 			{
-				return child.gameObject;
+				found.Add(child.gameObject);
 			}
 		}
-		return null;
+		return found;
 	}
 
 	public string GetHoverText()

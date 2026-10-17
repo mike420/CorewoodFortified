@@ -87,6 +87,8 @@ internal class LocalisedText
         { "piece_mm_corewood_saw_wall_description", "Deck the walls with rusty saws. Cuts enemies that come near." },
         { "piece_mm_corewood_spike_floor", "Spike Floor" },
         { "piece_mm_corewood_spike_floor_description", "The floor is spikes. Stabs enemies that walk over it." },
+        { "piece_mm_corewood_fortified_entrance_trap", "Fortified Entrance Trap" },
+        { "piece_mm_corewood_fortified_entrance_trap_description", "A gateway with a spiked roller each side. They spin up and close in on enemies who try to come through." },
         { "piece_mm_corewood_electric_fence", "Electric Fence 2m" },
         { "piece_mm_corewood_electric_fence_4m", "Electric Fence 4m" },
         { "piece_mm_corewood_electric_fence_description", "Crackling beams that shock enemies who touch them. Live only while a powered Fence Controller is nearby." },

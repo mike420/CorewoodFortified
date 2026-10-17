@@ -69,6 +69,7 @@ namespace CorewoodFortified
         public static ConfigEntry<float> flameTrapSoundVolume;
         public static ConfigEntry<float> sawWallSoundVolume;
         public static ConfigEntry<float> spikeFloorSoundVolume;
+        public static ConfigEntry<float> entranceTrapSoundVolume;
 
         public static ConfigEntry<float> fenceControllerRadius;
         public static ConfigEntry<float> fenceEitrMinutes;
@@ -92,6 +93,11 @@ namespace CorewoodFortified
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
+        public static ConfigEntry<float> entranceTrapTriggerRadius;
+        public static ConfigEntry<float> flameTrapDamage;
+        public static ConfigEntry<float> sawWallDamage;
+        public static ConfigEntry<float> spikeFloorDamage;
+        public static ConfigEntry<float> entranceTrapDamage;
 
         public static void InitConfigs(ConfigFile config)
         {
@@ -156,8 +162,14 @@ namespace CorewoodFortified
             flameTrapTriggerRadius = config.BindConfigInOrder("Traps", "Flame Trap Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on flame trap for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
             sawWallTriggerRadius = config.BindConfigInOrder("Traps", "Saw Wall Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on saw wall for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
             spikeFloorTriggerRadius = config.BindConfigInOrder("Traps", "Spike Floor Trigger Radius", defaultValue: 8f, "How close a creature or player has to come to a switched-on spike floor for it to go off, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
+            entranceTrapTriggerRadius = config.BindConfigInOrder("Traps", "Entrance Trap Trigger Radius", defaultValue: 6f, "How close a creature or player has to come to a switched-on fortified entrance trap for its spikes to close in, in metres. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 20f));
             flameTrapSoundVolume = config.BindConfigInOrder("Traps", "Flame Trap Sound Volume", defaultValue: 1f, "Volume of the flame trap's sound while it burns, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             sawWallSoundVolume = config.BindConfigInOrder("Traps", "Saw Wall Sound Volume", defaultValue: 1f, "Volume of the saw wall's sound while it cuts, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            flameTrapDamage = config.BindConfigInOrder("Traps", "Flame Trap Damage", defaultValue: 100f, "How much fire damage the flame trap does each time it hits. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 1000f));
+            sawWallDamage = config.BindConfigInOrder("Traps", "Saw Wall Damage", defaultValue: 50f, "How much slash damage each of the saw wall's blades does each time it hits. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 1000f));
+            spikeFloorDamage = config.BindConfigInOrder("Traps", "Spike Floor Damage", defaultValue: 100f, "How much pierce damage the spike floor does each time it hits. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 1000f));
+            entranceTrapDamage = config.BindConfigInOrder("Traps", "Entrance Trap Damage", defaultValue: 100f, "How much slash damage each of the fortified entrance trap's spiked rollers does each time it hits. Placed traps change too. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 1000f));
+            entranceTrapSoundVolume = config.BindConfigInOrder("Traps", "Entrance Trap Sound Volume", defaultValue: 1f, "Volume of the fortified entrance trap's sound while its spikes spin, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             spikeFloorSoundVolume = config.BindConfigInOrder("Traps", "Spike Floor Sound Volume", defaultValue: 1f, "Volume of the spike floor's sound each time its spikes go up or down, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             fenceControllerRadius = config.BindConfigInOrder("Electric Fence", "Fence Controller Radius", defaultValue: 50f, "How far from a fence controller its electric fences can be, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 200f));
