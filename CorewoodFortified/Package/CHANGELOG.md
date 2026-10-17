@@ -10,7 +10,7 @@
     <td>1.0.5</td>
     <td>
         <ul>
-            <li>New: Traps. Flame Trap, Saw Wall and Spike Floor, built at the forge. The flame trap burns anyone who steps on it; the others hurt only enemies.</li>
+            <li>New: Traps. Flame Trap, Saw Wall and Spike Floor, built at the artisan table. The flame trap burns anyone who steps on it; the others hurt only enemies.</li>
             <li>New: Trap Controller, built at the workbench. Press Use on it to turn the traps within 30m of it off, and again to turn them back on. Traps only work within range of a controller.</li>
             <li>New config section: Traps. Enable Traps turns all traps off and hides them from the build menu, and Trap Controller Radius sets how far a controller reaches (15m to 200m, default 30m). Both synced from the server.</li>
             <li>Traps only run while someone is near them, and stop a couple of seconds after they leave. How near is set per trap by its Trigger Radius setting (synced, default 8m).</li>

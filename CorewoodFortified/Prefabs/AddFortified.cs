@@ -1476,6 +1476,7 @@ internal class AddFortified
         TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
     }
+
     public static void AddPieceElectricFence4m()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_electric_fence_4m");
@@ -1569,7 +1570,7 @@ internal class AddFortified
         {
             Name = "$piece_" + prefabName,
             Description = "$piece_" + prefabName + "_description",
-            CraftingStation = "forge",
+            CraftingStation = "piece_artisanstation",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
             Usage = new[] { PieceUsages.Building, PieceUsages.Defense },

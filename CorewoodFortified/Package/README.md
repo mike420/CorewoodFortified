@@ -1,7 +1,7 @@
 # 🎯 HD Corewood Fortified
 
 
-HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, ziplines, a smarter ballista and more!
+HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, ziplines, traps, electric fences, a smarter ballista and more!
 
 <br>
 
@@ -109,22 +109,24 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 
   * **Fortified Ballista**: 10 Black Metal, 10 Yggdrasil Wood, 3 Mechanical Springs
 
+
+### Artisan Table
+
+**Spikes**
+
+  * **Black Metal Spikes**: 2 Core Wood, 2 Wood, 2 Black Metal
+
 **Traps**
 
   * **Flame Trap**: 4 Black Metal, 6 Wood
   * **Saw Wall**: 4 Black Metal, 6 Wood
   * **Spike Floor**: 4 Black Metal, 8 Stone
 
-
-### Artisan Table
-
-  * **Black Metal Spikes**: 2 Core Wood, 2 Wood, 2 Black Metal
-
 ### Galdr Table
 
-  * **Electric Fence 2m**: 2 Roundlog, 2 Eitr
-  * **Electric Fence 4m**: 2 Roundlog, 4 Eitr
-  * **Fence Controller**: 2 Roundlog, 2 Crystal, 2 Eitr
+  * **Electric Fence 2m**: 2 Core Wood, 2 Eitr
+  * **Electric Fence 4m**: 2 Core Wood, 4 Eitr
+  * **Fence Controller**: 2 Core Wood, 2 Crystal, 2 Eitr, 4 Iron
 
 ### Black Forge
 
