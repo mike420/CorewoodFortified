@@ -147,7 +147,8 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [b]Galdr Table[/b]
 
 [list]
-[*][b]Electric Fence[/b]: 2 Roundlog, 4 Eitr
+[*][b]Electric Fence 2m[/b]: 2 Roundlog, 2 Eitr
+[*][b]Electric Fence 4m[/b]: 2 Roundlog, 4 Eitr
 [*][b]Fence Controller[/b]: 2 Roundlog, 2 Crystal, 2 Eitr
 [/list]
 
@@ -249,7 +250,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [size=5][b]Electric Fence[/b][/size]
 
 [list]
-[*][b]Electric Fence:[/b] beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
+[*][b]Electric Fence 2m[/b] and [b]Electric Fence 4m:[/b] beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
 [*][b]Fence Controller:[/b] powers the electric fences within 50 m of it (the radius can be changed in the config).
 [*]Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
 [*]It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.

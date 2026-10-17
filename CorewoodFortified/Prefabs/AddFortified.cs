@@ -75,6 +75,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
     }
 
@@ -1456,7 +1457,41 @@ internal class AddFortified
             {
                 new RequirementConfig
                 {
-                    Item = "Roundlog",
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Eitr",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
+        SetWearEffects(gameObject, hitMetal, breakMetal);
+        ElectricFence.AddTo(gameObject);
+        ElectricFenceArcs.AddTo(gameObject);
+        TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+    public static void AddPieceElectricFence4m()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_electric_fence_4m");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_electric_fence_4m",
+            Description = "$piece_mm_corewood_electric_fence_description",
+            CraftingStation = "piece_magetable",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
                     Amount = 2,
                     Recover = true
                 },
@@ -1488,11 +1523,11 @@ internal class AddFortified
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
             Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
-            Requirements = new RequirementConfig[3]
+            Requirements = new RequirementConfig[4]
             {
                 new RequirementConfig
                 {
-                    Item = "Roundlog",
+                    Item = "RoundLog",
                     Amount = 2,
                     Recover = true
                 },
@@ -1506,6 +1541,12 @@ internal class AddFortified
                 {
                     Item = "Eitr",
                     Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 4,
                     Recover = true
                 }
             }

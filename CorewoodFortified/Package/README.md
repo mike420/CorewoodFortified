@@ -122,7 +122,8 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 
 ### Galdr Table
 
-  * **Electric Fence**: 2 Roundlog, 4 Eitr
+  * **Electric Fence 2m**: 2 Roundlog, 2 Eitr
+  * **Electric Fence 4m**: 2 Roundlog, 4 Eitr
   * **Fence Controller**: 2 Roundlog, 2 Crystal, 2 Eitr
 
 ### Black Forge
@@ -211,7 +212,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 
 ## ⚡ Electric Fence:
 
-  * **Electric Fence:** beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
+  * **Electric Fence 2m** and **Electric Fence 4m:** beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
   * **Fence Controller:** powers the electric fences within 50 m of it (the radius can be changed in the config).
     * Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
     * It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.
