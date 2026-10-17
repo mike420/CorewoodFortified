@@ -104,6 +104,7 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 **Defence**
 
   * **Fortified Ballista**: 10 Black Metal, 10 Yggdrasil Wood, 3 Mechanical Springs
+  * **Organ Cannon**: 10 Black Metal, 10 Yggdrasil Wood, 4 Mechanical Springs, 4 Iron
 
 
 ### Artisan Table
@@ -189,6 +190,19 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * Each feature can be turned off, and the range, scan arc, turning, targets and ammo can all be changed in the config. The ballista can also be turned off entirely.
 
 **Note:** Auto Reload is safe in multiplayer, but every player and the server need this mod installed for chests to hand over bolts.
+
+<br>
+
+## 💣 Organ Cannon:
+
+Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires at enemies in front of it, with a volley of one ball from every barrel.
+
+  * **Cannon Balls:** every trader (Haldor, Hildir and the Bog Witch) sells them, 10 for 1 coin.
+  * The whole cannon turns on the spot towards the target, its wheels rolling opposite ways, but only within its fire arc, so place it facing the way you want it to fire. Its range circle shows the arc it covers.
+  * It aims where a moving target will be when the balls arrive, and allows for them dropping on the way.
+  * Give it trophies to pick which creatures it fires at, just like the ballista. By default it fires only at enemies, not at players or tames.
+  * **Spare Buildings:** balls that miss do no damage to building pieces.
+  * The range, fire arc, reload time, volley size, ball damage, targets and ammo can all be changed in the config, and the cannon can be turned off entirely.
 
 <br>
 
@@ -293,6 +307,20 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 **Fortified Ballista** (each player's own)
 
   * **Scan Sound Volume** (default `0.5`): volume of the scanning sound, from 0 (silent) to 1 (full).
+
+**Organ Cannon** (synced from the server)
+
+  * **Enable Organ Cannon** (default `true`): if off, the Organ Cannon is hidden from the build menu, and placed ones stay but do not aim, fire or take cannon balls.
+  * **Range** (default `40`): how far away it finds and fires at enemies, in metres, from 10 to 60.
+  * **Fire Arc** (default `60`): how far it turns from one side to the other, in degrees, from 10 to 120.
+  * **Reload Time** (default `6`): seconds between volleys, from 1 to 30.
+  * **Volley Size** (default `13`): how many of its 13 barrels fire in each volley, one cannon ball each.
+  * **Cannon Ball Damage** (default `40`): blunt damage of each ball, from 5 to 300.
+  * **Max Ammo** (default `65`): how many cannon balls it holds, from 13 to 260.
+  * **Spare Buildings** (default `true`): balls that miss do no damage to building pieces. If off, they damage whatever they hit.
+  * **Target Players** (default `false`): it can fire at players.
+  * **Target Tames** (default `false`): it can fire at tamed creatures.
+  * **Target Enemies** (default `true`): it fires at enemies.
 
 **Traps** (synced from the server)
 

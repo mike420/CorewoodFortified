@@ -79,6 +79,9 @@
     <Compile Include="Elevators\ElevatorSwitch.cs" />
     <Compile Include="Elevators\ParentPlatform.cs" />
     <Compile Include="Elevators\TriggerPlatform.cs" />
+    <Compile Include="Cannons\CannonBall.cs" />
+    <Compile Include="Cannons\CannonWheels.cs" />
+    <Compile Include="Cannons\OrganCannon.cs" />
     <Compile Include="Turrets\HomingBolt.cs" />
     <Compile Include="Turrets\TurretAiming.cs" />
     <Compile Include="Turrets\TurretAutoReload.cs" />

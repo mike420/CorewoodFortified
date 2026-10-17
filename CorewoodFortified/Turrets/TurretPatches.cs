@@ -7,13 +7,13 @@ internal static class TurretPatches
 {
 	private const string TurretPrefab = "mm_corewood_fortified_turret";
 
-	// Hides the fortified ballista from the build menu while it is turned off; placed ones stay but do not turn, fire or take bolts
+	// Hides the fortified ballista and organ cannon from the build menu while they are turned off; placed ones stay but do not turn, fire or take ammo
 	[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.UpdateAvailable))]
 	private static class PieceTableUpdateAvailablePatch
 	{
 		private static void Postfix(PieceTable __instance)
 		{
-			if (MainConfig.enableTurrets.Value)
+			if (MainConfig.enableTurrets.Value && MainConfig.enableOrganCannon.Value)
 			{
 				return;
 			}
@@ -26,7 +26,7 @@ internal static class TurretPatches
 		}
 	}
 
-	// Skips targeting, turning and firing for placed fortified ballistas while they are turned off
+	// Skips targeting, turning and firing for placed ones while they are turned off
 	[HarmonyPatch(typeof(Turret), "FixedUpdate")]
 	private static class TurretFixedUpdatePatch
 	{
@@ -62,7 +62,7 @@ internal static class TurretPatches
 		{
 			if (IsDisabled(__instance))
 			{
-				__result = Localization.instance.Localize(__instance.m_name + "\n$text_turrets_disabled");
+				__result = Localization.instance.Localize(__instance.m_name + "\n" + DisabledText(__instance));
 				return false;
 			}
 			return true;
@@ -77,7 +77,7 @@ internal static class TurretPatches
 		}
 		if (user)
 		{
-			user.Message(MessageHud.MessageType.Center, "$text_turrets_disabled");
+			user.Message(MessageHud.MessageType.Center, DisabledText(turret));
 		}
 		result = false;
 		return false;
@@ -85,11 +85,25 @@ internal static class TurretPatches
 
 	private static bool IsDisabled(Turret turret)
 	{
+		if (turret.GetComponent<OrganCannon>())
+		{
+			return !MainConfig.enableOrganCannon.Value;
+		}
 		return !MainConfig.enableTurrets.Value && turret.GetComponent<TurretSettings>();
+	}
+
+	private static string DisabledText(Turret turret)
+	{
+		return turret.GetComponent<OrganCannon>() ? "$text_organ_cannons_disabled" : "$text_turrets_disabled";
 	}
 
 	private static bool IsTurret(Piece piece)
 	{
-		return piece != null && piece.gameObject.name == TurretPrefab;
+		if (piece == null)
+		{
+			return false;
+		}
+		string name = piece.gameObject.name;
+		return name == TurretPrefab && !MainConfig.enableTurrets.Value || name == OrganCannon.PrefabName && !MainConfig.enableOrganCannon.Value;
 	}
 }

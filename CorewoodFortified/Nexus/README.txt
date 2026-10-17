@@ -121,6 +121,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 
 [list]
 [*][b]Fortified Ballista[/b]: 10 Black Metal, 10 Yggdrasil Wood, 3 Mechanical Springs
+[*][b]Organ Cannon[/b]: 10 Black Metal, 10 Yggdrasil Wood, 4 Mechanical Springs, 4 Iron
 [/list]
 
 
@@ -222,6 +223,20 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [/list]
 
 [b]Note:[/b] Auto Reload is safe in multiplayer, but every player and the server need this mod installed for chests to hand over bolts.
+
+
+[size=5][b]Organ Cannon[/b][/size]
+
+Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires at enemies in front of it, with a volley of one ball from every barrel.
+
+[list]
+[*][b]Cannon Balls:[/b] every trader (Haldor, Hildir and the Bog Witch) sells them, 10 for 1 coin.
+[*]The whole cannon turns on the spot towards the target, its wheels rolling opposite ways, but only within its fire arc, so place it facing the way you want it to fire. Its range circle shows the arc it covers.
+[*]It aims where a moving target will be when the balls arrive, and allows for them dropping on the way.
+[*]Give it trophies to pick which creatures it fires at, just like the ballista. By default it fires only at enemies, not at players or tames.
+[*][b]Spare Buildings:[/b] balls that miss do no damage to building pieces.
+[*]The range, fire arc, reload time, volley size, ball damage, targets and ammo can all be changed in the config, and the cannon can be turned off entirely.
+[/list]
 
 
 [size=5][b]Traps[/b][/size]
@@ -342,6 +357,22 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 
 [list]
 [*][b]Scan Sound Volume[/b] (default [b]0.5[/b]): volume of the scanning sound, from 0 (silent) to 1 (full).
+[/list]
+
+[b]Organ Cannon[/b] (synced from the server)
+
+[list]
+[*][b]Enable Organ Cannon[/b] (default [b]true[/b]): if off, the Organ Cannon is hidden from the build menu, and placed ones stay but do not aim, fire or take cannon balls.
+[*][b]Range[/b] (default [b]40[/b]): how far away it finds and fires at enemies, in metres, from 10 to 60.
+[*][b]Fire Arc[/b] (default [b]60[/b]): how far it turns from one side to the other, in degrees, from 10 to 120.
+[*][b]Reload Time[/b] (default [b]6[/b]): seconds between volleys, from 1 to 30.
+[*][b]Volley Size[/b] (default [b]13[/b]): how many of its 13 barrels fire in each volley, one cannon ball each.
+[*][b]Cannon Ball Damage[/b] (default [b]40[/b]): blunt damage of each ball, from 5 to 300.
+[*][b]Max Ammo[/b] (default [b]65[/b]): how many cannon balls it holds, from 13 to 260.
+[*][b]Spare Buildings[/b] (default [b]true[/b]): balls that miss do no damage to building pieces. If off, they damage whatever they hit.
+[*][b]Target Players[/b] (default [b]false[/b]): it can fire at players.
+[*][b]Target Tames[/b] (default [b]false[/b]): it can fire at tamed creatures.
+[*][b]Target Enemies[/b] (default [b]true[/b]): it fires at enemies.
 [/list]
 
 [b]Traps[/b] (synced from the server)

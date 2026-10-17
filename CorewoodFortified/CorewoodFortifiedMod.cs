@@ -164,7 +164,8 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
         "sfx_saw_cwf",
         "sfx_spikes_cwf",
         "sfx_electric_fence_cwf",
-        "sfx_fence_controller_cwf"
+        "sfx_fence_controller_cwf",
+        "sfx_cannon_shot_cwf"
     };
 
     // Each sound is loaded on its own so one missing from the bundle does not stop the rest

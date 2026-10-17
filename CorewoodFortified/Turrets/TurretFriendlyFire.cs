@@ -26,7 +26,7 @@ internal sealed class FortifiedBolt : MonoBehaviour
 		private static void Prefix(Projectile __instance, Collider collider, out HitData.DamageTypes? __state)
 		{
 			__state = null;
-			if (!collider || !MainConfig.turretSpareBuildings.Value || !__instance.GetComponent<FortifiedBolt>())
+			if (!collider || !SparesBuildings(__instance))
 			{
 				return;
 			}
@@ -36,6 +36,16 @@ internal sealed class FortifiedBolt : MonoBehaviour
 				__state = __instance.m_damage;
 				__instance.m_damage = default;
 			}
+		}
+
+		// Organ cannon balls follow the cannon's own setting
+		private static bool SparesBuildings(Projectile projectile)
+		{
+			if (projectile.GetComponent<FortifiedBolt>())
+			{
+				return MainConfig.turretSpareBuildings.Value;
+			}
+			return projectile.GetComponent<CannonBallShot>() && MainConfig.cannonSpareBuildings.Value;
 		}
 
 		private static void Postfix(Projectile __instance, HitData.DamageTypes? __state)

@@ -20,7 +20,8 @@ internal static class TurretAiming
 	{
 		private static bool Prefix(Turret __instance)
 		{
-			if (!MainConfig.turretPredictiveAim.Value || !__instance.GetComponent<TurretSettings>())
+			// The organ cannon always aims this way, as its balls drop too far for the vanilla aim to hit
+			if (!__instance.GetComponent<OrganCannon>() && (!MainConfig.turretPredictiveAim.Value || !__instance.GetComponent<TurretSettings>()))
 			{
 				return true;
 			}

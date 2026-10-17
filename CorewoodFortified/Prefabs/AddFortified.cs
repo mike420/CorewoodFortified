@@ -51,6 +51,9 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceWindowed);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceGate);
 
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedOrganCannon);
+
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikes);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBronze);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesIron);
@@ -66,8 +69,6 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerLarge);
 
         CorewoodFortifiedMod.TryAddPiece(ZiplineSetup.AddPieceZiplinePost);
-
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceFlameTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
@@ -1076,6 +1077,116 @@ internal class AddFortified
     }
 
 
+    public static void AddPieceFortifiedBallista()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_turret");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_fortified_turret",
+            Description = "$piece_mm_corewood_fortified_turret_description",
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "BlackMetal",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "YggdrasilWood",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "MechanicalSpring",
+                    Amount = 3,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetTurretFromVanilla(gameObject);
+        TurretSettings.Init(gameObject);
+        TurretAutoReload.Init(gameObject);
+        AddTurretScanSound(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedOrganCannon()
+    {
+        // The cannon is given new child objects, which would belong to the menu scene and be destroyed with it if
+        // they were put on the bundle's prefab, leaving it broken. A copy in Jotunn's prefab container keeps them.
+        // Jotunn will not clone under a name already loaded, so the copy is renamed after, keeping placed cannons'
+        // prefab name
+        GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(OrganCannon.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(OrganCannon.PrefabName));
+        gameObject.name = OrganCannon.PrefabName;
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_organ_cannon",
+            Description = "$piece_mm_corewood_organ_cannon_description",
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[4]
+            {
+                new RequirementConfig
+                {
+                    Item = "BlackMetal",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "YggdrasilWood",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "MechanicalSpring",
+                    Amount = 4,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 4,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        GameObject vanillaPrefab = PrefabManager.Cache.GetPrefab<GameObject>("piece_turret");
+        Turret vanilla = vanillaPrefab ? vanillaPrefab.GetComponent<Turret>() : null;
+        ItemDrop ball = CannonBall.Add(vanilla);
+        if (ball && OrganCannon.Setup(gameObject, ball, vanilla, GetCannonShotEffect(vanilla)) && vanilla)
+        {
+            SetTurretMarker(gameObject, gameObject.GetComponent<Turret>(), vanilla);
+        }
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // The cannon's own shot sound, with the vanilla ballista's shot visuals but not its sound
+    private static EffectList GetCannonShotEffect(Turret vanilla)
+    {
+        List<EffectList.EffectData> effects = new List<EffectList.EffectData>(Effects("sfx_cannon_shot_cwf").m_effectPrefabs);
+        if (vanilla && vanilla.m_shootEffect != null)
+        {
+            effects.AddRange(vanilla.m_shootEffect.m_effectPrefabs.Where(effect => effect.m_prefab && !effect.m_prefab.name.StartsWith("sfx_")));
+        }
+        return new EffectList { m_effectPrefabs = effects.ToArray() };
+    }
+
+
     public static void AddPieceFortifiedSpikes()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes");
@@ -1380,48 +1491,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-
-    public static void AddPieceFortifiedBallista()
-    {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_turret");
-        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
-        {
-            Name = "$piece_mm_corewood_fortified_turret",
-            Description = "$piece_mm_corewood_fortified_turret_description",
-            CraftingStation = "forge",
-            PieceTable = "_HammerPieceTable",
-            Category = "CoreWood-Fortified",
-            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
-            Requirements = new RequirementConfig[3]
-            {
-                new RequirementConfig
-                {
-                    Item = "BlackMetal",
-                    Amount = 10,
-                    Recover = true
-                },
-                new RequirementConfig
-                {
-                    Item = "YggdrasilWood",
-                    Amount = 10,
-                    Recover = true
-                },
-                new RequirementConfig
-                {
-                    Item = "MechanicalSpring",
-                    Amount = 3,
-                    Recover = true
-                }
-            }
-        });
-        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
-        SetWearEffects(gameObject, hitWood, breakWood);
-        SetTurretFromVanilla(gameObject);
-        TurretSettings.Init(gameObject);
-        TurretAutoReload.Init(gameObject);
-        AddTurretScanSound(gameObject);
-        PieceManager.Instance.AddPiece(customPiece);
-    }
 
     public static void AddPieceFlameTrap()
     {

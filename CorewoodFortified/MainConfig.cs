@@ -72,6 +72,18 @@ namespace CorewoodFortified
         public static ConfigEntry<float> fenceEitrMinutes;
         public static ConfigEntry<float> electricFenceSoundVolume;
         public static ConfigEntry<float> fenceControllerSoundVolume;
+
+        public static ConfigEntry<bool> enableOrganCannon;
+        public static ConfigEntry<int> cannonRange;
+        public static ConfigEntry<int> cannonFireArc;
+        public static ConfigEntry<float> cannonReloadTime;
+        public static ConfigEntry<int> cannonVolleySize;
+        public static ConfigEntry<float> cannonBallDamage;
+        public static ConfigEntry<int> cannonMaxAmmo;
+        public static ConfigEntry<bool> cannonSpareBuildings;
+        public static ConfigEntry<bool> cannonTargetPlayers;
+        public static ConfigEntry<bool> cannonTargetTamed;
+        public static ConfigEntry<bool> cannonTargetEnemies;
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
@@ -145,6 +157,18 @@ namespace CorewoodFortified
             fenceEitrMinutes = config.BindConfigInOrder("Electric Fence", "Minutes Per Eitr", defaultValue: 10f, "How many minutes one Eitr keeps a fence controller's fences live. It only burns while the controller is on and has a fence in range. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 120f));
             fenceControllerSoundVolume = config.BindConfigInOrder("Electric Fence", "Fence Controller Sound Volume", defaultValue: 0.5f, "Volume of the fence controller's sound while it powers its fences, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             electricFenceSoundVolume = config.BindConfigInOrder("Electric Fence", "Electric Fence Sound Volume", defaultValue: 1f, "Volume of the electric fence's hum while it is live, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+
+            enableOrganCannon = config.BindConfigInOrder("Organ Cannon", "Enable Organ Cannon", defaultValue: true, "If Off, the organ cannon is hidden from the build menu, and placed ones stay but do not aim, fire or take cannon balls. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonRange = config.BindConfigInOrder("Organ Cannon", "Range", defaultValue: 40, "How far away the organ cannon finds and fires at enemies, in metres. The range circle matches it. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(10, 60));
+            cannonFireArc = config.BindConfigInOrder("Organ Cannon", "Fire Arc", defaultValue: 60, "How far the organ cannon turns from one side to the other, in degrees. It only fires at enemies inside this arc in front of it. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(10, 120));
+            cannonReloadTime = config.BindConfigInOrder("Organ Cannon", "Reload Time", defaultValue: 6f, "Seconds between the organ cannon's volleys. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 30f));
+            cannonVolleySize = config.BindConfigInOrder("Organ Cannon", "Volley Size", defaultValue: 13, "How many of the organ cannon's 13 barrels fire in each volley. Each barrel fires one cannon ball. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(1, 13));
+            cannonBallDamage = config.BindConfigInOrder("Organ Cannon", "Cannon Ball Damage", defaultValue: 40f, "Blunt damage of each cannon ball. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 300f));
+            cannonMaxAmmo = config.BindConfigInOrder("Organ Cannon", "Max Ammo", defaultValue: 65, "How many cannon balls an organ cannon holds. Balls already loaded above a lowered limit stay until they are fired. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(13, 260));
+            cannonSpareBuildings = config.BindConfigInOrder("Organ Cannon", "Spare Buildings", defaultValue: true, "If On, cannon balls that miss do no damage to building pieces. If Off, they damage whatever they hit. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonTargetPlayers = config.BindConfigInOrder("Organ Cannon", "Target Players", defaultValue: false, "If On, the organ cannon can fire at players. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonTargetTamed = config.BindConfigInOrder("Organ Cannon", "Target Tames", defaultValue: false, "If On, the organ cannon can fire at tamed creatures. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonTargetEnemies = config.BindConfigInOrder("Organ Cannon", "Target Enemies", defaultValue: true, "If On, the organ cannon fires at enemies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
 
             CarryOverOldSections(config);
         }
