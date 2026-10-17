@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Sets how hard a trap's hit areas hit from its damage setting. Each hit area keeps the kinds of damage the prefab
+// Sets how hard a trap's or electric fence's hit areas hit from its damage setting. Each hit area keeps the kinds of damage the prefab
 // gives it, such as fire or slash, scaled so they add up to the setting. Placed traps change with the setting too
 internal sealed class TrapDamage : MonoBehaviour
 {

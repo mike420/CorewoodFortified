@@ -1556,6 +1556,7 @@ internal class AddFortified
         gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
         SetWearEffects(gameObject, hitMetal, breakMetal);
         ElectricFence.AddTo(gameObject, GetWorkbenchPlaceEffect());
+        TrapDamage.AddTo(gameObject, MainConfig.electricFenceDamage);
         ElectricFenceArcs.AddTo(gameObject);
         TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
@@ -1591,6 +1592,7 @@ internal class AddFortified
         gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
         SetWearEffects(gameObject, hitMetal, breakMetal);
         ElectricFence.AddTo(gameObject, GetWorkbenchPlaceEffect());
+        TrapDamage.AddTo(gameObject, MainConfig.electricFenceDamage);
         ElectricFenceArcs.AddTo(gameObject);
         TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);

@@ -413,6 +413,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [list]
 [*][b]Fence Controller Radius[/b] (default [b]50[/b]): how far from a Fence Controller its electric fences can be, in metres, from 5 to 100.
 [*][b]Minutes Per Eitr[/b] (default [b]10[/b]): how many minutes one Eitr keeps a controller's fences live, from 1 to 120.
+[*][b]Electric Fence Damage[/b] (default [b]100[/b] lightning): how much a live fence does each time it shocks, from 1 to 1000. Placed fences change too.
 [/list]
 
 [b]Electric Fence[/b] (each player's own)
