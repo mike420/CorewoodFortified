@@ -15,8 +15,8 @@
             <li>New config section: Traps. Enable Traps turns all traps off and hides them from the build menu, and Trap Controller Radius sets how far a controller reaches (15m to 200m, default 30m). Both synced from the server.</li>
             <li>Traps only run while someone is near them, and stop a couple of seconds after they leave. How near is set per trap by its Trigger Radius setting (synced, default 8m).</li>
             <li>Trap sounds: the Flame Trap roars while it burns, the Saw Wall's blade whirs while it cuts, and the Spike Floor's spikes clank as they snap up and back down. Each trap has its own sound volume setting (each player's own).</li>
-            <li>New: Electric Fence (2m and 4m) and Fence Controller, built at the galdr table. The fence crackles with green lightning, hums and shocks enemies while a Fence Controller within 50m powers it. The controller holds only Eitr and burns one every 10 minutes while its fences are live; looking at it shows how long its power will last, and its range circle shows while placing it or a fence. Shift + Use turns it off and on.</li>
-            <li>New config section: Electric Fence. Fence Controller Radius (5m to 100m, default 50m) and Minutes Per Eitr (1 to 120, default 10), both synced from the server, and Electric Fence Sound Volume (each player's own).</li>
+            <li>New: Electric Fence (2m and 4m) and Fence Controller, built at the galdr table. The fence crackles with green lightning, hums, clanks as it switches on and off, and shocks enemies while a Fence Controller within 50m powers it. The controller holds only Eitr and burns one every 10 minutes while its fences are live; looking at it shows how long its power will last, and its range circle shows while placing it or a fence. Shift + Use turns it off and on.</li>
+            <li>New config section: Electric Fence. Fence Controller Radius (5m to 100m, default 50m) and Minutes Per Eitr (1 to 120, default 10), both synced from the server, and Electric Fence Sound Volume and Fence Controller Sound Volume (each player's own).</li>
         </ul>
     </td>
   </tr>

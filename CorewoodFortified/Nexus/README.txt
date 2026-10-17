@@ -146,7 +146,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [list]
 [*][b]Electric Fence 2m[/b]: 2 Core Wood, 2 Eitr
 [*][b]Electric Fence 4m[/b]: 2 Core Wood, 4 Eitr
-[*][b]Fence Controller[/b]: 2 Core Wood, 2 Crystal, 2 Eitr, 4 Iron
+[*][b]Fence Controller[/b]: 2 Core Wood, 2 Crystal, 2 Eitr, 4 Iron, 4 Iron
 [/list]
 
 [b]Black Forge[/b]
@@ -247,7 +247,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [size=5][b]Electric Fence[/b][/size]
 
 [list]
-[*][b]Electric Fence 2m[/b] and [b]Electric Fence 4m:[/b] beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
+[*][b]Electric Fence 2m[/b] and [b]Electric Fence 4m:[/b] beams that crackle with green lightning and hum, and shock enemies who touch them. They clank as they switch on and off. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
 [*][b]Fence Controller:[/b] powers the electric fences within 50 m of it (the radius can be changed in the config).
 [*]Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
 [*]It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.
@@ -369,6 +369,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 
 [list]
 [*][b]Electric Fence Sound Volume[/b] (default [b]1[/b]): volume of the fence's hum while it is live, from 0 (silent) to 1 (full).
+[*][b]Fence Controller Sound Volume[/b] (default [b]0.5[/b]): volume of the controller's sound while it powers its fences, from 0 (silent) to 1 (full).
 [/list]
 
 

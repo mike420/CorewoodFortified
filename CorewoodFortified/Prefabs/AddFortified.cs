@@ -1471,7 +1471,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
         SetWearEffects(gameObject, hitMetal, breakMetal);
-        ElectricFence.AddTo(gameObject);
+        ElectricFence.AddTo(gameObject, GetWorkbenchPlaceEffect());
         ElectricFenceArcs.AddTo(gameObject);
         TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
@@ -1506,7 +1506,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
         SetWearEffects(gameObject, hitMetal, breakMetal);
-        ElectricFence.AddTo(gameObject);
+        ElectricFence.AddTo(gameObject, GetWorkbenchPlaceEffect());
         ElectricFenceArcs.AddTo(gameObject);
         TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
@@ -1558,7 +1558,15 @@ internal class AddFortified
         PrivateArea ward = wardPrefab ? wardPrefab.GetComponent<PrivateArea>() : null;
         FenceController.AddTo(gameObject, ward ? ward.m_activateEffect : new EffectList(), ward ? ward.m_deactivateEffect : new EffectList());
         gameObject.GetComponent<FenceController>().m_areaMarker = SetMarkerFrom(gameObject, ward ? ward.m_areaMarker : null);
+        TrapLoopSound.AddTo(gameObject, "sfx_fence_controller_cwf", MainConfig.fenceControllerSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // The clank of a workbench being placed, which traps and electric fences make as they switch on and off
+    private static EffectList GetWorkbenchPlaceEffect()
+    {
+        GameObject workbench = PrefabManager.Cache.GetPrefab<GameObject>("piece_workbench");
+        return workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
     }
 
     // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);
@@ -1590,10 +1598,9 @@ internal class AddFortified
                 }
             }
         });
-        gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
-        SetWearEffects(gameObject, hitMetal, breakMetal);
-        GameObject workbench = PrefabManager.Cache.GetPrefab<GameObject>("piece_workbench");
-        EffectList switchEffect = workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        EffectList switchEffect = GetWorkbenchPlaceEffect();
         TrapEnabler.AddTo(gameObject, switchEffect, switchEffect, triggerRadius);
         PieceManager.Instance.AddPiece(customPiece);
         return gameObject;
