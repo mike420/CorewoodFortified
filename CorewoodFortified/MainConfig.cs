@@ -84,6 +84,8 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> cannonTargetPlayers;
         public static ConfigEntry<bool> cannonTargetTamed;
         public static ConfigEntry<bool> cannonTargetEnemies;
+        public static ConfigEntry<bool> cannonAutoReload;
+        public static ConfigEntry<float> cannonAutoReloadRange;
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
@@ -169,6 +171,8 @@ namespace CorewoodFortified
             cannonTargetPlayers = config.BindConfigInOrder("Organ Cannon", "Target Players", defaultValue: false, "If On, the organ cannon can fire at players. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             cannonTargetTamed = config.BindConfigInOrder("Organ Cannon", "Target Tames", defaultValue: false, "If On, the organ cannon can fire at tamed creatures. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             cannonTargetEnemies = config.BindConfigInOrder("Organ Cannon", "Target Enemies", defaultValue: true, "If On, the organ cannon fires at enemies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonAutoReload = config.BindConfigInOrder("Organ Cannon", "Auto Reload", defaultValue: true, "If On, an organ cannon that is not full takes cannon balls from chests nearby, every few seconds. It only uses chests its builder may open, and never while someone has the chest open. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            cannonAutoReloadRange = config.BindConfigInOrder("Organ Cannon", "Auto Reload Range", defaultValue: 10f, "How far from an organ cannon a chest can be for it to take cannon balls from, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 20f));
 
             CarryOverOldSections(config);
         }

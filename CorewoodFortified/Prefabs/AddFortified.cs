@@ -1114,7 +1114,7 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         SetTurretFromVanilla(gameObject);
         TurretSettings.Init(gameObject);
-        TurretAutoReload.Init(gameObject);
+        TurretAutoReload.Init(gameObject, () => MainConfig.enableTurrets.Value && MainConfig.turretAutoReload.Value, () => MainConfig.turretAutoReloadRange.Value);
         AddTurretScanSound(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
@@ -1171,6 +1171,7 @@ internal class AddFortified
         if (ball && OrganCannon.Setup(gameObject, ball, vanilla, GetCannonShotEffect(vanilla)) && vanilla)
         {
             SetTurretMarker(gameObject, gameObject.GetComponent<Turret>(), vanilla);
+            TurretAutoReload.Init(gameObject, () => MainConfig.enableOrganCannon.Value && MainConfig.cannonAutoReload.Value, () => MainConfig.cannonAutoReloadRange.Value);
         }
         PieceManager.Instance.AddPiece(customPiece);
     }

@@ -124,6 +124,12 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Organ Cannon[/b]: 10 Black Metal, 10 Yggdrasil Wood, 4 Mechanical Springs, 4 Iron
 [/list]
 
+[b]Ammo[/b] (crafted at the forge)
+
+[list]
+[*][b]Cannon Ball[/b]: 1 Iron
+[/list]
+
 
 [b]Artisan Table[/b]
 
@@ -230,12 +236,13 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires at enemies in front of it, with a volley of one ball from every barrel.
 
 [list]
-[*][b]Cannon Balls:[/b] every trader (Haldor, Hildir and the Bog Witch) sells them, 10 for 1 coin.
+[*][b]Cannon Balls:[/b] forged at the forge, 1 Iron for each ball.
 [*]The whole cannon turns on the spot towards the target, its wheels rolling opposite ways, but only within its fire arc, so place it facing the way you want it to fire. Its range circle shows the arc it covers.
 [*]It aims where a moving target will be when the balls arrive, and allows for them dropping on the way.
 [*]Give it trophies to pick which creatures it fires at, just like the ballista. By default it fires only at enemies, not at players or tames.
 [*][b]Spare Buildings:[/b] balls that miss do no damage to building pieces.
-[*]The range, fire arc, reload time, volley size, ball damage, targets and ammo can all be changed in the config, and the cannon can be turned off entirely.
+[*][b]Auto Reload:[/b] when it is not full, it takes cannon balls from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open. Graves, carts and ships are left alone.
+[*]The range, fire arc, reload time, volley size, ball damage, targets, ammo and auto reload can all be changed in the config, and the cannon can be turned off entirely.
 [/list]
 
 
@@ -373,6 +380,8 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Target Players[/b] (default [b]false[/b]): it can fire at players.
 [*][b]Target Tames[/b] (default [b]false[/b]): it can fire at tamed creatures.
 [*][b]Target Enemies[/b] (default [b]true[/b]): it fires at enemies.
+[*][b]Auto Reload[/b] (default [b]true[/b]): take cannon balls from nearby chests when not full.
+[*][b]Auto Reload Range[/b] (default [b]10[/b]): how far away a chest can be, in metres, from 2 to 20.
 [/list]
 
 [b]Traps[/b] (synced from the server)

@@ -1,4 +1,4 @@
-using HarmonyLib;
+using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine;
 namespace CorewoodFortified;
 
 // The organ cannon's ammo. The bundle's cannon ball is made an ammo item that fires a cannon ball projectile, built
-// from the vanilla ballista bolt's with the bolt's model swapped for the ball's. Every trader sells it
+// from the vanilla ballista bolt's with the bolt's model swapped for the ball's. It is forged from iron at the forge
 internal static class CannonBall
 {
 	public const string PrefabName = "mm_cannon_ball";
@@ -15,10 +15,10 @@ internal static class CannonBall
 
 	private const string VisualChild = "attach";
 
-	// Ten balls for one coin at every trader
-	private const int TradeStack = 10;
+	// One iron makes one ball, at the forge
+	private const string CraftingStation = "forge";
 
-	private const int TradePrice = 1;
+	private const string Material = "Iron";
 
 	private const float Speed = 40f;
 
@@ -27,8 +27,6 @@ internal static class CannonBall
 	private const float SpreadDegrees = 3f;
 
 	private const float PushForce = 60f;
-
-	private static ItemDrop s_ball;
 
 	public static ItemDrop Add(Turret vanilla)
 	{
@@ -45,7 +43,7 @@ internal static class CannonBall
 		shared.m_itemType = ItemDrop.ItemData.ItemType.AmmoNonEquipable;
 		shared.m_ammoType = OrganCannon.AmmoType;
 		shared.m_description = "$item_mm_cannonball_description";
-		// Worth nothing to sell, or buying ten for a coin and selling them back would make money
+		// Worth nothing to a trader, like the iron it is made from
 		shared.m_value = 0;
 		shared.m_attackForce = PushForce;
 		shared.m_attack.m_attackProjectile = AddProjectile(prefab, vanilla);
@@ -55,8 +53,12 @@ internal static class CannonBall
 		ApplyDamage(shared);
 		MainConfig.cannonBallDamage.SettingChanged += (sender, e) => ApplyDamage(shared);
 
-		ItemManager.Instance.AddItem(new CustomItem(prefab, fixReference: false));
-		s_ball = ball;
+		ItemManager.Instance.AddItem(new CustomItem(prefab, fixReference: false, new ItemConfig
+		{
+			CraftingStation = CraftingStation,
+			Amount = 1,
+			Requirements = new[] { new RequirementConfig(Material, 1) }
+		}));
 		return ball;
 	}
 
@@ -145,31 +147,6 @@ internal static class CannonBall
 		}
 		PrefabManager.Instance.AddPrefab(new CustomPrefab(projectile, fixReference: false));
 		return projectile;
-	}
-
-	// Traders are scene objects, not prefabs, so each one gets the balls as it starts
-	[HarmonyPatch(typeof(Trader), "Start")]
-	private static class Trader_Start
-	{
-		private static void Postfix(Trader __instance)
-		{
-			if (!s_ball || __instance.m_items.Exists(item => item.m_prefab == s_ball))
-			{
-				return;
-			}
-			__instance.m_items.Add(new Trader.TradeItem
-			{
-				m_prefab = s_ball,
-				m_stack = TradeStack,
-				m_price = TradePrice,
-				m_requiredGlobalKey = "",
-				m_buyPlayerEffects = new EffectList(),
-				m_name = "",
-				m_tooltip = "",
-				m_buyKey = "",
-				m_incrementKey = ""
-			});
-		}
 	}
 }
 

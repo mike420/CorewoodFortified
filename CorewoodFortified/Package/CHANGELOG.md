@@ -19,8 +19,8 @@
             <li>New config section: Electric Fence. Fence Controller Radius (5m to 100m, default 50m) and Minutes Per Eitr (1 to 120, default 10), both synced from the server, and Electric Fence Sound Volume and Fence Controller Sound Volume (each player's own).</li>
             <li>Fixed elevators with Automatic Elevators on starting by themselves when a dropped item, an arrow or anything else landed on the platform; only a player or creature stepping on moves them now.</li>
             <li>The trap and fence controllers' on/off sounds and the traps' clank are now heard by every player nearby, not only the one whose game runs the piece.</li>
-            <li>New: Organ Cannon, built at the forge. Load it with Cannon Balls and it turns on its wheels towards enemies in front of it and fires a volley, one ball from each barrel. Cannon Balls are sold by every trader, 10 for 1 coin.</li>
-            <li>New config section: Organ Cannon. Enable Organ Cannon, Range, Fire Arc, Reload Time, Volley Size, Cannon Ball Damage, Max Ammo, Spare Buildings, Target Players, Target Tames and Target Enemies, all synced from the server.</li>
+            <li>New: Organ Cannon, built at the forge. Load it with Cannon Balls and it turns on its wheels towards enemies in front of it and fires a volley, one ball from each barrel. Cannon Balls are forged at the forge, 1 Iron each. Like the ballista, it reloads itself from chests within 10m.</li>
+            <li>New config section: Organ Cannon. Enable Organ Cannon, Range, Fire Arc, Reload Time, Volley Size, Cannon Ball Damage, Max Ammo, Spare Buildings, Target Players, Target Tames, Target Enemies, Auto Reload and Auto Reload Range, all synced from the server.</li>
         </ul>
     </td>
   </tr>

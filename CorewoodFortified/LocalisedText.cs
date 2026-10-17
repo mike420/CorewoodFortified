@@ -74,7 +74,7 @@ internal class LocalisedText
         { "piece_mm_corewood_organ_cannon", "Organ Cannon" },
         { "piece_mm_corewood_organ_cannon_description", "Thirteen barrels on a wheeled carriage. Load it with cannon balls and it fires a volley at enemies in front of it." },
         { "item_mm_cannonball", "Cannon Ball" },
-        { "item_mm_cannonball_description", "An iron ball for the organ cannon. Traders sell them ten for a coin." },
+        { "item_mm_cannonball_description", "An iron ball for the organ cannon. Forged one for each iron." },
         { "text_organ_cannons_disabled", "Organ cannons are disabled" },
         { "text_cannon_add_ammo", "Add Cannonball" },
         { "piece_mm_corewood_flame_trap", "Flame Trap" },

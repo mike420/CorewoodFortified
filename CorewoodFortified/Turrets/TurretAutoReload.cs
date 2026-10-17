@@ -1,16 +1,18 @@
+using System;
 using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Keeps the fortified ballista loaded with bolts from chests nearby.
+// Keeps the fortified ballista loaded with bolts, and the organ cannon with cannon balls, from chests nearby.
+// Each kind of turret has its own ammo and its own settings for whether it reloads and from how far.
 //
 // It is safe in multiplayer because each change is made only by the machine the game lets save it. The turret's
 // owner asks the chest's owner for bolts. The chest's owner takes them out, but only while nobody has the chest
 // open (opening a chest makes whoever opened it its owner), and sends them to the turret's owner, who loads them.
-// The chest's owner also checks the request itself: that it comes from a fortified ballista in range, asks for
-// bolts that ballista can fire, and that the ballista's builder may open the chest
+// The chest's owner also checks the request itself: that it comes from a turret of a kind that reloads, in range,
+// asks for ammo that turret can fire, and that the turret's builder may open the chest
 internal sealed class TurretAutoReload : MonoBehaviour
 {
 	private const string RpcTakeAmmo = "CF_TurretTakeAmmo";
@@ -31,11 +33,21 @@ internal sealed class TurretAutoReload : MonoBehaviour
 
 	private static readonly List<Container> s_containers = new List<Container>();
 
-	private static readonly HashSet<string> s_allowedAmmo = new HashSet<string>();
+	// What each kind of turret reloads, by its prefab's hash
+	private sealed class Kind
+	{
+		public readonly HashSet<string> m_ammo = new HashSet<string>();
 
-	private static int s_turretHash;
+		public Func<bool> m_isOn;
+
+		public Func<float> m_range;
+	}
+
+	private static readonly Dictionary<int, Kind> s_kinds = new Dictionary<int, Kind>();
 
 	private Turret m_turret;
+
+	private Kind m_kind;
 
 	private ZNetView m_nview;
 
@@ -43,8 +55,9 @@ internal sealed class TurretAutoReload : MonoBehaviour
 
 	private float m_waitingUntil;
 
-	// Called once the prefab's turret is set up from the vanilla ballista, so its ammo list is known
-	public static void Init(GameObject prefab)
+	// Called once the prefab's turret is set up, so its ammo list is known. isOn and range read the turret's own
+	// settings
+	public static void Init(GameObject prefab, Func<bool> isOn, Func<float> range)
 	{
 		Turret turret = prefab.GetComponent<Turret>();
 		if (!turret)
@@ -52,15 +65,15 @@ internal sealed class TurretAutoReload : MonoBehaviour
 			Jotunn.Logger.LogWarning("[CorewoodFortified] " + prefab.name + " has no Turret component, it will not reload from chests.");
 			return;
 		}
-		s_turretHash = prefab.name.GetStableHashCode();
-		s_allowedAmmo.Clear();
+		Kind kind = new Kind { m_isOn = isOn, m_range = range };
 		foreach (Turret.AmmoType ammo in turret.m_allowedAmmo)
 		{
 			if (ammo.m_ammo)
 			{
-				s_allowedAmmo.Add(ammo.m_ammo.name);
+				kind.m_ammo.Add(ammo.m_ammo.name);
 			}
 		}
+		s_kinds[prefab.name.GetStableHashCode()] = kind;
 		prefab.AddComponent<TurretAutoReload>();
 	}
 
@@ -68,7 +81,7 @@ internal sealed class TurretAutoReload : MonoBehaviour
 	{
 		m_turret = GetComponent<Turret>();
 		m_nview = GetComponent<ZNetView>();
-		if (!m_turret || !m_nview || m_nview.GetZDO() == null)
+		if (!m_turret || !m_nview || m_nview.GetZDO() == null || !s_kinds.TryGetValue(m_nview.GetZDO().GetPrefab(), out m_kind))
 		{
 			enabled = false;
 			return;
@@ -76,7 +89,7 @@ internal sealed class TurretAutoReload : MonoBehaviour
 		m_nview.Register<string, int>(RpcGiveAmmo, RPC_GiveAmmo);
 		m_nview.Register<string, int>(RpcPassAmmo, RPC_PassAmmo);
 		// Turrets loaded together look at different times rather than all at once
-		m_nextCheck = Time.time + Random.Range(1f, CheckInterval);
+		m_nextCheck = Time.time + UnityEngine.Random.Range(1f, CheckInterval);
 	}
 
 	private void Update()
@@ -86,7 +99,7 @@ internal sealed class TurretAutoReload : MonoBehaviour
 			return;
 		}
 		m_nextCheck = Time.time + CheckInterval;
-		if (!MainConfig.enableTurrets.Value || !MainConfig.turretAutoReload.Value || !m_nview.IsValid() || !m_nview.IsOwner() || Time.time < m_waitingUntil)
+		if (!m_kind.m_isOn() || !m_nview.IsValid() || !m_nview.IsOwner() || Time.time < m_waitingUntil)
 		{
 			return;
 		}
@@ -102,7 +115,7 @@ internal sealed class TurretAutoReload : MonoBehaviour
 	{
 		string loaded = m_turret.GetAmmo() > 0 ? m_turret.GetAmmoType() : null;
 		long creator = m_nview.GetZDO().GetLong(ZDOVars.s_creator, 0L);
-		float range = MainConfig.turretAutoReloadRange.Value;
+		float range = m_kind.m_range();
 		Vector3 position = transform.position;
 		Container best = null;
 		string bestAmmo = null;
@@ -170,7 +183,7 @@ internal sealed class TurretAutoReload : MonoBehaviour
 		int taken = 0;
 		GameObject prefab = ZNetScene.instance.GetPrefab(ammo);
 		ItemDrop item = prefab ? prefab.GetComponent<ItemDrop>() : null;
-		bool valid = container.m_nview.IsOwner() && !container.IsInUse() && amount > 0 && item && s_allowedAmmo.Contains(ammo) && turret.GetPrefab() == s_turretHash && Vector3.Distance(turret.GetPosition(), container.transform.position) <= MainConfig.turretAutoReloadRange.Value + RangeTolerance && CanTakeFrom(container, turret.GetLong(ZDOVars.s_creator, 0L));
+		bool valid = container.m_nview.IsOwner() && !container.IsInUse() && amount > 0 && item && s_kinds.TryGetValue(turret.GetPrefab(), out Kind kind) && kind.m_ammo.Contains(ammo) && Vector3.Distance(turret.GetPosition(), container.transform.position) <= kind.m_range() + RangeTolerance && CanTakeFrom(container, turret.GetLong(ZDOVars.s_creator, 0L));
 		if (valid)
 		{
 			string name = item.m_itemData.m_shared.m_name;
