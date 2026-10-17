@@ -20,7 +20,8 @@
             <li>Fixed elevators with Automatic Elevators on starting by themselves when a dropped item, an arrow or anything else landed on the platform; only a player or creature stepping on moves them now.</li>
             <li>The trap and fence controllers' on/off sounds and the traps' clank are now heard by every player nearby, not only the one whose game runs the piece.</li>
             <li>New: Organ Cannon, built at the forge. Load it with Cannon Balls and it turns on its wheels towards enemies in front of it and fires a volley, one ball from each barrel. Cannon Balls are forged at the forge, 1 Iron each. Like the ballista, it reloads itself from chests within 10m.</li>
-            <li>New config section: Organ Cannon. Enable Organ Cannon, Range, Fire Arc, Reload Time, Volley Size, Cannon Ball Damage, Max Ammo, Spare Buildings, Target Players, Target Tames, Target Enemies, Auto Reload and Auto Reload Range, all synced from the server.</li>
+            <li>New config section: Organ Cannon. Enable Organ Cannon, Range, Fire Arc, Reload Time, Volley Size, Cannon Ball Damage, Max Ammo, Spare Buildings, Target Players, Target Tames, Target Enemies, Auto Reload, Auto Reload Range and Allow Moving, all synced from the server.</li>
+            <li>New: the Fortified Ballista and Organ Cannon can be moved. Look at one and press U (Turret Move Key in General Settings): a copy follows where you aim, scroll turns it, attack puts it down, and block or U again leaves it. It keeps its ammo and trophies. Each has an Allow Moving setting, synced from the server.</li>
         </ul>
     </td>
   </tr>

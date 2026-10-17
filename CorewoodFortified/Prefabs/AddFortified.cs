@@ -1116,6 +1116,7 @@ internal class AddFortified
         TurretSettings.Init(gameObject);
         TurretAutoReload.Init(gameObject, () => MainConfig.enableTurrets.Value && MainConfig.turretAutoReload.Value, () => MainConfig.turretAutoReloadRange.Value);
         AddTurretScanSound(gameObject);
+        gameObject.AddComponent<MovableTurret>();
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1172,6 +1173,7 @@ internal class AddFortified
         {
             SetTurretMarker(gameObject, gameObject.GetComponent<Turret>(), vanilla);
             TurretAutoReload.Init(gameObject, () => MainConfig.enableOrganCannon.Value && MainConfig.cannonAutoReload.Value, () => MainConfig.cannonAutoReloadRange.Value);
+            gameObject.AddComponent<MovableTurret>();
         }
         PieceManager.Instance.AddPiece(customPiece);
     }

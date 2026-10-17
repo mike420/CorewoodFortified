@@ -13,6 +13,7 @@ namespace CorewoodFortified;
 
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 [BepInDependency("com.jotunn.jotunn", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency(EasyRelocateCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
 [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Patch)]
 public class CorewoodFortifiedMod : BaseUnityPlugin
 {
@@ -77,6 +78,7 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
             PrefabManager.OnVanillaPrefabsAvailable += LoadCoreWoodFortified;
 
             harmony = Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), PluginGUID);
+            EasyRelocateCompat.Apply(harmony);
 
             Game.isModded = true;
         }
@@ -85,6 +87,7 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
     public void Update()
     {
         ReloadTranslationsIfChanged();
+        TurretMover.Tick();
     }
 
     private void ReloadTranslationsIfChanged()

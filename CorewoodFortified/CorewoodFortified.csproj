@@ -83,9 +83,11 @@
     <Compile Include="Cannons\CannonWheels.cs" />
     <Compile Include="Cannons\OrganCannon.cs" />
     <Compile Include="Turrets\HomingBolt.cs" />
+    <Compile Include="Turrets\MovableTurret.cs" />
     <Compile Include="Turrets\TurretAiming.cs" />
     <Compile Include="Turrets\TurretAutoReload.cs" />
     <Compile Include="Turrets\TurretFriendlyFire.cs" />
+    <Compile Include="Turrets\TurretMover.cs" />
     <Compile Include="Turrets\TurretPatches.cs" />
     <Compile Include="Turrets\TurretScanSound.cs" />
     <Compile Include="Turrets\TurretSettings.cs" />

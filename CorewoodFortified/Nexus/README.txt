@@ -224,6 +224,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [*][b]Spare Buildings:[/b] bolts that miss do no damage to building pieces, so it cannot shoot down your own walls, towers or other ballistas.
 [*][b]Auto Reload:[/b] when it is not full, it takes bolts from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open, and only the kind of bolt already loaded. Graves, carts and ships are left alone.
 [*]A scanning sound plays while it sweeps looking for a target.
+[*][b]Moving it:[/b] look at it and press U (the Turret Move Key) to pick it up. A copy follows where you aim: scroll to turn it, attack to put it down, block or U again to leave it where it was. It keeps its bolts and trophies. You need access to the area at both ends.
 [*]By default it shoots only at enemies, not at players or tames.
 [*]Each feature can be turned off, and the range, scan arc, turning, targets and ammo can all be changed in the config. The ballista can also be turned off entirely.
 [/list]
@@ -242,6 +243,7 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 [*]Give it trophies to pick which creatures it fires at, just like the ballista. By default it fires only at enemies, not at players or tames.
 [*][b]Spare Buildings:[/b] balls that miss do no damage to building pieces.
 [*][b]Auto Reload:[/b] when it is not full, it takes cannon balls from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open. Graves, carts and ships are left alone.
+[*][b]Moving it:[/b] look at it and press U (the Turret Move Key) to pick it up. A copy follows where you aim: scroll to turn it, attack to put it down, block or U again to leave it where it was. It keeps its cannon balls and trophies. You need access to the area at both ends.
 [*]The range, fire arc, reload time, volley size, ball damage, targets, ammo and auto reload can all be changed in the config, and the cannon can be turned off entirely.
 [/list]
 
@@ -288,6 +290,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Gate Sound Volume[/b] (default [b]1[/b]): volume of the lift gate and drawbridge sounds, from 0 (silent) to 1 (full).
 [*][b]Large Drawbridge Sound Volume[/b] (default [b]1[/b]): volume of the large and roofed drawbridge sounds, from 0 (silent) to 1 (full). Used instead of Gate Sound Volume for these pieces.
 [*][b]Chain Tower Sound Volume[/b] (default [b]0.5[/b]): volume of the chain tower winch sounds, from 0 (silent) to 1 (full).
+[*][b]Turret Move Key[/b] (default [b]U[/b]): look at a Fortified Ballista or Organ Cannon and press it to move it.
 [/list]
 
 [b]Elevators[/b] (synced from the server)
@@ -358,6 +361,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Max Ammo[/b] (default [b]40[/b]): how many bolts it holds, from 5 to 100.
 [*][b]Auto Reload[/b] (default [b]true[/b]): take bolts from nearby chests when not full.
 [*][b]Auto Reload Range[/b] (default [b]10[/b]): how far away a chest can be, in metres, from 2 to 20.
+[*][b]Allow Moving[/b] (default [b]true[/b]): it can be picked up with the Turret Move Key and put down somewhere else.
 [/list]
 
 [b]Fortified Ballista[/b] (each player's own)
@@ -382,6 +386,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Target Enemies[/b] (default [b]true[/b]): it fires at enemies.
 [*][b]Auto Reload[/b] (default [b]true[/b]): take cannon balls from nearby chests when not full.
 [*][b]Auto Reload Range[/b] (default [b]10[/b]): how far away a chest can be, in metres, from 2 to 20.
+[*][b]Allow Moving[/b] (default [b]true[/b]): it can be picked up with the Turret Move Key and put down somewhere else.
 [/list]
 
 [b]Traps[/b] (synced from the server)

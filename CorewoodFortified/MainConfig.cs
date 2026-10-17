@@ -14,6 +14,7 @@ namespace CorewoodFortified
         public static ConfigEntry<float> largeDrawbridgeSoundVolume;
         public static ConfigEntry<float> chainTowerSoundVolume;
         public static ConfigEntry<float> elevatorSoundVolume;
+        public static ConfigEntry<KeyboardShortcut> turretMoveKey;
         public static ConfigEntry<bool> enableElevators;
         public static ConfigEntry<bool> autoTriggers;
         public static ConfigEntry<float> elevatorSpeed;
@@ -61,6 +62,7 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> turretAutoReload;
         public static ConfigEntry<float> turretAutoReloadRange;
         public static ConfigEntry<float> turretSoundVolume;
+        public static ConfigEntry<bool> turretAllowMoving;
 
         public static ConfigEntry<bool> enableTraps;
         public static ConfigEntry<float> trapControllerRadius;
@@ -86,6 +88,7 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> cannonTargetEnemies;
         public static ConfigEntry<bool> cannonAutoReload;
         public static ConfigEntry<float> cannonAutoReloadRange;
+        public static ConfigEntry<bool> cannonAllowMoving;
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
@@ -100,6 +103,7 @@ namespace CorewoodFortified
             autoTriggers = config.BindConfigInOrder("General Settings", "Automatic Elevators", defaultValue: true, "If On, elevators move automatically when a player steps on the platform. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             elevatorSpeed = config.BindConfigInOrder("General Settings", "Elevator Speed", defaultValue: 2f, "How fast elevator platforms move, in metres per second. A trip already under way keeps the speed it started with. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));
             elevatorSoundVolume = config.BindConfigInOrder("General Settings", "Elevator Sound Volume", defaultValue: 0.5f, "Volume of the elevator sound, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            turretMoveKey = config.BindConfigInOrder("General Settings", "Turret Move Key", defaultValue: new KeyboardShortcut(UnityEngine.KeyCode.U), "Look at a fortified ballista or organ cannon and press this key to pick it up and put it down somewhere else: aim where it should go, scroll to turn it, attack to put it down, block or this key again to leave it where it was.", synced: false, sectionOrder: true, settingOrder: true);
 
             enableChainTowers = config.BindConfigInOrder("Chain Towers", "Enable Chain Towers", defaultValue: true, "If Off, chain towers are hidden from the build menu, and placed towers stay but their winches cannot be used. A net keeps the height it had. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             chainMaxSpanSmall = config.BindConfigInOrder("Chain Towers", "Max Span Small", defaultValue: 15f, "The longest net a small chain tower can hold, in metres (ring to ring). Two towers of different sizes together hold the shorter of their two. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 64f));
@@ -144,6 +148,7 @@ namespace CorewoodFortified
             turretMaxAmmo = config.BindConfigInOrder("Fortified Ballista", "Max Ammo", defaultValue: 40, "How many bolts a fortified ballista holds. Bolts already loaded above a lowered limit stay until they are fired. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(5, 100));
             turretAutoReload = config.BindConfigInOrder("Fortified Ballista", "Auto Reload", defaultValue: true, "If On, a fortified ballista that is not full takes bolts from chests nearby, every few seconds. It only uses chests its builder may open, never while someone has the chest open, and only the kind of bolt already loaded. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretAutoReloadRange = config.BindConfigInOrder("Fortified Ballista", "Auto Reload Range", defaultValue: 10f, "How far from a fortified ballista a chest can be for it to take bolts from, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 20f));
+            turretAllowMoving = config.BindConfigInOrder("Fortified Ballista", "Allow Moving", defaultValue: true, "If On, a placed fortified ballista can be picked up with the Turret Move Key and put down somewhere else, keeping its bolts and trophies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretSoundVolume = config.BindConfigInOrder("Fortified Ballista", "Scan Sound Volume", defaultValue: 0.5f, "Volume of the fortified ballista's sound while it sweeps looking for a target, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             enableTraps = config.BindConfigInOrder("Traps", "Enable Traps", defaultValue: true, "If Off, the traps and the trap controller are hidden from the build menu, and placed traps stay but are switched off and do no damage. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
@@ -173,6 +178,7 @@ namespace CorewoodFortified
             cannonTargetEnemies = config.BindConfigInOrder("Organ Cannon", "Target Enemies", defaultValue: true, "If On, the organ cannon fires at enemies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             cannonAutoReload = config.BindConfigInOrder("Organ Cannon", "Auto Reload", defaultValue: true, "If On, an organ cannon that is not full takes cannon balls from chests nearby, every few seconds. It only uses chests its builder may open, and never while someone has the chest open. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             cannonAutoReloadRange = config.BindConfigInOrder("Organ Cannon", "Auto Reload Range", defaultValue: 10f, "How far from an organ cannon a chest can be for it to take cannon balls from, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(2f, 20f));
+            cannonAllowMoving = config.BindConfigInOrder("Organ Cannon", "Allow Moving", defaultValue: true, "If On, a placed organ cannon can be picked up with the Turret Move Key and put down somewhere else, keeping its cannon balls and trophies. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
 
             CarryOverOldSections(config);
         }
