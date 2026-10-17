@@ -49,6 +49,7 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 		{
 			return;
 		}
+		m_nview.Register<bool>("CWF_TrapSwitchEffect", RPC_SwitchEffect);
 		UpdateEnabledObject();
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
 	}
@@ -108,12 +109,18 @@ internal sealed class TrapEnabler : MonoBehaviour, Hoverable
 				m_nview.GetZDO().Set(KeyEnabled, enabled);
 				if (m_checkedOnce)
 				{
-					(enabled ? m_activateEffect : m_deactivateEffect).Create(transform.position, transform.rotation);
+					m_nview.InvokeRPC(ZNetView.Everybody, "CWF_TrapSwitchEffect", enabled);
 				}
 			}
 		}
 		m_checkedOnce = true;
 		UpdateEnabledObject();
+	}
+
+	// Played by every player's game, not only the owner's that switched the trap
+	private void RPC_SwitchEffect(long sender, bool enabled)
+	{
+		(enabled ? m_activateEffect : m_deactivateEffect).Create(transform.position, transform.rotation);
 	}
 
 	private bool ShouldBeEnabled()

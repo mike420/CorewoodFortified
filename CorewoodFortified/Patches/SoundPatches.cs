@@ -72,6 +72,15 @@ public class SoundPatches
 		}
 	}
 
+	// The gate and drawbridge sounds, the only ones the gate volume settings scale. The other custom sounds have
+	// their own volume settings, applied where they are played
+	private static readonly string[] GateSfxPrefabs =
+	{
+		"sfx_open_fortified_cwf",
+		"sfx_close_fortified_cwf",
+		"sfx_oc_drawbridge_cwf"
+	};
+
 	// The gate and drawbridge sounds are scaled by the player's volume setting as each one spawns.
 	// The elevator plays its sound from the platform instead (see Elevator), and applies its own volume setting there.
 	[HarmonyPatch(typeof(ZSFX), "Awake")]
@@ -80,7 +89,7 @@ public class SoundPatches
 		private static void Postfix(ZSFX __instance)
 		{
 			string prefabName = Utils.GetPrefabName(__instance.gameObject);
-			if (Array.IndexOf(CorewoodFortifiedMod.SfxPrefabs, prefabName) < 0)
+			if (Array.IndexOf(GateSfxPrefabs, prefabName) < 0)
 			{
 				return;
 			}

@@ -17,6 +17,8 @@
             <li>Trap sounds: the Flame Trap roars while it burns, the Saw Wall's blade whirs while it cuts, and the Spike Floor's spikes clank as they snap up and back down. Each trap has its own sound volume setting (each player's own).</li>
             <li>New: Electric Fence (2m and 4m) and Fence Controller, built at the galdr table. The fence crackles with green lightning, hums, clanks as it switches on and off, and shocks enemies while a Fence Controller within 50m powers it. The controller holds only Eitr and burns one every 10 minutes while its fences are live; looking at it shows how long its power will last, and its range circle shows while placing it or a fence. Shift + Use turns it off and on.</li>
             <li>New config section: Electric Fence. Fence Controller Radius (5m to 100m, default 50m) and Minutes Per Eitr (1 to 120, default 10), both synced from the server, and Electric Fence Sound Volume and Fence Controller Sound Volume (each player's own).</li>
+            <li>Fixed elevators with Automatic Elevators on starting by themselves when a dropped item, an arrow or anything else landed on the platform; only a player or creature stepping on moves them now.</li>
+            <li>The trap and fence controllers' on/off sounds and the traps' clank are now heard by every player nearby, not only the one whose game runs the piece.</li>
         </ul>
     </td>
   </tr>

@@ -177,7 +177,7 @@ internal sealed class ChainTower : MonoBehaviour, Hoverable, Interactable, IPlac
 			Piece component = GetComponent<Piece>();
 			if ((object)component == null || string.IsNullOrEmpty(component.m_name))
 			{
-				LocalisedText.Get("text_chain_tower");
+				return LocalisedText.Get("text_chain_tower");
 			}
 			return component.m_name;
 		}

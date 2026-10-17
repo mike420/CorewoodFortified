@@ -13,7 +13,13 @@ internal sealed class TriggerPlatform : MonoBehaviour
 			return;
 		}
 
-		Player player = other.GetComponentInParent<Player>();
+		// Only a player or creature stepping on moves it, not a dropped item, an arrow or anything else landing there
+		Character character = other.GetComponentInParent<Character>();
+		if (character == null)
+		{
+			return;
+		}
+		Player player = character as Player;
 		if (player != null)
 		{
 			if (player != Player.m_localPlayer)

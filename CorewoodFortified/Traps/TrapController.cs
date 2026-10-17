@@ -46,6 +46,7 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 			m_areaMarker.gameObject.SetActive(false);
 		}
 		m_nview.Register("CWF_ToggleTrapController", RPC_Toggle);
+		m_nview.Register<bool>("CWF_TrapControllerEffect", RPC_SwitchEffect);
 		s_all.Add(this);
 		UpdateVisuals();
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
@@ -119,8 +120,14 @@ internal sealed class TrapController : MonoBehaviour, Hoverable, Interactable
 		}
 		bool turnedOff = !IsTurnedOff();
 		m_nview.GetZDO().Set(KeyTurnedOff, turnedOff);
-		(turnedOff ? m_deactivateEffect : m_activateEffect).Create(transform.position, transform.rotation);
+		m_nview.InvokeRPC(ZNetView.Everybody, "CWF_TrapControllerEffect", turnedOff);
 		CheckState();
+	}
+
+	// Played by every player's game, as the owner who switches it is not always the player who pressed it
+	private void RPC_SwitchEffect(long sender, bool turnedOff)
+	{
+		(turnedOff ? m_deactivateEffect : m_activateEffect).Create(transform.position, transform.rotation);
 	}
 
 	public string GetHoverText()
