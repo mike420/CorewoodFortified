@@ -200,7 +200,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
   * A trap only runs while someone (a player, creature or tame) is near it, and stops a couple of seconds after they leave.
   * Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
 
-**Trap Controller:** switches the traps within 50 m of it (the radius can be changed in the config).
+**Trap Controller:** switches the traps within 30 m of it (the radius can be changed in the config).
 
   * Its traps stay on, whether or not anyone is nearby, until you turn them off.
   * Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
@@ -212,7 +212,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 ## ⚡ Electric Fence:
 
   * **Electric Fence:** beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
-  * **Fence Controller:** powers the electric fences within 20 m of it (the radius can be changed in the config).
+  * **Fence Controller:** powers the electric fences within 50 m of it (the radius can be changed in the config).
     * Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
     * It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.
     * Looking at it shows how much Eitr it holds and how long its power will last.
@@ -296,7 +296,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 **Traps** (synced from the server)
 
   * **Enable Traps** (default `true`): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
-  * **Trap Controller Radius** (default `50`): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
+  * **Trap Controller Radius** (default `30`): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
   * **Flame Trap Trigger Radius**, **Saw Wall Trigger Radius** and **Spike Floor Trigger Radius** (default `8`): how close a creature or player has to come to a switched-on trap for it to go off, in metres, from 1 to 20. Placed traps change too.
 
 **Traps** (each player's own)
@@ -305,7 +305,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 
 **Electric Fence** (synced from the server)
 
-  * **Fence Controller Radius** (default `20`): how far from a Fence Controller its electric fences can be, in metres, from 5 to 100.
+  * **Fence Controller Radius** (default `50`): how far from a Fence Controller its electric fences can be, in metres, from 5 to 100.
   * **Minutes Per Eitr** (default `10`): how many minutes one Eitr keeps a controller's fences live, from 1 to 120.
 
 **Electric Fence** (each player's own)
