@@ -144,6 +144,13 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Black Metal Spikes[/b]: 2 Core Wood, 2 Wood, 2 Black Metal
 [/list]
 
+[b]Galdr Table[/b]
+
+[list]
+[*][b]Electric Fence[/b]: 2 Roundlog, 4 Eitr
+[*][b]Fence Controller[/b]: 2 Roundlog, 2 Crystal, 2 Eitr
+[/list]
+
 [b]Black Forge[/b]
 
 [list]
@@ -236,6 +243,18 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
 [*]Press Use on it to turn its traps off, and again to turn them back on. You need access to the area, as with a ward.
 [*]Its range shows while you place it, while you look at it, and while you place a trap inside it.
 [*]Traps only work within range of a Trap Controller. A trap with no controller in range stays off and says so when you look at it.
+[/list]
+
+
+[size=5][b]Electric Fence[/b][/size]
+
+[list]
+[*][b]Electric Fence:[/b] beams that crackle with green lightning and hum, and shock enemies who touch them. It is not a trap: it is powered by a Fence Controller, not switched by a Trap Controller.
+[*][b]Fence Controller:[/b] powers the electric fences within 20 m of it (the radius can be changed in the config).
+[*]Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
+[*]It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.
+[*]Looking at it shows how much Eitr it holds and how long its power will last.
+[*]A fence is live only while a powered Fence Controller is in range. Looking at it tells you if it has no controller, or its controller is off or out of Eitr.
 [/list]
 
 
@@ -338,6 +357,19 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 
 [list]
 [*][b]Flame Trap Sound Volume[/b], [b]Saw Wall Sound Volume[/b] and [b]Spike Floor Sound Volume[/b] (default [b]1[/b]): volume of each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade, from 0 (silent) to 1 (full).
+[/list]
+
+[b]Electric Fence[/b] (synced from the server)
+
+[list]
+[*][b]Fence Controller Radius[/b] (default [b]20[/b]): how far from a Fence Controller its electric fences can be, in metres, from 5 to 100.
+[*][b]Minutes Per Eitr[/b] (default [b]10[/b]): how many minutes one Eitr keeps a controller's fences live, from 1 to 120.
+[/list]
+
+[b]Electric Fence[/b] (each player's own)
+
+[list]
+[*][b]Electric Fence Sound Volume[/b] (default [b]1[/b]): volume of the fence's hum while it is live, from 0 (silent) to 1 (full).
 [/list]
 
 

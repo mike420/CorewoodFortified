@@ -11,10 +11,12 @@
     <td>
         <ul>
             <li>New: Traps. Flame Trap, Saw Wall and Spike Floor, built at the forge. The flame trap burns anyone who steps on it; the others hurt only enemies.</li>
-            <li>New: Trap Controller, built at the workbench. Press Use on it to turn the traps within 50 m of it off, and again to turn them back on. Traps only work within range of a controller.</li>
-            <li>New config section: Traps. Enable Traps turns all traps off and hides them from the build menu, and Trap Controller Radius sets how far a controller reaches (15 to 200 m, default 50). Both synced from the server.</li>
-            <li>Traps only run while someone is near them, and stop a couple of seconds after they leave. How near is set per trap by its Trigger Radius setting (synced, default 8 m).</li>
+            <li>New: Trap Controller, built at the workbench. Press Use on it to turn the traps within 50m of it off, and again to turn them back on. Traps only work within range of a controller.</li>
+            <li>New config section: Traps. Enable Traps turns all traps off and hides them from the build menu, and Trap Controller Radius sets how far a controller reaches (15m to 200m, default 50m). Both synced from the server.</li>
+            <li>Traps only run while someone is near them, and stop a couple of seconds after they leave. How near is set per trap by its Trigger Radius setting (synced, default 8m).</li>
             <li>Trap sounds: the Flame Trap roars while it burns, the Saw Wall's blade whirs while it cuts, and the Spike Floor's spikes clank as they snap up and back down. Each trap has its own sound volume setting (each player's own).</li>
+            <li>New: Electric Fence and Fence Controller, built at the galdr table. The fence crackles with green lightning, hums and shocks enemies while a Fence Controller within 20m powers it. The controller holds only Eitr and burns one every 10 minutes while its fences are live; looking at it shows how long its power will last. Shift + Use turns it off and on.</li>
+            <li>New config section: Electric Fence. Fence Controller Radius (5m to 100m, default 20m) and Minutes Per Eitr (1 to 120, default 10), both synced from the server, and Electric Fence Sound Volume (each player's own).</li>
         </ul>
     </td>
   </tr>

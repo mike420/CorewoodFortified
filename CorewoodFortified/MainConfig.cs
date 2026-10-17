@@ -67,6 +67,10 @@ namespace CorewoodFortified
         public static ConfigEntry<float> flameTrapSoundVolume;
         public static ConfigEntry<float> sawWallSoundVolume;
         public static ConfigEntry<float> spikeFloorSoundVolume;
+
+        public static ConfigEntry<float> fenceControllerRadius;
+        public static ConfigEntry<float> fenceEitrMinutes;
+        public static ConfigEntry<float> electricFenceSoundVolume;
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
@@ -135,6 +139,10 @@ namespace CorewoodFortified
             flameTrapSoundVolume = config.BindConfigInOrder("Traps", "Flame Trap Sound Volume", defaultValue: 1f, "Volume of the flame trap's sound while it burns, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             sawWallSoundVolume = config.BindConfigInOrder("Traps", "Saw Wall Sound Volume", defaultValue: 1f, "Volume of the saw wall's sound while it cuts, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             spikeFloorSoundVolume = config.BindConfigInOrder("Traps", "Spike Floor Sound Volume", defaultValue: 1f, "Volume of the spike floor's sound each time its spikes go up or down, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+
+            fenceControllerRadius = config.BindConfigInOrder("Electric Fence", "Fence Controller Radius", defaultValue: 20f, "How far from a fence controller its electric fences can be, in metres. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(5f, 100f));
+            fenceEitrMinutes = config.BindConfigInOrder("Electric Fence", "Minutes Per Eitr", defaultValue: 10f, "How many minutes one Eitr keeps a fence controller's fences live. It only burns while the controller is on and has a fence in range. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 120f));
+            electricFenceSoundVolume = config.BindConfigInOrder("Electric Fence", "Electric Fence Sound Volume", defaultValue: 1f, "Volume of the electric fence's hum while it is live, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             CarryOverOldSections(config);
         }

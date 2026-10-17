@@ -73,6 +73,9 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSpikeFloor);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -1435,6 +1438,84 @@ internal class AddFortified
     {
         GameObject gameObject = AddTrapPiece("mm_corewood_spike_floor", "BlackMetal", 4, "Stone", 8, MainConfig.spikeFloorTriggerRadius);
         TrapStabSound.AddTo(gameObject, "sfx_spikes_cwf", MainConfig.spikeFloorSoundVolume);
+    }
+
+    // Not a trap: it is powered by a fence controller rather than switched by a trap controller
+    public static void AddPieceElectricFence()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_electric_fence");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_electric_fence",
+            Description = "$piece_mm_corewood_electric_fence_description",
+            CraftingStation = "piece_magetable",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "Roundlog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Eitr",
+                    Amount = 4,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
+        SetWearEffects(gameObject, hitMetal, breakMetal);
+        ElectricFence.AddTo(gameObject);
+        ElectricFenceArcs.AddTo(gameObject);
+        TrapLoopSound.AddTo(gameObject, "sfx_electric_fence_cwf", MainConfig.electricFenceSoundVolume);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // Switches with the vanilla ward's on and off effects
+    public static void AddPieceFenceController()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fence_controller");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_fence_controller",
+            Description = "$piece_mm_corewood_fence_controller_description",
+            CraftingStation = "piece_magetable",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "Roundlog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Crystal",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Eitr",
+                    Amount = 2,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildMetal;
+        SetWearEffects(gameObject, hitMetal, breakMetal);
+        GameObject wardPrefab = PrefabManager.Cache.GetPrefab<GameObject>("guard_stone");
+        PrivateArea ward = wardPrefab ? wardPrefab.GetComponent<PrivateArea>() : null;
+        FenceController.AddTo(gameObject, ward ? ward.m_activateEffect : new EffectList(), ward ? ward.m_deactivateEffect : new EffectList());
+        PieceManager.Instance.AddPiece(customPiece);
     }
 
     // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);

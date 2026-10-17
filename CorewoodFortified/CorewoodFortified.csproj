@@ -90,6 +90,10 @@
     <Compile Include="Ziplines\RopeCarry.cs" />
     <Compile Include="Ziplines\RopeGrab.cs" />
     <Compile Include="Ziplines\RopePath.cs" />
+    <Compile Include="ElectricFence\ElectricFence.cs" />
+    <Compile Include="ElectricFence\ElectricFenceArcs.cs" />
+    <Compile Include="ElectricFence\FenceController.cs" />
+    <Compile Include="ElectricFence\FencePatches.cs" />
     <Compile Include="Traps\TrapController.cs" />
     <Compile Include="Traps\TrapEnabler.cs" />
     <Compile Include="Traps\TrapLoopSound.cs" />
