@@ -21,9 +21,11 @@ internal sealed class FenceController : MonoBehaviour, Hoverable, Interactable
 	private const string KeyPower = "cwf_fence_power";
 
 	private const float CheckInterval = 0.5f;
+	private const float MarkerShowTime = 0.5f;
 
 	public static readonly List<FenceController> s_all = new List<FenceController>();
 
+	public CircleProjector m_areaMarker;
 	public EffectList m_activateEffect = new EffectList();
 	public EffectList m_deactivateEffect = new EffectList();
 
@@ -38,14 +40,32 @@ internal sealed class FenceController : MonoBehaviour, Hoverable, Interactable
 		m_piece = GetComponent<Piece>();
 		m_container = GetComponentInChildren<Container>(includeInactive: true);
 		m_onVisual = transform.Find("_enabled")?.gameObject;
+		if (m_areaMarker)
+		{
+			m_areaMarker.m_radius = Radius;
+		}
+		// The placement ghost keeps its marker showing, so the area it will cover is seen while placing it
 		if (!m_nview || !m_nview.IsValid())
 		{
 			return;
+		}
+		if (m_areaMarker)
+		{
+			m_areaMarker.gameObject.SetActive(false);
 		}
 		m_nview.Register("CWF_ToggleFenceController", RPC_Toggle);
 		s_all.Add(this);
 		UpdateVisuals();
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
+	}
+
+	// The radius is a synced setting, so the marker follows it while it shows
+	private void Update()
+	{
+		if (m_areaMarker && m_areaMarker.gameObject.activeSelf)
+		{
+			m_areaMarker.m_radius = Radius;
+		}
 	}
 
 	private void OnDestroy()
@@ -163,6 +183,7 @@ internal sealed class FenceController : MonoBehaviour, Hoverable, Interactable
 
 	public string GetHoverText()
 	{
+		ShowAreaMarker();
 		string name = GetHoverName();
 		if (!PrivateArea.CheckAccess(transform.position, 0f, flash: false))
 		{
@@ -234,6 +255,25 @@ internal sealed class FenceController : MonoBehaviour, Hoverable, Interactable
 	public bool UseItem(Humanoid user, ItemDrop.ItemData item)
 	{
 		return false;
+	}
+
+	public void ShowAreaMarker()
+	{
+		if (!m_areaMarker)
+		{
+			return;
+		}
+		m_areaMarker.gameObject.SetActive(true);
+		CancelInvoke(nameof(HideAreaMarker));
+		Invoke(nameof(HideAreaMarker), MarkerShowTime);
+	}
+
+	private void HideAreaMarker()
+	{
+		if (m_areaMarker)
+		{
+			m_areaMarker.gameObject.SetActive(false);
+		}
 	}
 
 	// The store on the child gets its network object from the root, and is named so the Eitr-only rule finds it

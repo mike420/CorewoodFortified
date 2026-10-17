@@ -1479,7 +1479,7 @@ internal class AddFortified
     // Switches with the vanilla ward's on and off effects
     public static void AddPieceFenceController()
     {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fence_controller");
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fence_controller_new");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
             Name = "$piece_mm_corewood_fence_controller",
@@ -1515,6 +1515,7 @@ internal class AddFortified
         GameObject wardPrefab = PrefabManager.Cache.GetPrefab<GameObject>("guard_stone");
         PrivateArea ward = wardPrefab ? wardPrefab.GetComponent<PrivateArea>() : null;
         FenceController.AddTo(gameObject, ward ? ward.m_activateEffect : new EffectList(), ward ? ward.m_deactivateEffect : new EffectList());
+        gameObject.GetComponent<FenceController>().m_areaMarker = SetMarkerFrom(gameObject, ward ? ward.m_areaMarker : null);
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1573,12 +1574,12 @@ internal class AddFortified
                 new RequirementConfig
                 {
                     Item = "Stone",
-                    Amount = 4,
+                    Amount = 20,
                     Recover = true
                 },
                 new RequirementConfig
                 {
-                    Item = "Wood",
+                    Item = "Coal",
                     Amount = 6,
                     Recover = true
                 }

@@ -30,6 +30,22 @@ internal sealed class ElectricFence : MonoBehaviour, Hoverable
 		InvokeRepeating(nameof(CheckState), Random.Range(0f, CheckInterval), CheckInterval);
 	}
 
+	// The placement ghost shows the areas of the controllers it would be in
+	private void Update()
+	{
+		if (m_nview && m_nview.IsValid())
+		{
+			return;
+		}
+		foreach (FenceController controller in FenceController.s_all)
+		{
+			if (controller && controller.InRange(transform.position))
+			{
+				controller.ShowAreaMarker();
+			}
+		}
+	}
+
 	private void OnDestroy()
 	{
 		s_all.Remove(this);

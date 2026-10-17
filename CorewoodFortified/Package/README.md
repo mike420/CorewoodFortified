@@ -216,6 +216,7 @@ A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give i
     * Press Use to open its store, which holds only Eitr. Press Shift + Use to turn it off, and again to turn it back on. You need access to the area, as with a ward.
     * It burns one Eitr every 10 minutes (changeable in the config), but only while it is on and has a fence in range.
     * Looking at it shows how much Eitr it holds and how long its power will last.
+    * Its range shows while you place it, while you look at it, and while you place a fence inside it.
   * A fence is live only while a powered Fence Controller is in range. Looking at it tells you if it has no controller, or its controller is off or out of Eitr.
 
 <br>
