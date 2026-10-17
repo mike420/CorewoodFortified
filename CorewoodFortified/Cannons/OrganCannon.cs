@@ -42,7 +42,8 @@ internal sealed class OrganCannon : MonoBehaviour
 
 	private static GameObject s_prefab;
 
-	// Each barrel's mouth, in the space of the turret body that turns the barrels
+	// Each barrel's mouth, in the space of the turret's neck, which turns the model side to side but does not tilt,
+	// as the barrels do not
 	public List<Vector3> m_muzzles = new List<Vector3>();
 
 	private Turret m_turret;
@@ -68,6 +69,7 @@ internal sealed class OrganCannon : MonoBehaviour
 	{
 		Turret turret = m_turret;
 		ZDO zdo = turret.m_nview.GetZDO();
+		Transform neck = turret.m_turretNeck.transform;
 		Transform body = turret.m_turretBody.transform;
 		Transform eye = turret.m_eye.transform;
 		turret.m_shootEffect.Create(eye.position, eye.rotation);
@@ -84,7 +86,8 @@ internal sealed class OrganCannon : MonoBehaviour
 		float accuracy = ball.m_shared.m_attack.m_projectileAccuracy;
 		for (int i = 0; i < count; i++)
 		{
-			Vector3 position = body.TransformPoint(m_muzzles[m_nextBarrel]);
+			// The ball leaves the barrel's mouth, but along the body, which also tilts to aim
+			Vector3 position = neck.TransformPoint(m_muzzles[m_nextBarrel]);
 			m_nextBarrel = (m_nextBarrel + 1) % m_muzzles.Count;
 			Vector3 direction = body.forward;
 			Vector3 side = Vector3.Cross(direction, Vector3.up);
@@ -143,7 +146,7 @@ internal sealed class OrganCannon : MonoBehaviour
 	// to face the piece's front, which is where a turret looks. The model and its colliders then go under the
 	// turret's neck, which only turns side to side, about the middle between the wheels, so the whole cannon turns
 	// on the spot. The turret's body is unseen: it also tilts to aim, and the balls fire along it from each barrel's
-	// mouth, which is found from its mesh
+	// mouth, which is found from its mesh and turns with the neck
 	public static bool Setup(GameObject piece, ItemDrop ball, Turret vanilla, EffectList shootEffect)
 	{
 		Transform root = piece.transform;
@@ -194,7 +197,7 @@ internal sealed class OrganCannon : MonoBehaviour
 		OrganCannon cannon = piece.AddComponent<OrganCannon>();
 		foreach (MeshFilter barrel in barrelMeshes)
 		{
-			cannon.m_muzzles.Add(FindMuzzle(barrel, body));
+			cannon.m_muzzles.Add(FindMuzzle(barrel, neck));
 		}
 		// The volley runs from one side to the other
 		cannon.m_muzzles.Sort((a, b) => a.x.CompareTo(b.x));
@@ -203,7 +206,8 @@ internal sealed class OrganCannon : MonoBehaviour
 		{
 			eye += muzzle;
 		}
-		eye /= cannon.m_muzzles.Count;
+		// The neck and body do not turn yet, so the middle mouth carries over to the body as it stands
+		eye = body.InverseTransformPoint(neck.TransformPoint(eye / cannon.m_muzzles.Count));
 
 		Turret turret = piece.AddComponent<Turret>();
 		turret.m_name = piece.GetComponent<Piece>().m_name;
@@ -280,12 +284,12 @@ internal sealed class OrganCannon : MonoBehaviour
 
 	// The middle of the barrel's mouth: the mean of its frontmost vertices, or the front of its bounds when the mesh
 	// cannot be read
-	private static Vector3 FindMuzzle(MeshFilter barrel, Transform body)
+	private static Vector3 FindMuzzle(MeshFilter barrel, Transform space)
 	{
 		Mesh mesh = barrel.sharedMesh;
 		if (!mesh)
 		{
-			return body.InverseTransformPoint(barrel.transform.position);
+			return space.InverseTransformPoint(barrel.transform.position);
 		}
 		Vector3 muzzle;
 		if (mesh.isReadable)
@@ -294,7 +298,7 @@ internal sealed class OrganCannon : MonoBehaviour
 			float front = float.MinValue;
 			for (int i = 0; i < vertices.Length; i++)
 			{
-				vertices[i] = body.InverseTransformPoint(barrel.transform.TransformPoint(vertices[i]));
+				vertices[i] = space.InverseTransformPoint(barrel.transform.TransformPoint(vertices[i]));
 				front = Mathf.Max(front, vertices[i].z);
 			}
 			Vector3 sum = Vector3.zero;
@@ -312,8 +316,8 @@ internal sealed class OrganCannon : MonoBehaviour
 		else
 		{
 			Bounds local = mesh.bounds;
-			muzzle = body.InverseTransformPoint(barrel.transform.TransformPoint(local.center));
-			muzzle.z = body.InverseTransformPoint(barrel.transform.TransformPoint(local.max)).z;
+			muzzle = space.InverseTransformPoint(barrel.transform.TransformPoint(local.center));
+			muzzle.z = space.InverseTransformPoint(barrel.transform.TransformPoint(local.max)).z;
 		}
 		return muzzle + Vector3.forward * MuzzleClearance;
 	}
