@@ -75,6 +75,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSpikeFloor);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFloorBlades);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceGroundTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
@@ -1530,6 +1531,18 @@ internal class AddFortified
         GameObject gameObject = AddTrapPiece("mm_corewood_floor_blades", "Iron", 4, null, 0, MainConfig.floorBladesTriggerRadius, MainConfig.floorBladesDamage);
         TrapSpinner.AddTo(gameObject, "floor_blades", 1080f);
         TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.floorBladesSoundVolume, 1.5f);
+    }
+
+    // The spikes' hit area is put under a new _enabled, which would belong to the menu scene and be destroyed with it
+    // if it were put on the bundle's prefab, so it goes on a renamed copy, as with the organ cannon. That is done
+    // before the trap is set up, as a trap needs its _enabled
+    public static void AddPieceGroundTrap()
+    {
+        GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(GroundTrap.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(GroundTrap.PrefabName));
+        gameObject.name = GroundTrap.PrefabName;
+        GroundTrap.Setup(gameObject);
+        // It springs for those over its cover rather than within a radius, so it has no trigger radius setting
+        AddTrapPiece(gameObject, "Iron", 4, "Wood", 10, null, MainConfig.groundTrapDamage);
     }
 
     // Not a trap: it is powered by a fence controller rather than switched by a trap controller

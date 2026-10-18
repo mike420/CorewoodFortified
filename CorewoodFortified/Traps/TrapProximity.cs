@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
+// A trap that only springs for some of the characters inside its Trigger, such as the ground trap for those over its
+// cover
+internal interface ITrapTargets
+{
+	bool Springs(Character character);
+}
+
 // Sits on a trap's Trigger collider and tells the trap whenever a character is inside it. Trigger
 // messages go to the collider's own object, so this cannot live on the trap's root
 internal sealed class TrapProximity : MonoBehaviour
@@ -14,6 +21,8 @@ internal sealed class TrapProximity : MonoBehaviour
 
 	private TrapEnabler m_trap;
 
+	private ITrapTargets m_targets;
+
 	private SphereCollider m_sphere;
 
 	private ConfigEntry<float> m_radiusConfig;
@@ -21,6 +30,7 @@ internal sealed class TrapProximity : MonoBehaviour
 	private void Awake()
 	{
 		m_trap = GetComponentInParent<TrapEnabler>();
+		m_targets = m_trap ? m_trap.GetComponent<ITrapTargets>() : null;
 		m_sphere = GetComponent<SphereCollider>();
 		if (m_trap && m_sphere)
 		{
@@ -71,7 +81,8 @@ internal sealed class TrapProximity : MonoBehaviour
 			return;
 		}
 		Rigidbody body = other.attachedRigidbody;
-		if (body ? body.GetComponent<Character>() : other.GetComponentInParent<Character>())
+		Character character = body ? body.GetComponent<Character>() : other.GetComponentInParent<Character>();
+		if (character && (m_targets == null || m_targets.Springs(character)))
 		{
 			m_trap.OnCharacterNear();
 		}

@@ -56,6 +56,10 @@ internal static class TurretMover
 
 	private static GameObject s_ghost;
 
+	// A move is under way, until Stop. Kept apart from the turret and its copy, as both can be destroyed without Stop
+	// running, such as when logging out
+	private static bool s_moving;
+
 	private static float s_yaw;
 
 	private static bool s_valid;
@@ -102,8 +106,8 @@ internal static class TurretMover
 	public static void Tick()
 	{
 		Player me = Player.m_localPlayer;
-		// The turret was broken or unloaded while being moved: its copy and lines are cleared away
-		if (!Active && s_ghost)
+		// The turret was broken or unloaded while being moved, or the world was left: its copy and lines are cleared away
+		if (!Active && s_moving)
 		{
 			Stop("$text_turret_move_cancelled");
 			return;
@@ -162,6 +166,7 @@ internal static class TurretMover
 	private static void Start(Player me, MovableTurret turret)
 	{
 		s_turret = turret;
+		s_moving = true;
 		s_yaw = turret.transform.eulerAngles.y;
 		s_origin = turret.transform.position;
 		s_scroll = 0f;
@@ -228,6 +233,7 @@ internal static class TurretMover
 	private static void Stop(string message)
 	{
 		s_turret = null;
+		s_moving = false;
 		s_quietUntil = Time.time + 0.5f;
 		if (s_ghost)
 		{

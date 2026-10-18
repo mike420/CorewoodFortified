@@ -125,6 +125,7 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * **Spike Floor**: 4 Black Metal, 8 Stone
   * **Fortified Entrance Trap**: 30 Core Wood, 8 Black Metal
   * **Floor Blades**: 4 Iron
+  * **Ground Trap**: 4 Iron, 10 Wood
 
 ### Galdr Table
 
@@ -221,6 +222,7 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
   * **Saw Wall:** a wall of saw blades that spin up when anyone comes close, and cut enemies.
   * **Spike Floor:** a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
   * **Floor Blades:** blades set into the floor that whirl round fast, with a high saw whine, when anyone steps near, and cut enemies.
+  * **Ground Trap:** a spiked pit under a false floor. Placing it digs the ground out beneath it, and the ground comes back when it is removed. When anyone steps onto the false floor, it drops away so they fall onto the spikes; it closes over again a couple of seconds after the pit is clear. Standing beside it does not set it off. Grass from the biome it is in grows on its cover and frame, to help hide it.
   * **Fortified Entrance Trap:** a gateway with a spiked roller on each side. When anyone comes near, the rollers spin up with a whirr like the Saw Wall's and roll in until they meet in the middle, cutting enemies caught between them. When they stop, the rollers spin down and roll back to the sides.
   * A trap only runs while someone (a player, creature or tame) is near it, and stops a couple of seconds after they leave.
   * Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
@@ -251,9 +253,6 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, in game or on the main menu, to open a panel with the settings of all your installed Magic Mike mods).
 
   * **Enable Plugin** (default `true`): turns the mod on or off. Restart required.
-  * **Gate Sound Volume** (default `1`): volume of the lift gate and drawbridge sounds, from 0 (silent) to 1 (full).
-  * **Large Drawbridge Sound Volume** (default `1`): volume of the large and roofed drawbridge sounds, from 0 (silent) to 1 (full). Used instead of Gate Sound Volume for these pieces.
-  * **Chain Tower Sound Volume** (default `0.5`): volume of the chain tower winch sounds, from 0 (silent) to 1 (full).
   * **Turret Move Key** (default `U`): look at a Fortified Ballista or Organ Cannon and press it to move it.
 
 **Elevators** (synced from the server)
@@ -261,7 +260,6 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Enable Elevators** (default `true`): if off, the Elevator Wall and Fortified Watchtower are hidden from the build menu and placed elevators do not move.
   * **Automatic Elevators** (default `true`): if on, an elevator moves on its own when a player steps onto the platform.
   * **Elevator Speed** (default `2`): how fast the platform moves, in metres per second, from 0.5 to 10.
-  * **Elevator Sound Volume** (default `0.5`): volume of the elevator sound, from 0 (silent) to 1 (full).
 
 **Chain Towers** (synced from the server)
 
@@ -295,7 +293,6 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Grab Rope In Mid-Air** (default `true`): catch a rope by jumping or falling into it.
   * **Log Back In On The Ground** (default `true`): logging out mid-ride brings you back on the ground by a post.
   * **Messages** (default `Short`): `Short` shows a few words in the corner, `All` the full help, `Off` nothing.
-  * **Zipline Sound Volume** (default `1`): volume of the rope sound while riding, from 0 (silent) to 1 (full).
 
 **Fortified Ballista** (synced from the server)
 
@@ -316,10 +313,6 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Auto Reload** (default `true`): take bolts from nearby chests when not full.
   * **Auto Reload Range** (default `10`): how far away a chest can be, in metres, from 2 to 20.
   * **Allow Moving** (default `true`): it can be picked up with the Turret Move Key and put down somewhere else.
-
-**Fortified Ballista** (each player's own)
-
-  * **Scan Sound Volume** (default `0.5`): volume of the scanning sound, from 0 (silent) to 1 (full).
 
 **Organ Cannon** (synced from the server)
 
@@ -344,12 +337,12 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Trap Controller Radius** (default `30`): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
   * **Flame Trap Trigger Radius**, **Saw Wall Trigger Radius** and **Spike Floor Trigger Radius** (default `8`): how close a creature or player has to come to a switched-on trap for it to go off, in metres, from 1 to 20. Placed traps change too.
   * **Entrance Trap Trigger Radius** (default `6`) and **Floor Blades Trigger Radius** (default `2`): the same for the Fortified Entrance Trap and the Floor Blades.
-  * **Flame Trap Damage** (default `100` fire), **Saw Wall Damage** (default `50` slash, per blade), **Spike Floor Damage** (default `100` pierce), **Floor Blades Damage** (default `50` slash) and **Entrance Trap Damage** (default `100` slash, per roller): how much each trap does each time it hits, from 1 to 1000. Placed traps change too.
+  * **Flame Trap Damage** (default `100` fire), **Saw Wall Damage** (default `50` slash, per blade), **Spike Floor Damage** (default `100` pierce), **Floor Blades Damage** (default `50` slash), **Ground Trap Damage** (default `50` pierce) and **Entrance Trap Damage** (default `100` slash, per roller): how much each trap does each time it hits, from 1 to 1000. Placed traps change too.
+  * **Ground Trap Ignores Players** (default `false`): if on, players never open a Ground Trap, so they can walk over their own; only creatures do.
 
 **Traps** (each player's own)
 
-  * **Flame Trap Sound Volume**, **Saw Wall Sound Volume** and **Spike Floor Sound Volume** (default `1`): volume of each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade, from 0 (silent) to 1 (full).
-  * **Entrance Trap Sound Volume** and **Floor Blades Sound Volume** (default `1`): the same for the Fortified Entrance Trap's whirring spikes and the Floor Blades' whine.
+  * **Ground Trap Grass** (default `true`): if on, grass like the grass round it grows on a Ground Trap's cover and frame, so it is harder to spot.
 
 **Electric Fence** (synced from the server)
 
@@ -357,10 +350,20 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Minutes Per Eitr** (default `10`): how many minutes one Eitr keeps a controller's fences live, from 1 to 120.
   * **Electric Fence Damage** (default `100` lightning): how much a live fence does each time it shocks, from 1 to 1000. Placed fences change too.
 
-**Electric Fence** (each player's own)
+**Sounds** (each player's own)
 
-  * **Electric Fence Sound Volume** (default `1`): volume of the fence's hum while it is live, from 0 (silent) to 1 (full).
-  * **Fence Controller Sound Volume** (default `0.5`): volume of the controller's sound while it powers its fences, from 0 (silent) to 1 (full).
+Every volume goes from 0 (silent) to 1 (full).
+
+  * **Gate Sound Volume** (default `1`): the lift gate and drawbridge sounds.
+  * **Large Drawbridge Sound Volume** (default `1`): the large and roofed drawbridge sounds, used instead of Gate Sound Volume for these pieces.
+  * **Elevator Sound Volume** (default `0.5`): the elevator sound.
+  * **Chain Tower Sound Volume** (default `0.5`): the chain tower winch sounds.
+  * **Zipline Sound Volume** (default `1`): the rope sound while riding.
+  * **Ballista Scan Sound Volume** (default `0.5`): the Fortified Ballista's sound while it sweeps for a target.
+  * **Flame Trap Sound Volume**, **Saw Wall Sound Volume** and **Spike Floor Sound Volume** (default `1`): each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade.
+  * **Entrance Trap Sound Volume** and **Floor Blades Sound Volume** (default `1`): the Fortified Entrance Trap's whirring spikes and the Floor Blades' whine.
+  * **Electric Fence Sound Volume** (default `1`): the fence's hum while it is live.
+  * **Fence Controller Sound Volume** (default `0.5`): the controller's sound while it powers its fences.
 
 <br>
 

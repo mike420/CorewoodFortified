@@ -89,6 +89,8 @@ internal class LocalisedText
         { "piece_mm_corewood_spike_floor_description", "The floor is spikes. Stabs enemies that walk over it." },
         { "piece_mm_corewood_fortified_entrance_trap", "Fortified Entrance Trap" },
         { "piece_mm_corewood_floor_blades", "Floor Blades" },
+        { "piece_mm_corewood_ground_trap", "Ground Trap" },
+        { "piece_mm_corewood_ground_trap_description", "A spiked pit dug into the ground under a false floor. The floor drops away when enemies come near." },
         { "piece_mm_corewood_floor_blades_description", "Blades set into the floor that whirl into life and cut the legs from enemies that come near." },
         { "piece_mm_corewood_fortified_entrance_trap_description", "A gateway with a spiked roller each side. They spin up and close in on enemies who try to come through." },
         { "piece_mm_corewood_electric_fence", "Electric Fence 2m" },
