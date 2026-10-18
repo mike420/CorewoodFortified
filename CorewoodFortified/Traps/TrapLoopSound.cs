@@ -16,6 +16,9 @@ internal sealed class TrapLoopSound : MonoBehaviour
 	// The sound prefab whose clip is looped, set up when the piece is added
 	public GameObject m_soundPrefab;
 
+	// Above 1 plays the sound faster and higher, such as the floor blades' quicker saw
+	public float m_pitch = 1f;
+
 	private GameObject m_enabledObject;
 
 	private AudioSource m_sound;
@@ -39,7 +42,9 @@ internal sealed class TrapLoopSound : MonoBehaviour
 		if (!m_sound)
 		{
 			enabled = false;
+			return;
 		}
+		m_sound.pitch = m_pitch;
 	}
 
 	private void Update()
@@ -47,7 +52,7 @@ internal sealed class TrapLoopSound : MonoBehaviour
 		LoopingSound.Update(m_sound, m_enabledObject.activeInHierarchy, m_soundVolume * (m_volumeConfig != null ? m_volumeConfig.Value : 1f), SoundFadeOut);
 	}
 
-	public static void AddTo(GameObject piece, string soundPrefabName, ConfigEntry<float> volumeConfig)
+	public static void AddTo(GameObject piece, string soundPrefabName, ConfigEntry<float> volumeConfig, float pitch = 1f)
 	{
 		GameObject soundPrefab = Jotunn.Managers.PrefabManager.Instance.GetPrefab(soundPrefabName);
 		if (!soundPrefab)
@@ -55,7 +60,9 @@ internal sealed class TrapLoopSound : MonoBehaviour
 			Jotunn.Logger.LogWarning("[CorewoodFortified] Sound prefab '" + soundPrefabName + "' not found, " + piece.name + " will be silent.");
 			return;
 		}
-		piece.AddComponent<TrapLoopSound>().m_soundPrefab = soundPrefab;
+		TrapLoopSound sound = piece.AddComponent<TrapLoopSound>();
+		sound.m_soundPrefab = soundPrefab;
+		sound.m_pitch = pitch;
 		s_volumeConfigs[piece.name] = volumeConfig;
 	}
 }

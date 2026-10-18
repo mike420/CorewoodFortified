@@ -147,6 +147,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Saw Wall[/b]: 4 Black Metal, 6 Wood
 [*][b]Spike Floor[/b]: 4 Black Metal, 8 Stone
 [*][b]Fortified Entrance Trap[/b]: 30 Core Wood, 8 Black Metal
+[*][b]Floor Blades[/b]: 4 Iron
 [/list]
 
 [b]Galdr Table[/b]
@@ -255,6 +256,7 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 [*][b]Flame Trap:[/b] a floor trap that bursts into flame, with the roar of fire, when something steps near it. It burns anyone, players included.
 [*][b]Saw Wall:[/b] a wall of saw blades that spin up when anyone comes close, and cut enemies.
 [*][b]Spike Floor:[/b] a floor trap whose spikes shoot up when anyone steps near it, and stab enemies.
+[*][b]Floor Blades:[/b] blades set into the floor that whirl round fast, with a high saw whine, when anyone steps near, and cut enemies.
 [*][b]Fortified Entrance Trap:[/b] a gateway with a spiked roller on each side. When anyone comes near, the rollers spin up with a whirr like the Saw Wall's and roll in until they meet in the middle, cutting enemies caught between them. When they stop, the rollers spin down and roll back to the sides.
 [*]A trap only runs while someone (a player, creature or tame) is near it, and stops a couple of seconds after they leave.
 [*]Traps do not hurt players, except the Flame Trap, and are harmless while you are placing them.
@@ -397,15 +399,15 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Enable Traps[/b] (default [b]true[/b]): if off, the traps and the Trap Controller are hidden from the build menu, and placed traps stay but are switched off and do no damage.
 [*][b]Trap Controller Radius[/b] (default [b]30[/b]): how far from a Trap Controller its traps can be, in metres, from 15 to 200. Placed controllers change too.
 [*][b]Flame Trap Trigger Radius[/b], [b]Saw Wall Trigger Radius[/b] and [b]Spike Floor Trigger Radius[/b] (default [b]8[/b]): how close a creature or player has to come to a switched-on trap for it to go off, in metres, from 1 to 20. Placed traps change too.
-[*][b]Entrance Trap Trigger Radius[/b] (default [b]6[/b]): the same for the Fortified Entrance Trap.
-[*][b]Flame Trap Damage[/b] (default [b]100[/b] fire), [b]Saw Wall Damage[/b] (default [b]50[/b] slash, per blade), [b]Spike Floor Damage[/b] (default [b]100[/b] pierce) and [b]Entrance Trap Damage[/b] (default [b]100[/b] slash, per roller): how much each trap does each time it hits, from 1 to 1000. Placed traps change too.
+[*][b]Entrance Trap Trigger Radius[/b] (default [b]6[/b]) and [b]Floor Blades Trigger Radius[/b] (default [b]2[/b]): the same for the Fortified Entrance Trap and the Floor Blades.
+[*][b]Flame Trap Damage[/b] (default [b]100[/b] fire), [b]Saw Wall Damage[/b] (default [b]50[/b] slash, per blade), [b]Spike Floor Damage[/b] (default [b]100[/b] pierce), [b]Floor Blades Damage[/b] (default [b]50[/b] slash) and [b]Entrance Trap Damage[/b] (default [b]100[/b] slash, per roller): how much each trap does each time it hits, from 1 to 1000. Placed traps change too.
 [/list]
 
 [b]Traps[/b] (each player's own)
 
 [list]
 [*][b]Flame Trap Sound Volume[/b], [b]Saw Wall Sound Volume[/b] and [b]Spike Floor Sound Volume[/b] (default [b]1[/b]): volume of each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade, from 0 (silent) to 1 (full).
-[*][b]Entrance Trap Sound Volume[/b] (default [b]1[/b]): the same for the Fortified Entrance Trap's whirring spikes.
+[*][b]Entrance Trap Sound Volume[/b] and [b]Floor Blades Sound Volume[/b] (default [b]1[/b]): the same for the Fortified Entrance Trap's whirring spikes and the Floor Blades' whine.
 [/list]
 
 [b]Electric Fence[/b] (synced from the server)

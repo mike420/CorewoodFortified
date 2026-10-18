@@ -102,6 +102,12 @@ internal static class TurretMover
 	public static void Tick()
 	{
 		Player me = Player.m_localPlayer;
+		// The turret was broken or unloaded while being moved: its copy and lines are cleared away
+		if (!Active && s_ghost)
+		{
+			Stop("$text_turret_move_cancelled");
+			return;
+		}
 		if (Active)
 		{
 			if (!me || me.IsDead() || me.IsAttached() || me.InPlaceMode() || !s_turret.CanBeMoved())

@@ -16,6 +16,7 @@ internal class AddFortified
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntrance);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceDrawbridge);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWall);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairs);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedWallStairsAlt);
@@ -73,7 +74,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceFlameTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSpikeFloor);
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedEntranceTrap);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFloorBlades);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
@@ -146,6 +147,15 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         SetDoorEffects(gameObject, fortifiedOpen, fortifiedClose);
         PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceFortifiedEntranceTrap()
+    {
+        GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(EntranceTrap.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(EntranceTrap.PrefabName));
+        gameObject.name = EntranceTrap.PrefabName;
+        AddTrapPiece(gameObject, "RoundLog", 30, "BlackMetal", 8, MainConfig.entranceTrapTriggerRadius, MainConfig.entranceTrapDamage);
+        EntranceTrap.Setup(gameObject);
+        TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.entranceTrapSoundVolume);
     }
 
     public static void AddPieceFortifiedWall(){
@@ -1514,15 +1524,12 @@ internal class AddFortified
         TrapStabSound.AddTo(gameObject, "sfx_spikes_cwf", MainConfig.spikeFloorSoundVolume);
     }
 
-    // The spikes are given pivots, which would belong to the menu scene and be destroyed with it if they were put on
-    // the bundle's prefab, so they go on a renamed copy, as with the organ cannon
-    public static void AddPieceFortifiedEntranceTrap()
+    // The blades spin fast, with the saw wall's sound played faster to match
+    public static void AddPieceFloorBlades()
     {
-        GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(EntranceTrap.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(EntranceTrap.PrefabName));
-        gameObject.name = EntranceTrap.PrefabName;
-        AddTrapPiece(gameObject, "RoundLog", 30, "BlackMetal", 8, MainConfig.entranceTrapTriggerRadius, MainConfig.entranceTrapDamage);
-        EntranceTrap.Setup(gameObject);
-        TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.entranceTrapSoundVolume);
+        GameObject gameObject = AddTrapPiece("mm_corewood_floor_blades", "Iron", 4, null, 0, MainConfig.floorBladesTriggerRadius, MainConfig.floorBladesDamage);
+        TrapSpinner.AddTo(gameObject, "floor_blades", 1080f);
+        TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.floorBladesSoundVolume, 1.5f);
     }
 
     // Not a trap: it is powered by a fence controller rather than switched by a trap controller
@@ -1675,21 +1682,10 @@ internal class AddFortified
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
             Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
-            Requirements = new RequirementConfig[2]
-            {
-                new RequirementConfig
-                {
-                    Item = item1,
-                    Amount = amount1,
-                    Recover = true
-                },
-                new RequirementConfig
-                {
-                    Item = item2,
-                    Amount = amount2,
-                    Recover = true
-                }
-            }
+            // A trap made from one thing passes no second item
+            Requirements = item2 == null
+                ? new[] { new RequirementConfig(item1, amount1, recover: true) }
+                : new[] { new RequirementConfig(item1, amount1, recover: true), new RequirementConfig(item2, amount2, recover: true) }
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);

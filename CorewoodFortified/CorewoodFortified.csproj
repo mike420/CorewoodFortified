@@ -106,6 +106,7 @@
     <Compile Include="Traps\TrapLoopSound.cs" />
     <Compile Include="Traps\TrapPatches.cs" />
     <Compile Include="Traps\TrapProximity.cs" />
+    <Compile Include="Traps\TrapSpinner.cs" />
     <Compile Include="Traps\TrapStabSound.cs" />
     <Compile Include="Ziplines\RopeTube.cs" />
     <Compile Include="Ziplines\ZiplineAnchor.cs" />
