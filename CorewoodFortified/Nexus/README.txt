@@ -148,7 +148,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Spike Floor[/b]: 4 Black Metal, 8 Stone
 [*][b]Fortified Entrance Trap[/b]: 30 Core Wood, 8 Black Metal
 [*][b]Floor Blades[/b]: 4 Iron
-[*][b]Ground Trap[/b]: 4 Iron, 10 Wood
+[*][b]Ground Trap[/b]: 2 Iron, 10 Wood
 [/list]
 
 [b]Galdr Table[/b]

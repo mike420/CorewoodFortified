@@ -1542,7 +1542,7 @@ internal class AddFortified
         gameObject.name = GroundTrap.PrefabName;
         GroundTrap.Setup(gameObject);
         // It springs for those over its cover rather than within a radius, so it has no trigger radius setting
-        AddTrapPiece(gameObject, "Iron", 4, "Wood", 10, null, MainConfig.groundTrapDamage);
+        AddTrapPiece(gameObject, "Iron", 2, "Wood", 10, null, MainConfig.groundTrapDamage);
     }
 
     // Not a trap: it is powered by a fence controller rather than switched by a trap controller

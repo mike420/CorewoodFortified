@@ -125,7 +125,7 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * **Spike Floor**: 4 Black Metal, 8 Stone
   * **Fortified Entrance Trap**: 30 Core Wood, 8 Black Metal
   * **Floor Blades**: 4 Iron
-  * **Ground Trap**: 4 Iron, 10 Wood
+  * **Ground Trap**: 2 Iron, 10 Wood
 
 ### Galdr Table
 
