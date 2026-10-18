@@ -47,8 +47,7 @@ internal sealed class GroundTrapGrass : MonoBehaviour
 		bool show = MainConfig.groundTrapGrass.Value;
 		if (show && !m_built)
 		{
-			m_built = true;
-			Build();
+			m_built = Build();
 		}
 		foreach (GameObject grass in m_grass)
 		{
@@ -59,19 +58,21 @@ internal sealed class GroundTrapGrass : MonoBehaviour
 		}
 	}
 
-	private void Build()
+	// False when there is no grass to be had yet, such as with vegetation turned off, so it is tried again the next
+	// time the setting is turned on
+	private bool Build()
 	{
 		ClutterSystem clutter = ClutterSystem.instance;
 		if (!clutter || clutter.m_quality == ClutterSystem.Quality.Off)
 		{
-			return;
+			return false;
 		}
 		Vector3 position = transform.position;
 		Heightmap.Biome biome = Heightmap.FindBiomeClutter(position);
 		Heightmap heightmap = Heightmap.FindHeightmap(position);
 		if (biome == Heightmap.Biome.None || !heightmap)
 		{
-			return;
+			return false;
 		}
 		float outer = m_trap.m_frame ? Mathf.Max(m_trap.m_frameHalfSize, m_trap.m_halfSize) : m_trap.m_halfSize;
 		float area = outer * 2f * outer * 2f;
@@ -124,6 +125,7 @@ internal sealed class GroundTrapGrass : MonoBehaviour
 			}
 		}
 		UnityEngine.Random.state = state;
+		return true;
 	}
 
 	// Whether this kind of grass would grow here on open ground: high enough above the sea, and in or out of forest

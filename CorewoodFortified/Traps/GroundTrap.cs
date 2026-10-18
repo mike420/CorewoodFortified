@@ -88,7 +88,28 @@ internal sealed class GroundTrap : MonoBehaviour, ITrapTargets
 
 	private void OnDestroy()
 	{
-		s_digging.Remove(this);
+		if (s_digging.Remove(this))
+		{
+			// Fills the pit back in
+			PokeHeightmaps();
+		}
+	}
+
+	// How far from the trap's middle the pit's sides reach
+	private float DigReach => m_digHalf * 1.415f + TerrainStep;
+
+	// The terrain modifier only redraws the ground as far as it clears grass, short of the pit's sides, so a pit by
+	// the edge of a piece of terrain would miss the next piece. Every piece the pit reaches is redrawn, a couple of
+	// frames on as the game does, by which time a removed trap no longer digs
+	private void PokeHeightmaps()
+	{
+		foreach (Heightmap heightmap in Heightmap.GetAllHeightmaps())
+		{
+			if (heightmap && heightmap.IsPointInside(transform.position, DigReach))
+			{
+				heightmap.Poke(2);
+			}
+		}
 	}
 
 	private void Update()
@@ -125,6 +146,7 @@ internal sealed class GroundTrap : MonoBehaviour, ITrapTargets
 		modifier.m_paintRadius = m_halfSize;
 		modifier.m_paintStrength = 1f;
 		modifier.PokeHeightmaps(false);
+		PokeHeightmaps();
 	}
 
 	// Lowers the terrain points inside the dug square to the dig level, never raising any
@@ -226,7 +248,7 @@ internal sealed class GroundTrap : MonoBehaviour, ITrapTargets
 		{
 			foreach (GroundTrap trap in s_digging)
 			{
-				if (trap && trap.m_modifier && trap.m_modifier.enabled && __instance.IsPointInside(trap.transform.position, trap.m_digHalf * 1.415f + TerrainStep))
+				if (trap && trap.m_modifier && trap.m_modifier.enabled && __instance.IsPointInside(trap.transform.position, trap.DigReach))
 				{
 					trap.DigInto(__instance);
 				}
