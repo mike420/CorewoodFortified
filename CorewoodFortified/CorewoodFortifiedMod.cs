@@ -18,7 +18,7 @@ namespace CorewoodFortified;
 public class CorewoodFortifiedMod : BaseUnityPlugin
 {
     public const string PluginName = "CorewoodFortified";
-    public const string PluginVersion = "1.0.5";
+    public const string PluginVersion = "1.0.6";
     public const string PluginAuthor = "MagicMike";
     internal const string PluginGUID = "MagicMike.CorewoodFortified";
     internal const string PluginCopy = "Copyright © MagicMike 2026";
@@ -146,10 +146,11 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
 
     public static bool LoadAssetBundles()
     {
-        cwfortified = AssetUtils.LoadAssetBundleFromResources(newBundle, Assembly.GetExecutingAssembly());
+        string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), newBundle);
+        cwfortified = File.Exists(path) ? AssetBundle.LoadFromFile(path) : null;
         if (cwfortified == null)
         {
-            Jotunn.Logger.LogError("Failed to load asset bundle with name: " + newBundle);
+            Jotunn.Logger.LogError("Failed to load asset bundle with name: " + newBundle + " (expected at " + path + ")");
             return false;
         }
         return true;

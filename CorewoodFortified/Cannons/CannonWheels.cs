@@ -4,10 +4,14 @@ using UnityEngine;
 namespace CorewoodFortified;
 
 // Rolls the organ cannon's wheels as it turns on the spot. Turning about the middle between them, the wheel on one
-// side rolls forwards and the other backwards, each as far as its side of the carriage moves
+// side rolls forwards and the other backwards, each as far as its side of the carriage moves. They also roll back
+// and forth with the carriage when it recoils
 internal sealed class CannonWheels : MonoBehaviour
 {
 	public Transform m_neck;
+
+	// What the recoil moves, back along the neck's forward
+	public Transform m_recoil;
 
 	// A pivot at each wheel's middle, which is turned about the axle
 	public List<Transform> m_pivots = new List<Transform>();
@@ -18,9 +22,13 @@ internal sealed class CannonWheels : MonoBehaviour
 	// Degrees each wheel rolls for every degree the cannon turns
 	public List<float> m_ratios = new List<float>();
 
+	public List<float> m_radii = new List<float>();
+
 	private float[] m_angles;
 
 	private float m_lastYaw;
+
+	private float m_lastRecoil;
 
 	private void Awake()
 	{
@@ -40,7 +48,10 @@ internal sealed class CannonWheels : MonoBehaviour
 		float yaw = m_neck.localEulerAngles.y;
 		float turned = Mathf.DeltaAngle(m_lastYaw, yaw);
 		m_lastYaw = yaw;
-		if (Mathf.Abs(turned) < 0.0001f)
+		float recoil = m_recoil ? m_recoil.localPosition.z : 0f;
+		float moved = recoil - m_lastRecoil;
+		m_lastRecoil = recoil;
+		if (Mathf.Abs(turned) < 0.0001f && Mathf.Abs(moved) < 0.0001f)
 		{
 			return;
 		}
@@ -50,14 +61,14 @@ internal sealed class CannonWheels : MonoBehaviour
 			{
 				continue;
 			}
-			m_angles[i] = Mathf.Repeat(m_angles[i] + turned * m_ratios[i], 360f);
+			m_angles[i] = Mathf.Repeat(m_angles[i] + turned * m_ratios[i] + moved / m_radii[i] * Mathf.Rad2Deg, 360f);
 			m_pivots[i].localRotation = Quaternion.AngleAxis(m_angles[i], m_axles[i]);
 		}
 	}
 
 	// Each wheel goes under a pivot at its middle, so it turns about its axle and not the model's origin. The axle
 	// runs across the cannon, and a wheel's radius is half its height
-	public static void Setup(GameObject piece, Transform neck, List<Transform> wheels)
+	public static void Setup(GameObject piece, Transform neck, Transform recoil, List<Transform> wheels)
 	{
 		if (wheels.Count == 0)
 		{
@@ -66,6 +77,7 @@ internal sealed class CannonWheels : MonoBehaviour
 		}
 		CannonWheels component = piece.AddComponent<CannonWheels>();
 		component.m_neck = neck;
+		component.m_recoil = recoil;
 		foreach (Transform wheel in wheels)
 		{
 			Bounds inNeck = OrganCannon.MeshBounds(neck, wheel);
@@ -84,6 +96,7 @@ internal sealed class CannonWheels : MonoBehaviour
 			component.m_axles.Add(pivot.InverseTransformDirection(neck.right).normalized);
 			// Turning right moves a wheel on the left forwards. Rolling forwards turns a wheel about the right axis
 			component.m_ratios.Add(-inNeck.center.x / radius);
+			component.m_radii.Add(radius);
 		}
 	}
 }

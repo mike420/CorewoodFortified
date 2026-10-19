@@ -182,14 +182,17 @@ internal sealed class OrganCannon : MonoBehaviour
 		pivot.y = 0f;
 
 		Transform neck = AddChild(root, "_cannon_neck", pivot);
+		// The model sits a step below the neck, so it can be kicked back along the barrels when the cannon fires
+		Transform recoil = AddChild(neck, "_cannon_recoil", Vector3.zero);
 		foreach (Transform child in new List<Transform>(root.Cast<Transform>()))
 		{
 			if (child != neck)
 			{
-				child.SetParent(neck, worldPositionStays: true);
+				child.SetParent(recoil, worldPositionStays: true);
 			}
 		}
-		CannonWheels.Setup(piece, neck, wheels);
+		piece.AddComponent<CannonRecoil>().m_recoil = recoil;
+		CannonWheels.Setup(piece, neck, recoil, wheels);
 
 		Vector3 bodyPosition = pivot;
 		bodyPosition.y = root.InverseTransformPoint(barrels.position).y;

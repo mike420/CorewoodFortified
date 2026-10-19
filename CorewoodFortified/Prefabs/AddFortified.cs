@@ -81,6 +81,12 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse01);
+        //CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse02);
+        //CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse03);
+        //CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse04);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouseDoor);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -1190,17 +1196,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-    // The cannon's own shot sound, with the vanilla ballista's shot visuals but not its sound
-    private static EffectList GetCannonShotEffect(Turret vanilla)
-    {
-        List<EffectList.EffectData> effects = new List<EffectList.EffectData>(Effects("sfx_cannon_shot_cwf").m_effectPrefabs);
-        if (vanilla && vanilla.m_shootEffect != null)
-        {
-            effects.AddRange(vanilla.m_shootEffect.m_effectPrefabs.Where(effect => effect.m_prefab && !effect.m_prefab.name.StartsWith("sfx_")));
-        }
-        return new EffectList { m_effectPrefabs = effects.ToArray() };
-    }
-
 
     public static void AddPieceFortifiedSpikes()
     {
@@ -1525,7 +1520,6 @@ internal class AddFortified
         TrapStabSound.AddTo(gameObject, "sfx_spikes_cwf", MainConfig.spikeFloorSoundVolume);
     }
 
-    // The blades spin fast, with the saw wall's sound played faster to match
     public static void AddPieceFloorBlades()
     {
         GameObject gameObject = AddTrapPiece("mm_corewood_floor_blades", "Iron", 4, null, 0, MainConfig.floorBladesTriggerRadius, MainConfig.floorBladesDamage);
@@ -1533,9 +1527,6 @@ internal class AddFortified
         TrapLoopSound.AddTo(gameObject, "sfx_saw_cwf", MainConfig.floorBladesSoundVolume, 1.5f);
     }
 
-    // The spikes' hit area is put under a new _enabled, which would belong to the menu scene and be destroyed with it
-    // if it were put on the bundle's prefab, so it goes on a renamed copy, as with the organ cannon. That is done
-    // before the trap is set up, as a trap needs its _enabled
     public static void AddPieceGroundTrap()
     {
         GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(GroundTrap.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(GroundTrap.PrefabName));
@@ -1545,7 +1536,6 @@ internal class AddFortified
         AddTrapPiece(gameObject, "Iron", 2, "Wood", 10, null, MainConfig.groundTrapDamage);
     }
 
-    // Not a trap: it is powered by a fence controller rather than switched by a trap controller
     public static void AddPieceElectricFence()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_electric_fence");
@@ -1618,7 +1608,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-    // Switches with the vanilla ward's on and off effects
     public static void AddPieceFenceController()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fence_controller_new");
@@ -1666,6 +1655,72 @@ internal class AddFortified
         gameObject.GetComponent<FenceController>().m_areaMarker = SetMarkerFrom(gameObject, ward ? ward.m_areaMarker : null);
         TrapLoopSound.AddTo(gameObject, "sfx_fence_controller_cwf", MainConfig.fenceControllerSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+
+    public static void AddPieceVillageHouse01()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_01");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 500,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceVillageHouseDoor()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_door");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 5,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, doorOpen, doorClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+
+
+
+    // The cannon's own shot sound, with the vanilla ballista's shot visuals but not its sound
+    private static EffectList GetCannonShotEffect(Turret vanilla)
+    {
+        List<EffectList.EffectData> effects = new List<EffectList.EffectData>(Effects("sfx_cannon_shot_cwf").m_effectPrefabs);
+        if (vanilla && vanilla.m_shootEffect != null)
+        {
+            effects.AddRange(vanilla.m_shootEffect.m_effectPrefabs.Where(effect => effect.m_prefab && !effect.m_prefab.name.StartsWith("sfx_")));
+        }
+        return new EffectList { m_effectPrefabs = effects.ToArray() };
     }
 
     // The clank of a workbench being placed, which traps and electric fences make as they switch on and off
