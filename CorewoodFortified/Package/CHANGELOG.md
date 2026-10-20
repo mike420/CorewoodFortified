@@ -10,7 +10,7 @@
     <td>1.0.6</td>
     <td>
         <ul>
-            <li>New: Village House, built with the hammer at the workbench for 500 Wood, and a Village House Door to go with it for 5 Wood.</li>
+            <li>New: Walkways, built with the hammer at the workbench. Walkway 2m (2 Core Wood, 4 Wood), Walkway 3m (2 Core Wood, 5 Wood), Walkway 4m (4 Core Wood, 8 Wood), Walkway Corner (8 Core Wood, 14 Wood) and Walkway T-Junction (8 Core Wood, 16 Wood).</li>
             <li>Organ cannon recoils when it fires, kicking back and rolling forward into place on its wheels</li>
             <li>The asset bundle (corewood_fortified) is now a separate file next to CorewoodFortified.dll instead of being packed inside it. This lowers memory use and speeds up loading. If you install manually, copy the whole plugins folder, not just the dll.</li>
         </ul>
