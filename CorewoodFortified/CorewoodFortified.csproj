@@ -120,7 +120,7 @@
     <Compile Include="Ziplines\ZiplineVisuals.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Shared\ModSettings\*.cs">
+    <Compile Include="..\Shared\ModSettings\*.cs">
       <Link>ModSettings\%(Filename)%(Extension)</Link>
     </Compile>
   </ItemGroup>
