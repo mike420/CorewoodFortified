@@ -79,6 +79,8 @@
   "piece_mm_corewood_walkway_corner_description": "A wooden walkway corner that turns the path at a right angle.",
   "piece_mm_corewood_walkway_tjunction": "Walkway T-Junction",
   "piece_mm_corewood_walkway_tjunction_description": "A wooden walkway junction that splits the path three ways.",
+  "piece_mm_corewood_village_house_door": "Village House Door",
+  "piece_mm_corewood_village_house_01": "Village House 01",
   "text_fortified_lift_gate": "Fortified Lift Gate",
   "text_fortified_gates": "Fortified Gates",
   "text_fortified_drawbridge": "Fortified Drawbridge",

@@ -91,6 +91,8 @@ internal class LocalisedText
         { "piece_mm_corewood_walkway_corner_description", "A wooden walkway corner that turns the path at a right angle." },
         { "piece_mm_corewood_walkway_tjunction", "Walkway T-Junction" },
         { "piece_mm_corewood_walkway_tjunction_description", "A wooden walkway junction that splits the path three ways." },
+        { "piece_mm_corewood_village_house_door", "Village House Door" },
+        { "piece_mm_corewood_village_house_01", "Village House 01" },
         { "item_mm_cannonball", "Cannon Ball" },
         { "item_mm_cannonball_description", "An iron ball for the organ cannon. Forged one for each iron." },
         { "text_organ_cannons_disabled", "Organ cannons are disabled" },

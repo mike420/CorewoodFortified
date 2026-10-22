@@ -76,6 +76,16 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Fortified Spikes[/b]: 2 Core Wood, 2 Wood
 [/list]
 
+[b]Walkways[/b]
+
+[list]
+[*][b]Walkway 2m[/b]: 2 Core Wood, 4 Wood
+[*][b]Walkway 3m[/b]: 2 Core Wood, 5 Wood
+[*][b]Walkway 4m[/b]: 4 Core Wood, 8 Wood
+[*][b]Walkway Corner[/b]: 8 Core Wood, 14 Wood
+[*][b]Walkway T-Junction[/b]: 8 Core Wood, 16 Wood
+[/list]
+
 [b]Forge[/b]
 
 [list]
@@ -243,6 +253,7 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 [*][b]Cannon Balls:[/b] forged at the forge, 1 Iron for each ball.
 [*]The whole cannon turns on the spot towards the target, its wheels rolling opposite ways, but only within its fire arc, so place it facing the way you want it to fire. Its range circle shows the arc it covers.
 [*]It aims where a moving target will be when the balls arrive, and allows for them dropping on the way.
+[*]Each volley kicks the cannon back on its wheels, and it rolls forward into place again.
 [*]Give it trophies to pick which creatures it fires at, just like the ballista. By default it fires only at enemies, not at players or tames.
 [*][b]Spare Buildings:[/b] balls that miss do no damage to building pieces.
 [*][b]Auto Reload:[/b] when it is not full, it takes cannon balls from chests within 10 m, every few seconds. It only uses chests its builder may open, never while someone has the chest open. Graves, carts and ships are left alone.

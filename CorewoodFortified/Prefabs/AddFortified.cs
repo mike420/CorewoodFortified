@@ -87,6 +87,9 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse01);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouseDoor);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -1148,8 +1151,6 @@ internal class AddFortified
 
 
 
-
-
     public static void AddPieceFortifiedFence()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence");
@@ -1822,7 +1823,70 @@ internal class AddFortified
 
 
 
-    // The cannon's own shot sound, with the vanilla ballista's shot visuals but not its sound
+    public static void AddPieceVillageHouse01()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_01");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 50,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 500,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceVillageHouseDoor()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_door");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 1,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 6,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, doorOpen, doorClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+
+
     private static EffectList GetCannonShotEffect(Turret vanilla)
     {
         List<EffectList.EffectData> effects = new List<EffectList.EffectData>(Effects("sfx_cannon_shot_cwf").m_effectPrefabs);
@@ -1833,15 +1897,12 @@ internal class AddFortified
         return new EffectList { m_effectPrefabs = effects.ToArray() };
     }
 
-    // The clank of a workbench being placed, which traps and electric fences make as they switch on and off
     private static EffectList GetWorkbenchPlaceEffect()
     {
         GameObject workbench = PrefabManager.Cache.GetPrefab<GameObject>("piece_workbench");
         return workbench ? workbench.GetComponent<Piece>().m_placeEffect : new EffectList();
     }
 
-    // The traps' damage and visuals are already on the prefab (Aoe, and an Animator or particles);
-    // TrapEnabler only switches them on and off. They clank like a workbench being placed as they do
     private static GameObject AddTrapPiece(string prefabName, string item1, int amount1, string item2, int amount2, BepInEx.Configuration.ConfigEntry<float> triggerRadius, BepInEx.Configuration.ConfigEntry<float> damage)
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
@@ -1873,7 +1934,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-    // Takes its on and off effects and its area marker's look from the vanilla ward
     public static void AddPieceTrapController()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_trap_controller");
@@ -1920,8 +1980,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-    // Gives the piece's area markers the look of the source marker. A CircleProjector without a segment prefab
-    // throws every frame it is active, so a marker that cannot get one is removed. Returns the first one kept
     private static CircleProjector SetMarkerFrom(GameObject piece, CircleProjector source)
     {
         CircleProjector kept = null;
@@ -1955,8 +2013,6 @@ internal class AddFortified
         return kept;
     }
 
-    // Copies the ammo, targets, effects and marker look from the vanilla ballista. Only data is copied, so the
-    // prefab's own model and positions (its taller ballista_base) are kept
     private static void SetTurretFromVanilla(GameObject piece)
     {
         Turret turret = piece.GetComponent<Turret>();
@@ -2007,9 +2063,6 @@ internal class AddFortified
         SetTurretMarker(piece, turret, vanilla);
     }
 
-    // The turret sets the marker's radius to its view distance when it wakes, so only the look is copied.
-    // A CircleProjector without a segment prefab throws every frame it is active (on the placement ghost too),
-    // so a marker that cannot get one is removed, and the vanilla turret null-checks m_marker everywhere
     private static void SetTurretMarker(GameObject piece, Turret turret, Turret vanilla)
     {
         turret.m_marker = null;
@@ -2049,7 +2102,6 @@ internal class AddFortified
         }
     }
 
-    // The vanilla ballista is silent while it looks for a target, so it is given its own scanning loop
     private static void AddTurretScanSound(GameObject piece)
     {
         GameObject soundPrefab = PrefabManager.Instance.GetPrefab("sfx_turret_scan_cwf");

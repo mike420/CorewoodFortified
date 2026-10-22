@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.0.7</td>
+    <td>
+        <ul>
+            <li></li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.0.6</td>
     <td>
         <ul>
