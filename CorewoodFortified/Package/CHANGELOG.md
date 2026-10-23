@@ -10,7 +10,7 @@
     <td>1.0.7</td>
     <td>
         <ul>
-            <li></li>
+            <li>Fixed Fortified Ballistas breaking on the top of the Fortified Corner Tower. They now take support like iron instead of wood, so they stay up anywhere on the top of a tall piece.</li>
         </ul>
     </td>
   </tr>

@@ -1291,6 +1291,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
+        SetTurretSupport(gameObject);
         SetTurretFromVanilla(gameObject);
         TurretSettings.Init(gameObject);
         TurretAutoReload.Init(gameObject, () => MainConfig.enableTurrets.Value && MainConfig.turretAutoReload.Value, () => MainConfig.turretAutoReloadRange.Value);
@@ -1345,6 +1346,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
+        SetTurretSupport(gameObject);
         GameObject vanillaPrefab = PrefabManager.Cache.GetPrefab<GameObject>("piece_turret");
         Turret vanilla = vanillaPrefab ? vanillaPrefab.GetComponent<Turret>() : null;
         ItemDrop ball = CannonBall.Add(vanilla);
@@ -2123,6 +2125,17 @@ internal class AddFortified
         }
         wearNTear.m_destroyedEffect = destroyed;
         wearNTear.m_hitEffect = hit;
+    }
+
+    // A wooden turret loses too much support with distance to stand on the top of a tall piece such as the corner
+    // tower, and breaks when its support is next worked out. Iron loses far less, so it holds anywhere on the top
+    private static void SetTurretSupport(GameObject piece)
+    {
+        WearNTear wearNTear = piece.GetComponent<WearNTear>();
+        if (wearNTear)
+        {
+            wearNTear.m_materialType = WearNTear.MaterialType.Iron;
+        }
     }
 
     private static void SetDoorEffects(GameObject piece, EffectList open, EffectList close)
