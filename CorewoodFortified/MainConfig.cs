@@ -233,11 +233,13 @@ namespace CorewoodFortified
             }
 
             int carried = 0, dropped = 0;
+            HashSet<ConfigEntryBase> handled = new HashSet<ConfigEntryBase>();
             bool saveOnSet = config.SaveOnConfigSet;
             config.SaveOnConfigSet = false;
             try
             {
-                foreach (ConfigDefinition old in orphans.Keys.ToList())
+                // An earlier renumbering can leave the same setting under several old numbers; the highest is the latest
+                foreach (ConfigDefinition old in orphans.Keys.OrderByDescending(d => SectionNumber(d.Section)).ToList())
                 {
                     string oldName = SectionName(old.Section);
                     ConfigEntryBase entry = ((IDictionary<ConfigDefinition, ConfigEntryBase>)config).Values.FirstOrDefault(e => e.Definition.Key == old.Key && e.Definition.Section != old.Section
@@ -246,7 +248,7 @@ namespace CorewoodFortified
                     {
                         continue;   // (not one of ours any more: left as it is)
                     }
-                    if (Equals(entry.BoxedValue, entry.DefaultValue))
+                    if (handled.Add(entry) && Equals(entry.BoxedValue, entry.DefaultValue))
                     {
                         try
                         {
@@ -275,5 +277,11 @@ namespace CorewoodFortified
 
         // A section's name without the number in front ("4 - Fortified Ballista": Fortified Ballista)
         private static string SectionName(string section) => Regex.Replace(section ?? "", @"^\d+\s*-\s*", "");
+
+        private static int SectionNumber(string section)
+        {
+            Match match = Regex.Match(section ?? "", @"^(\d+)\s*-");
+            return match.Success ? int.Parse(match.Groups[1].Value) : -1;
+        }
     }
 }
