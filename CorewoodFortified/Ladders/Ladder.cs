@@ -18,6 +18,9 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 
 	private const float StackTolerance = 0.1f;
 
+	// How near the player must be to get on, from their middle to the nearest point up the ladder
+	private const float UseDistance = 1.5f;
+
 	private ZNetView m_nview;
 
 	private Piece m_piece;
@@ -64,7 +67,12 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 		{
 			return Localization.instance.Localize(text);
 		}
-		if (LadderClimber.IsClimbing(Player.m_localPlayer))
+		bool climbing = LadderClimber.IsClimbing(Player.m_localPlayer);
+		if (!climbing && !InReach(Player.m_localPlayer))
+		{
+			return Localization.instance.Localize(text);
+		}
+		if (climbing)
 		{
 			text += "\n[<color=yellow><b>$KEY_Use</b></color>] $text_ladder_let_go"
 				+ "\n[<color=yellow><b>$KEY_Jump</b></color>] $text_ladder_jump_off"
@@ -94,12 +102,24 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 			LadderClimber.LetGo();
 			return true;
 		}
-		return LadderClimber.TryStart(player, this);
+		return InReach(player) && LadderClimber.TryStart(player, this);
 	}
 
 	public bool UseItem(Humanoid user, ItemDrop.ItemData item)
 	{
 		return false;
+	}
+
+	private bool InReach(Player player)
+	{
+		if (player == null)
+		{
+			return false;
+		}
+		Vector3 middle = player.transform.position + Vector3.up * 1f;
+		Vector3 up = Top - Bottom;
+		float along = Mathf.Clamp01(Vector3.Dot(middle - Bottom, up) / up.sqrMagnitude);
+		return Vector3.Distance(middle, Bottom + up * along) <= UseDistance;
 	}
 
 	// This section and every section stacked straight above and below it, lowest first
