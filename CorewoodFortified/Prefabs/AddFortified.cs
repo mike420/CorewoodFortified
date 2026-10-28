@@ -87,9 +87,6 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
-
-        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouse01);
-        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHouseDoor);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -1302,10 +1299,6 @@ internal class AddFortified
 
     public static void AddPieceFortifiedOrganCannon()
     {
-        // The cannon is given new child objects, which would belong to the menu scene and be destroyed with it if
-        // they were put on the bundle's prefab, leaving it broken. A copy in Jotunn's prefab container keeps them.
-        // Jotunn will not clone under a name already loaded, so the copy is renamed after, keeping placed cannons'
-        // prefab name
         GameObject gameObject = PrefabManager.Instance.CreateClonedPrefab(OrganCannon.PrefabName + "_cwf_setup", CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(OrganCannon.PrefabName));
         gameObject.name = OrganCannon.PrefabName;
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
@@ -1822,70 +1815,6 @@ internal class AddFortified
         TrapLoopSound.AddTo(gameObject, "sfx_fence_controller_cwf", MainConfig.fenceControllerSoundVolume);
         PieceManager.Instance.AddPiece(customPiece);
     }
-
-
-
-    public static void AddPieceVillageHouse01()
-    {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_01");
-        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
-        {
-            CraftingStation = "piece_workbench",
-            PieceTable = "_HammerPieceTable",
-            Category = "CoreWood-Fortified",
-            Usage = new[] { PieceUsages.Building },
-            Requirements = new RequirementConfig[2]
-            {
-                new RequirementConfig
-                {
-                    Item = "RoundLog",
-                    Amount = 50,
-                    Recover = true
-                },
-                new RequirementConfig
-                {
-                    Item = "Wood",
-                    Amount = 500,
-                    Recover = true
-                }
-            }
-        });
-        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
-        SetWearEffects(gameObject, hitWood, breakWood);
-        PieceManager.Instance.AddPiece(customPiece);
-    }
-
-    public static void AddPieceVillageHouseDoor()
-    {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_village_house_door");
-        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
-        {
-            CraftingStation = "piece_workbench",
-            PieceTable = "_HammerPieceTable",
-            Category = "CoreWood-Fortified",
-            Usage = new[] { PieceUsages.Building },
-            Requirements = new RequirementConfig[2]
-            {
-                new RequirementConfig
-                {
-                    Item = "RoundLog",
-                    Amount = 1,
-                    Recover = true
-                },
-                new RequirementConfig
-                {
-                    Item = "Wood",
-                    Amount = 6,
-                    Recover = true
-                }
-            }
-        });
-        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
-        SetWearEffects(gameObject, hitWood, breakWood);
-        SetDoorEffects(gameObject, doorOpen, doorClose);
-        PieceManager.Instance.AddPiece(customPiece);
-    }
-
 
 
 

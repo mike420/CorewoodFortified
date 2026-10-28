@@ -91,6 +91,7 @@
     <Compile Include="Turrets\TurretAiming.cs" />
     <Compile Include="Turrets\TurretAutoReload.cs" />
     <Compile Include="Turrets\TurretFriendlyFire.cs" />
+    <Compile Include="Turrets\TurretMeteorProof.cs" />
     <Compile Include="Turrets\TurretMover.cs" />
     <Compile Include="Turrets\TurretPatches.cs" />
     <Compile Include="Turrets\TurretScanSound.cs" />

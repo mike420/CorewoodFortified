@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.0.8</td>
+    <td>
+        <ul>
+            <li>Fortified Ballistas and Organ Cannons now take no damage from meteors, such as the meteor showers from Deep North, so they no longer get destroyed on your towers while a shower rains on your base.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.0.7</td>
     <td>
         <ul>
