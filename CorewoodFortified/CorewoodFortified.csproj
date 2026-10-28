@@ -44,7 +44,10 @@
     <StartWorkingDirectory>$(VALHEIM_INSTALL)</StartWorkingDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Assets\Translations\English\CorewoodFortified.json" />
+    <EmbeddedResource Include="Assets\Translations\English\CorewoodFortified.json">
+      <LogicalName>translations/English.json</LogicalName>
+    </EmbeddedResource>
+    <None Include="Assets\Translations\**\CorewoodFortified.json" Exclude="Assets\Translations\English\CorewoodFortified.json" />
     <None Include="Resources\corewood_fortified" />
   </ItemGroup>
   <ItemGroup>
@@ -54,8 +57,8 @@
     <Compile Include="Patches\LegacyAutoJump.cs" />
     <Compile Include="Patches\MonoUpdatersPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translations.cs" />
     <Compile Include="Properties\IgnoreAccessModifiers.cs" />
-    <Compile Include="FileWatcher.cs" />
     <Compile Include="LocalisedText.cs" />
     <Compile Include="Elevators\LoopingSound.cs" />
     <Compile Include="MainConfig.cs" />
@@ -169,9 +172,9 @@
   <Target Name="CopyOutputAssets" AfterTargets="CopyOutputDLL">
     <Error Text="Assets directory not found." Condition="!Exists('$(AssetsDir)')" />
     <ItemGroup>
-      <LanguageFiles Include="$(AssetsDir)\Translations\English\CorewoodFortified.json" Condition="Exists('$(AssetsDir)\Translations\English\CorewoodFortified.json')" />
+      <LanguageFiles Include="$(AssetsDir)\Translations\**\CorewoodFortified.json" />
     </ItemGroup>
-    <Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(MOD_CONFIGPATH)\CorewoodFortified\Translations\English" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="@(LanguageFiles)" DestinationFiles="@(LanguageFiles->'$(MOD_CONFIGPATH)\CorewoodFortified\Translations\%(RecursiveDir)%(Filename)%(Extension)')" OverwriteReadOnlyFiles="true" />
   </Target>
   <UsingTask TaskName="WriteManifestFile" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
@@ -214,7 +217,7 @@ System.IO.File.WriteAllText(ManifestFile, content);
     <Error Text="manifest.json not found in Package directory." Condition="!Exists('$(ProjectDir)Package\manifest.json')" />
     <Error Text="icon.png not found in Package directory. Please note that Thunderstore requires this image to be 256x256 in dimension" Condition="!Exists('$(ProjectDir)Package\icon.png')" />
     <ItemGroup>
-      <LanguageFiles Include="$(AssetsDir)\Translations\English\CorewoodFortified.json" Condition="Exists('$(AssetsDir)\Translations\English\CorewoodFortified.json')" />
+      <LanguageFiles Include="$(AssetsDir)\Translations\**\CorewoodFortified.json" />
       <PluginFiles Include="$(TargetDir)$(AssemblyName).dll" Condition="Exists('$(TargetDir)$(AssemblyName).dll')" />
       <PluginFiles Include="$(ProjectDir)Resources\corewood_fortified" />
       <PackageFiles Include="$(ProjectDir)Package\CHANGELOG.md" Condition="Exists('$(ProjectDir)Package\CHANGELOG.md')" />
@@ -223,7 +226,7 @@ System.IO.File.WriteAllText(ManifestFile, content);
       <PackageFiles Include="$(ProjectDir)Package\icon.png" Condition="Exists('$(ProjectDir)Package\icon.png')" />
     </ItemGroup>
     <MakeDir Directories="$(ThunderPackage)" />
-    <Copy SourceFiles="@(LanguageFiles)" DestinationFolder="$(ThunderPackage)\config\CorewoodFortified\Translations\English" />
+    <Copy SourceFiles="@(LanguageFiles)" DestinationFiles="@(LanguageFiles->'$(ThunderPackage)\config\CorewoodFortified\Translations\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(ThunderPackage)\plugins" />
     <Copy SourceFiles="@(PackageFiles)" DestinationFolder="$(ThunderPackage)" />
     <ZipDirectory SourceDirectory="$(ThunderPackage)" DestinationFile="$(ProjectDir)ThunderStore\$(PackageName).zip" Overwrite="true" />

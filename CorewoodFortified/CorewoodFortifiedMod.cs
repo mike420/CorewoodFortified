@@ -24,19 +24,12 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
     internal const string PluginCopy = "Copyright © MagicMike 2026";
     public const string PluginLink = "https://discord.gg/mnr36G6J4x";
 
-    private static char pds = Path.DirectorySeparatorChar;
-    public static readonly string _basePath = BepInEx.Paths.ConfigPath + pds + "CorewoodFortified";
-    public static readonly string TranslationFilePath = _basePath + pds + "Translations";
-
     public static CorewoodFortifiedMod plugininstance;
 
     public static AssetBundle cwfortified;
     public static string newBundle = "corewood_fortified";
 
     private Harmony harmony;
-
-    private volatile bool translationsChanged;
-    private float translationReloadAt = -1f;
 
     public void Awake()
     {
@@ -48,25 +41,7 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
 
         if (MainConfig.modEnabled.Value)
         {
-            CheckForFolders();
-            // A broken translation file must not stop the pieces loading; the built-in English names cover it
-            try
-            {
-                LoadLocalisationData(TranslationFilePath);
-            }
-            catch (Exception ex)
-            {
-                Jotunn.Logger.LogWarning("[CorewoodFortified] Could not load the translation files: " + ex.Message);
-            }
-            int missing = LocalisedText.AddMissingLocalisations();
-            if (missing > 0)
-            {
-                Jotunn.Logger.LogWarning("[CorewoodFortified] " + missing + " English translation(s) missing from " + TranslationFilePath + ", using built-in names for them.");
-            }
-            FileWatcher.WatchTranslationChanges(TranslationFilePath, delegate
-            {
-                translationsChanged = true;
-            });
+            Translations.Load(this);
 
             if (!LoadAssetBundles())
             {
@@ -86,61 +61,13 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
 
     public void Update()
     {
-        ReloadTranslationsIfChanged();
+        Translations.Tick();
         TurretMover.Tick();
     }
 
-    private void ReloadTranslationsIfChanged()
+    public void OnDestroy()
     {
-        if (translationsChanged)
-        {
-            translationsChanged = false;
-            translationReloadAt = Time.time + 0.5f;
-        }
-        if (translationReloadAt >= 0f && Time.time >= translationReloadAt)
-        {
-            translationReloadAt = -1f;
-            try
-            {
-                LocalisedText.Reload(() => LoadLocalisationData(TranslationFilePath));
-            }
-            catch (Exception ex)
-            {
-                Jotunn.Logger.LogWarning("[CorewoodFortified] Could not apply the reloaded translations: " + ex.Message);
-            }
-        }
-    }
-
-    public static void CheckForFolders()
-    {
-        if (!Directory.Exists(_basePath))
-        {
-            Jotunn.Logger.LogInfo("Creating CorewoodFortified directory");
-            Directory.CreateDirectory(_basePath);
-        }
-        if (!Directory.Exists(TranslationFilePath))
-        {
-            Jotunn.Logger.LogInfo("Creating Translations folder");
-            Directory.CreateDirectory(TranslationFilePath);
-        }
-    }
-
-    public void LoadLocalisationData(string directory)
-    {
-        string[] fileSystemEntries = Directory.GetFileSystemEntries(directory, "*.json", SearchOption.AllDirectories);
-        string root = Path.GetFullPath(directory).TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-        foreach (string path in fileSystemEntries)
-        {
-            // The language comes from the folder name, so a file sitting directly in Translations has none
-            string folder = Path.GetDirectoryName(Path.GetFullPath(path));
-            if (string.Equals(folder, root, StringComparison.OrdinalIgnoreCase))
-            {
-                Jotunn.Logger.LogWarning("[CorewoodFortified] Skipping " + path + ": translation files must be in a language folder, e.g. Translations" + pds + "English.");
-                continue;
-            }
-            string language = new DirectoryInfo(folder).Name;
-            LocalisedText.Localization.AddJsonFile(language, File.ReadAllText(path));
-        }
+        Translations.Unload();
     }
 
 
