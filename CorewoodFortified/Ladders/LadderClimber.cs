@@ -129,6 +129,9 @@ internal static class LadderClimber
 
 	private static ClimbGait s_gait;
 
+	// Metres climbed towards the next raise of the Climbing skill
+	private static float s_climbed;
+
 	private static readonly List<Vector3> s_route = new List<Vector3>();
 
 	private static readonly List<Collider> s_ignored = new List<Collider>();
@@ -265,6 +268,7 @@ internal static class LadderClimber
 		s_lastTarget = feet;
 		s_speed = 0f;
 		s_gait = ClimbGait.Hold;
+		s_climbed = 0f;
 		s_toldNoTop = false;
 		s_nextTopCheck = 0f;
 		BeginRoute();
@@ -400,7 +404,7 @@ internal static class LadderClimber
 	private static bool StillClimbing()
 	{
 		Player player = s_player;
-		if (player == null || s_body == null || s_body.isKinematic)
+		if (player == null || s_body == null || s_body.isKinematic || !MainConfig.enableLadders.Value)
 		{
 			return false;
 		}
@@ -439,15 +443,27 @@ internal static class LadderClimber
 		}
 		else if (s_player.m_run && input != 0f)
 		{
-			float stamina = MainConfig.ladderFastClimbStamina.Value * dt;
+			// Run climbs faster, or from the Climbing skill's slide level slides down
+			bool slide = input < 0f && ClimbingSkill.Level(s_player) >= MainConfig.ladderSlideSkillLevel.Value;
+			float perSecond = slide ? MainConfig.ladderSlideStamina.Value : MainConfig.ladderFastClimbStamina.Value;
+			float stamina = perSecond * ClimbingSkill.StaminaScale(s_player) * dt;
 			if (stamina <= 0f || s_player.HaveStamina(stamina))
 			{
 				if (stamina > 0f)
 				{
 					s_player.UseStamina(stamina);
 				}
-				speed = MainConfig.ladderFastClimbSpeed.Value;
-				s_gait = ClimbGait.Fast;
+				if (slide)
+				{
+					speed = MainConfig.ladderSlideSpeed.Value;
+					input = -1f;
+					s_gait = ClimbGait.Slide;
+				}
+				else
+				{
+					speed = MainConfig.ladderFastClimbSpeed.Value;
+					s_gait = ClimbGait.Fast;
+				}
 			}
 		}
 		float v = input * speed;
@@ -486,6 +502,13 @@ internal static class LadderClimber
 			s_gait = ClimbGait.Hold;
 		}
 		MoveTo(LanePoint(next), dt);
+		s_climbed += Mathf.Abs(next - y);
+		if (s_climbed >= 1f)
+		{
+			int metres = (int)s_climbed;
+			s_climbed -= metres;
+			ClimbingSkill.Raise(s_player, metres);
+		}
 	}
 
 	// Forward on the keys or stick climbs up, whichever way the camera looks
@@ -665,7 +688,13 @@ internal static class LadderClimber
 		{
 			Hud.instance.StaminaBarEmptyFlash();
 		}
-		Stop(strong ? Exit.Jump : Exit.Drop, strong ? direction * 3f + Vector3.up * 5f : direction);
+		// The Jump skill pushes off up to 40% harder, and jumping off raises it
+		float power = 1f + s_player.GetSkillFactor(Skills.SkillType.Jump) * 0.4f;
+		if (strong)
+		{
+			s_player.RaiseSkill(Skills.SkillType.Jump);
+		}
+		Stop(strong ? Exit.Jump : Exit.Drop, strong ? (direction * 3f + Vector3.up * 5f) * power : direction);
 	}
 
 	private static void Stop(Exit exit, Vector3 velocity = default)
@@ -811,7 +840,7 @@ internal static class LadderClimber
 				motion = PresentedMotion.TopFinish;
 				break;
 			default:
-				motion = s_gait == ClimbGait.Fast ? PresentedMotion.Fast : s_gait == ClimbGait.Normal ? PresentedMotion.Climb : PresentedMotion.Hold;
+				motion = s_gait == ClimbGait.Slide ? PresentedMotion.Slide : s_gait == ClimbGait.Fast ? PresentedMotion.Fast : s_gait == ClimbGait.Normal ? PresentedMotion.Climb : PresentedMotion.Hold;
 				break;
 			}
 			bool routing = s_stage != Stage.Climbing;
@@ -1038,7 +1067,7 @@ internal static class LadderClimber
 		{
 			PresentedMotion motion = (PresentedMotion)zdo.GetInt(s_keyMotion);
 			ClimbGait gait = (ClimbGait)zdo.GetInt(s_keyGait);
-			bool climbing = motion == PresentedMotion.Climb || motion == PresentedMotion.Fast || motion == PresentedMotion.Hold;
+			bool climbing = motion == PresentedMotion.Climb || motion == PresentedMotion.Fast || motion == PresentedMotion.Slide || motion == PresentedMotion.Hold;
 			Vector3 feet = player.transform.position;
 			float step = climbing && climb.LastClimbing ? feet.y - climb.LastY : 0f;
 			climb.Travel += step;

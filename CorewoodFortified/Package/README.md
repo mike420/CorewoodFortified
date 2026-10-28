@@ -203,7 +203,8 @@ Tie a rope between two zipline posts and ride it, hanging from a trolley.
   * Press Use on a ladder to get on, from the ground, part way up, or from the floor at the top. You can climb either side.
   * Forward climbs up and Backward climbs down, whichever way you are looking. Hold Run to climb faster, which uses stamina. Carrying too much halves your speed.
   * At the top you step off onto the floor across the ladder, if there is room to stand. At the bottom you step off onto the ground.
-  * Jump pushes off the ladder, the way you are holding or straight back. Crouch drops you, and Use lets go.
+  * Jump pushes off the ladder, the way you are holding or straight back. Your Jump skill makes the push stronger, by up to 40%, and jumping off raises it. Crouch drops you, and Use lets go.
+  * Climbing has its own skill, raised by every metre you climb. It makes climbing fast cheaper on stamina, by up to 25% at level 100. From level 20, holding Run while climbing down slides you down the ladder.
   * Stack ladders on each other's snap points, 2m and 3m in any mix, and they climb as one ladder.
   * The ladder's own height never counts as a fall: fall damage starts from where you leave it.
   * Other players see your hands and feet on the rungs too.
@@ -327,9 +328,13 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 
 **Ladders** (synced from the server)
 
+  * **Enable Ladders** (default `true`): if off, ladders are hidden from the build menu, and placed ladders stay but cannot be climbed. Anyone on a ladder lets go.
   * **Climb Speed** (default `0.9`): how fast you climb up and down, in metres per second, from 0.3 to 4. The climbing animation is made for 0.9.
   * **Fast Climb Speed** (default `1.2`): how fast you climb while holding Run, in metres per second, from 0.3 to 6. The climbing animation is made for 1.2.
-  * **Fast Climb Stamina** (default `8`): stamina used per second while climbing fast, from 0 to 30. 0 is free. Out of stamina, you climb at the normal speed.
+  * **Fast Climb Stamina** (default `8`): stamina used per second while climbing fast, from 0 to 30, up to 25% less with the Climbing skill. 0 is free. Out of stamina, you climb at the normal speed.
+  * **Slide Skill Level** (default `20`): the Climbing skill level from which holding Run while climbing down slides you down, from 0 to 100. 0 lets anyone slide.
+  * **Slide Speed** (default `4.5`): how fast you slide down, in metres per second, from 1 to 10.
+  * **Slide Stamina** (default `2`): stamina used per second while sliding, from 0 to 30, up to 25% less with the Climbing skill. 0 is free. Out of stamina, you climb down at the normal speed.
 
 **Ladders** (each player's own)
 

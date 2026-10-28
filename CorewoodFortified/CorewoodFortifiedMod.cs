@@ -49,6 +49,7 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
                 return;
             }
             AddFXAssets();
+            ClimbingSkill.Register();
 
             PrefabManager.OnVanillaPrefabsAvailable += LoadCoreWoodFortified;
 

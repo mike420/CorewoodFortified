@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using HarmonyLib;
 using UnityEngine;
 
 namespace CorewoodFortified;
@@ -55,6 +56,10 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 	public string GetHoverText()
 	{
 		string text = m_piece != null ? m_piece.m_name : "";
+		if (!MainConfig.enableLadders.Value)
+		{
+			return Localization.instance.Localize(text + "\n$text_ladders_disabled");
+		}
 		if (!IsValid)
 		{
 			return Localization.instance.Localize(text);
@@ -79,7 +84,7 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 
 	public bool Interact(Humanoid user, bool hold, bool alt)
 	{
-		if (hold || user == null || user != Player.m_localPlayer || !IsValid)
+		if (hold || user == null || user != Player.m_localPlayer || !IsValid || !MainConfig.enableLadders.Value)
 		{
 			return false;
 		}
@@ -134,5 +139,29 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 			}
 		}
 		return null;
+	}
+
+	// Hides the ladders from the build menu while ladders are turned off; placed ones stay but cannot be climbed
+	[HarmonyPatch(typeof(PieceTable), nameof(PieceTable.UpdateAvailable))]
+	private static class PieceTableUpdateAvailablePatch
+	{
+		private static void Postfix(PieceTable __instance)
+		{
+			if (MainConfig.enableLadders.Value)
+			{
+				return;
+			}
+			__instance.m_availablePieces.RemoveWhere(IsLadder);
+			__instance.m_enabledPieces.RemoveWhere(IsLadder);
+			foreach (List<Piece> category in __instance.m_availablePiecesByCategory)
+			{
+				category.RemoveAll(IsLadder);
+			}
+		}
+	}
+
+	private static bool IsLadder(Piece piece)
+	{
+		return piece != null && piece.GetComponent<Ladder>() != null;
 	}
 }
