@@ -24,16 +24,22 @@ internal static class ZiplineMessages
 		case Level.All:
 			if (!string.IsNullOrEmpty(full))
 			{
-				player.Message(fullType, full);
+				player.Message(fullType, Localise(full));
 			}
 			break;
 		default:
 			if (!string.IsNullOrEmpty(brief))
 			{
-				player.Message(MessageHud.MessageType.TopLeft, brief);
+				player.Message(MessageHud.MessageType.TopLeft, Localise(brief));
 			}
 			break;
 		}
+	}
+
+	// Translated here as well as by the message box, so the $KEY_ names inside a translated text become the bound keys
+	private static string Localise(string text)
+	{
+		return Localization.instance != null ? Localization.instance.Localize(text) : text;
 	}
 
 	public static void LogInfo(string text)

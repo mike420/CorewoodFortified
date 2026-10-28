@@ -493,6 +493,13 @@ For Nexus downloads you will need to install manually.
 [/list]
 
 
+[size=5][b]Credits[/b][/size]
+
+[list]
+[*][b]Ladder climbing[/b] and its climbing animation are ported from The Concerned Cat's [url=https://github.com/Weakened/ConcernedCatMods]Concerned Ladders[/url].
+[/list]
+
+
 [size=5][b]Plugins Created by Magic Mike[/b][/size]
 
 [list]

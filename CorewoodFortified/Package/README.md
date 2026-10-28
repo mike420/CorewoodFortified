@@ -423,6 +423,12 @@ For Nexus downloads you will need to install manually.
 
 <br>
 
+## 🙏 Credits:
+
+  * **Ladder climbing** and its climbing animation are ported from The Concerned Cat's <a href="https://github.com/Weakened/ConcernedCatMods">Concerned Ladders</a>.
+
+<br>
+
 ## 💥 Plugins Created by Magic Mike:
   * <a href="https://thunderstore.io/c/valheim/p/MagicMike/CoreWoodExtras/">Corewood Extras</a>
   * <a href="https://thunderstore.io/c/valheim/p/MagicMike/CorewoodFortified/">Corewood Fortified</a>

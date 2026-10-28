@@ -274,7 +274,8 @@ internal static class LadderClimber
 		if (!s_toldControls)
 		{
 			s_toldControls = true;
-			player.Message(MessageHud.MessageType.TopLeft, "$text_ladder_controls");
+			// Translated here as well as by the message box, so the $KEY_ names inside the translated text become the bound keys
+			player.Message(MessageHud.MessageType.TopLeft, Localization.instance.Localize("$text_ladder_controls"));
 		}
 		return true;
 	}
