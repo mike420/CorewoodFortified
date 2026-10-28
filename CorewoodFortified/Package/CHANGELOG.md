@@ -11,6 +11,7 @@
     <td>
         <ul>
             <li>Fortified Ballistas and Organ Cannons now take no damage from meteors, such as the meteor showers from Deep North, so they no longer get destroyed on your towers while a shower rains on your base.</li>
+            <li>New: translations in nine languages: English, Russian, German, Chinese, Brazilian Portuguese, Spanish, French, Polish and Turkish. The files are in BepInEx\config\CorewoodFortified\Translations, one folder per language, and you can edit them. Changes show in game straight away, with no restart. Any text missing from a file falls back to English.</li>
         </ul>
     </td>
   </tr>
