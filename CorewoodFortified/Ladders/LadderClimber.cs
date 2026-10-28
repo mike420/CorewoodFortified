@@ -28,6 +28,26 @@ internal static class LadderClimber
 		Jump
 	}
 
+	// Another player's climb as animated here
+	private sealed class RemoteClimb
+	{
+		internal int Session;
+
+		internal LadderGeometry Geometry;
+
+		internal RungProfile[] Profiles;
+
+		internal LadderFace Face;
+
+		internal float Travel;
+
+		internal float LastY;
+
+		internal bool LastClimbing;
+
+		internal bool Broken;
+	}
+
 	// The body keeps this far, plus its radius, from the middle of the rungs: where the animation's hands reach
 	private const float LaneFromRungs = 0.14f;
 
@@ -135,6 +155,31 @@ internal static class LadderClimber
 
 	private static bool s_lastSampleClimbing;
 
+	private static ZDOID s_shareLadder;
+
+	private static readonly Dictionary<Player, RemoteClimb> s_remote = new Dictionary<Player, RemoteClimb>();
+
+	private static readonly HashSet<Player> s_seen = new HashSet<Player>();
+
+	private static readonly List<Player> s_gone = new List<Player>();
+
+	// The shared climb, on the climber's player data. A session of 0 means not climbing, or climbing unanimated
+	private static readonly int s_keySession = "cwf_climb_session".GetStableHashCode();
+
+	private static readonly KeyValuePair<int, int> s_keyLadder = ZDO.GetHashZDOID("cwf_climb_ladder");
+
+	private static readonly int s_keyFace = "cwf_climb_face".GetStableHashCode();
+
+	private static readonly int s_keyMotion = "cwf_climb_motion".GetStableHashCode();
+
+	private static readonly int s_keyGait = "cwf_climb_gait".GetStableHashCode();
+
+	private static readonly int s_keyFrom = "cwf_climb_from".GetStableHashCode();
+
+	private static readonly int s_keyTo = "cwf_climb_to".GetStableHashCode();
+
+	private static readonly int s_keyProgress = "cwf_climb_progress".GetStableHashCode();
+
 	private static int SolidMask
 	{
 		get
@@ -225,7 +270,7 @@ internal static class LadderClimber
 		BeginRoute();
 		IgnoreRunCollisions(collider);
 		s_stage = Stage.Mounting;
-		BeginPresentation(forward);
+		BeginPresentation(ladder);
 		if (!s_toldControls)
 		{
 			s_toldControls = true;
@@ -674,43 +719,72 @@ internal static class LadderClimber
 	}
 
 	// Sets up the climbing animation for this climb, which falls back to the walking pose if it cannot run
-	private static void BeginPresentation(Vector3 forward)
+	private static void BeginPresentation(Ladder anchor)
 	{
 		s_animating = false;
-		if (!MainConfig.ladderClimbAnimation.Value || s_presenterFailed)
+		if (!MainConfig.ladderClimbAnimation.Value || !EnsurePresenter())
 		{
 			return;
 		}
-		Ladder bottom = s_run[0];
-		Ladder top = s_run[s_run.Count - 1];
-		ClimbPoint low = new ClimbPoint(s_column.x, bottom.Bottom.y, s_column.z);
-		ClimbPoint high = new ClimbPoint(s_column.x, top.Top.y, s_column.z);
-		if (!LadderGeometry.TryMeasure(low, high, ClimbHeading.FromXz(forward.x, forward.z), 0.8f, RungPitch, out s_geometry))
+		if (!TryMeasure(anchor, s_run, out s_geometry, out s_profiles, out Vector3 forward))
 		{
 			return;
 		}
 		s_face = Vector3.Dot(s_out, forward) >= 0f ? LadderFace.Front : LadderFace.Rear;
-		s_profiles = new RungProfile[s_run.Count];
-		for (int i = 0; i < s_run.Count; i++)
-		{
-			s_profiles[i] = new RungProfile(s_run[i].Bottom.y, s_run[i].Top.y, RungHalfHeight, RungHalfDepth, 0f);
-		}
-		if (s_presenter == null)
-		{
-			s_presenter = new OriginalClimbPresenter(message => Jotunn.Logger.LogDebug("[CorewoodFortified] " + message));
-			if (!s_presenter.Install(CorewoodFortifiedMod.PluginGUID + ".ladderanimation"))
-			{
-				s_presenter = null;
-				s_presenterFailed = true;
-				Jotunn.Logger.LogWarning("[CorewoodFortified] The ladder climbing animation could not start; ladders are climbed in the walking pose.");
-				return;
-			}
-		}
 		s_session++;
 		s_travel = 0f;
 		s_lastSampleY = s_body.position.y;
 		s_lastSampleClimbing = false;
+		s_shareLadder = anchor.ZdoId;
 		s_animating = true;
+	}
+
+	private static bool EnsurePresenter()
+	{
+		if (s_presenterFailed)
+		{
+			return false;
+		}
+		if (s_presenter != null)
+		{
+			return true;
+		}
+		s_presenter = new OriginalClimbPresenter(message => Jotunn.Logger.LogDebug("[CorewoodFortified] " + message));
+		if (s_presenter.Install(CorewoodFortifiedMod.PluginGUID + ".ladderanimation"))
+		{
+			return true;
+		}
+		s_presenter = null;
+		s_presenterFailed = true;
+		Jotunn.Logger.LogWarning("[CorewoodFortified] The ladder climbing animation could not start; ladders are climbed in the walking pose.");
+		return false;
+	}
+
+	// The run's shape and rungs as the animation sees them, the same on every machine for the same ladders
+	private static bool TryMeasure(Ladder anchor, List<Ladder> run, out LadderGeometry geometry, out RungProfile[] profiles, out Vector3 forward)
+	{
+		geometry = default;
+		profiles = null;
+		forward = anchor.transform.forward;
+		forward.y = 0f;
+		if (forward.sqrMagnitude < 0.0001f)
+		{
+			return false;
+		}
+		forward.Normalize();
+		Vector3 column = anchor.Bottom;
+		ClimbPoint low = new ClimbPoint(column.x, run[0].Bottom.y, column.z);
+		ClimbPoint high = new ClimbPoint(column.x, run[run.Count - 1].Top.y, column.z);
+		if (!LadderGeometry.TryMeasure(low, high, ClimbHeading.FromXz(forward.x, forward.z), 0.8f, RungPitch, out geometry))
+		{
+			return false;
+		}
+		profiles = new RungProfile[run.Count];
+		for (int i = 0; i < run.Count; i++)
+		{
+			profiles[i] = new RungProfile(run[i].Bottom.y, run[i].Top.y, RungHalfHeight, RungHalfDepth, 0f);
+		}
+		return true;
 	}
 
 	private static void Present()
@@ -740,17 +814,15 @@ internal static class LadderClimber
 				break;
 			}
 			bool routing = s_stage != Stage.Climbing;
-			Vector3 end = routing && s_route.Count > 0 ? s_route[s_route.Count - 1] : position;
+			Vector3 from = routing ? s_routeStart : position;
+			Vector3 to = routing && s_route.Count > 0 ? s_route[s_route.Count - 1] : position;
+			float progress = routing ? RouteProgress() : -1f;
 			Player player = s_player;
 			bool placing = player.InPlaceMode();
-			NativeActionParts native = player.InMinorAction()
-				? NativeActionParts.LeftArm | NativeActionParts.RightArm | NativeActionParts.UpperBody
-				: placing ? NativeActionParts.RightArm : NativeActionParts.None;
 			bool menu = !player.TakeInput() || InventoryGui.IsVisible() || Hud.InRadial() || Hud.IsPieceSelectionVisible();
-			int lastRung = ClimbPresentationFrame.LastRungOf(s_geometry.Height, RungOrigin, s_geometry.RungPitch);
-			ClimbPresentationFrame frame = new ClimbPresentationFrame(s_session, 0, 0, ++s_sample, Time.fixedTime, motion, s_gait, s_travel, step,
-				Point(position), s_geometry, s_face, 0f, RungOrigin, lastRung, routing ? RouteProgress() : -1f,
-				Point(routing ? s_routeStart : position), Point(end), native, placing, menu, s_profiles);
+			Share(player, motion, from, to, progress);
+			ClimbPresentationFrame frame = Frame(s_session, motion, s_gait, s_travel, step, position, s_geometry, s_face, progress, from, to,
+				Native(player, placing), placing, menu, s_profiles);
 			s_presenter.Publish(player, in frame);
 		}
 		catch (Exception ex)
@@ -759,8 +831,28 @@ internal static class LadderClimber
 		}
 	}
 
+	private static ClimbPresentationFrame Frame(int session, PresentedMotion motion, ClimbGait gait, float travel, float step, Vector3 feet,
+		LadderGeometry geometry, LadderFace face, float progress, Vector3 from, Vector3 to, NativeActionParts native, bool placing, bool menu,
+		RungProfile[] profiles)
+	{
+		int lastRung = ClimbPresentationFrame.LastRungOf(geometry.Height, RungOrigin, geometry.RungPitch);
+		return new ClimbPresentationFrame(session, 0, 0, ++s_sample, Time.fixedTime, motion, gait, travel, step, Point(feet), geometry, face, 0f,
+			RungOrigin, lastRung, progress, Point(from), Point(to), native, placing, menu, profiles);
+	}
+
+	// Arms and body left to the game's own animation while the player uses or builds something
+	private static NativeActionParts Native(Player player, bool placing)
+	{
+		if (player.InMinorAction())
+		{
+			return NativeActionParts.LeftArm | NativeActionParts.RightArm | NativeActionParts.UpperBody;
+		}
+		return placing ? NativeActionParts.RightArm : NativeActionParts.None;
+	}
+
 	private static void EndPresentation(Player player, Exit exit)
 	{
+		ClearShare(player);
 		if (!s_animating)
 		{
 			return;
@@ -776,12 +868,14 @@ internal static class LadderClimber
 		}
 	}
 
-	// The climb goes on in the walking pose for the rest of the session
+	// The climb goes on in the walking pose for the rest of the session, and other climbers are seen that way too
 	private static void PresentationFailed(Exception ex)
 	{
 		Jotunn.Logger.LogWarning("[CorewoodFortified] The ladder climbing animation stopped, climbing in the walking pose from now on: " + ex.Message);
 		s_animating = false;
 		s_presenterFailed = true;
+		ClearShare(s_player);
+		s_remote.Clear();
 		OriginalClimbPresenter presenter = s_presenter;
 		s_presenter = null;
 		try
@@ -790,6 +884,207 @@ internal static class LadderClimber
 		}
 		catch
 		{
+		}
+	}
+
+	// What other players need to animate this climb, on the climber's own player data: the ladder, the face, the
+	// motion and how far through getting on or off. The position comes with the player as always
+	private static void Share(Player player, PresentedMotion motion, Vector3 from, Vector3 to, float progress)
+	{
+		ZDO zdo = player.m_nview != null && player.m_nview.IsValid() && player.m_nview.IsOwner() ? player.m_nview.GetZDO() : null;
+		if (zdo == null)
+		{
+			return;
+		}
+		if (zdo.GetInt(s_keySession) != s_session)
+		{
+			zdo.Set(s_keyLadder, s_shareLadder);
+			zdo.Set(s_keyFace, (int)s_face);
+			zdo.Set(s_keySession, s_session);
+		}
+		SetIfChanged(zdo, s_keyMotion, (int)motion);
+		SetIfChanged(zdo, s_keyGait, (int)s_gait);
+		if (progress >= 0f)
+		{
+			if (zdo.GetVec3(s_keyFrom, Vector3.zero) != from)
+			{
+				zdo.Set(s_keyFrom, from);
+			}
+			if (zdo.GetVec3(s_keyTo, Vector3.zero) != to)
+			{
+				zdo.Set(s_keyTo, to);
+			}
+		}
+		if (Mathf.Abs(zdo.GetFloat(s_keyProgress, -1f) - progress) > 0.001f)
+		{
+			zdo.Set(s_keyProgress, progress);
+		}
+	}
+
+	private static void SetIfChanged(ZDO zdo, int key, int value)
+	{
+		if (zdo.GetInt(key) != value)
+		{
+			zdo.Set(key, value);
+		}
+	}
+
+	private static void ClearShare(Player player)
+	{
+		try
+		{
+			if (player != null && player.m_nview != null && player.m_nview.IsValid() && player.m_nview.IsOwner())
+			{
+				ZDO zdo = player.m_nview.GetZDO();
+				if (zdo.GetInt(s_keySession) != 0)
+				{
+					zdo.Set(s_keySession, 0);
+				}
+			}
+		}
+		catch (Exception ex)
+		{
+			Jotunn.Logger.LogDebug("[CorewoodFortified] Clearing the shared ladder climb failed: " + ex.Message);
+		}
+	}
+
+	// Called every physics step: animates other players on ladders from the climbs they share
+	internal static void FixedTick()
+	{
+		if (ZNet.instance == null || ZNetScene.instance == null || Player.m_localPlayer == null)
+		{
+			s_remote.Clear();
+			return;
+		}
+		if (!MainConfig.ladderClimbAnimation.Value || s_presenterFailed)
+		{
+			EndAllRemote();
+			return;
+		}
+		s_seen.Clear();
+		foreach (Player player in Player.GetAllPlayers())
+		{
+			if (player == null || (object)player == Player.m_localPlayer || player.m_nview == null || !player.m_nview.IsValid())
+			{
+				continue;
+			}
+			s_seen.Add(player);
+			ZDO zdo = player.m_nview.GetZDO();
+			int session = zdo.GetInt(s_keySession);
+			s_remote.TryGetValue(player, out RemoteClimb climb);
+			if (climb != null && climb.Session != session)
+			{
+				EndRemote(player);
+				climb = null;
+			}
+			if (session == 0)
+			{
+				continue;
+			}
+			if (climb == null)
+			{
+				climb = BeginRemote(player, zdo, session);
+				if (climb == null)
+				{
+					continue;
+				}
+			}
+			if (!climb.Broken)
+			{
+				PresentRemote(player, zdo, climb);
+			}
+		}
+		if (s_remote.Count > 0)
+		{
+			s_gone.Clear();
+			foreach (Player player in s_remote.Keys)
+			{
+				if (player == null || !s_seen.Contains(player))
+				{
+					s_gone.Add(player);
+				}
+			}
+			foreach (Player player in s_gone)
+			{
+				s_remote.Remove(player);
+			}
+		}
+	}
+
+	// Waits until the ladder the other player is on has loaded here
+	private static RemoteClimb BeginRemote(Player player, ZDO zdo, int session)
+	{
+		ZDOID id = zdo.GetZDOID(s_keyLadder);
+		GameObject instance = id.IsNone() ? null : ZNetScene.instance.FindInstance(id);
+		Ladder anchor = instance != null ? instance.GetComponent<Ladder>() : null;
+		if (anchor == null || !anchor.IsValid || !EnsurePresenter())
+		{
+			return null;
+		}
+		RemoteClimb climb = new RemoteClimb { Session = session, LastY = player.transform.position.y };
+		if (!TryMeasure(anchor, anchor.Run(), out climb.Geometry, out climb.Profiles, out _))
+		{
+			climb.Broken = true;
+		}
+		climb.Face = zdo.GetInt(s_keyFace) < 0 ? LadderFace.Rear : LadderFace.Front;
+		s_remote[player] = climb;
+		return climb;
+	}
+
+	private static void PresentRemote(Player player, ZDO zdo, RemoteClimb climb)
+	{
+		try
+		{
+			PresentedMotion motion = (PresentedMotion)zdo.GetInt(s_keyMotion);
+			ClimbGait gait = (ClimbGait)zdo.GetInt(s_keyGait);
+			bool climbing = motion == PresentedMotion.Climb || motion == PresentedMotion.Fast || motion == PresentedMotion.Hold;
+			Vector3 feet = player.transform.position;
+			float step = climbing && climb.LastClimbing ? feet.y - climb.LastY : 0f;
+			climb.Travel += step;
+			climb.LastY = feet.y;
+			climb.LastClimbing = climbing;
+			float progress = climbing ? -1f : Mathf.Clamp01(zdo.GetFloat(s_keyProgress, 0f));
+			Vector3 from = climbing ? feet : zdo.GetVec3(s_keyFrom, feet);
+			Vector3 to = climbing ? feet : zdo.GetVec3(s_keyTo, feet);
+			ClimbPresentationFrame frame = Frame(climb.Session, motion, gait, climb.Travel, step, feet, climb.Geometry, climb.Face, progress, from, to,
+				Native(player, placing: false), placing: false, menu: false, climb.Profiles);
+			s_presenter.Publish(player, in frame);
+		}
+		catch (Exception ex)
+		{
+			// Only this climb is shown in the walking pose; the next one tries again
+			climb.Broken = true;
+			Jotunn.Logger.LogDebug("[CorewoodFortified] Animating another player's ladder climb failed: " + ex.Message);
+		}
+	}
+
+	private static void EndRemote(Player player)
+	{
+		if (!s_remote.Remove(player))
+		{
+			return;
+		}
+		try
+		{
+			s_presenter?.End(player, ClimbEnd.Drop);
+		}
+		catch (Exception ex)
+		{
+			Jotunn.Logger.LogDebug("[CorewoodFortified] Ending another player's ladder climb failed: " + ex.Message);
+		}
+	}
+
+	private static void EndAllRemote()
+	{
+		if (s_remote.Count == 0)
+		{
+			return;
+		}
+		s_gone.Clear();
+		s_gone.AddRange(s_remote.Keys);
+		foreach (Player player in s_gone)
+		{
+			EndRemote(player);
 		}
 	}
 

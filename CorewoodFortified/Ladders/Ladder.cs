@@ -25,6 +25,8 @@ public class Ladder : MonoBehaviour, Hoverable, Interactable
 
 	internal Vector3 Top => transform.position + transform.up * m_height;
 
+	internal ZDOID ZdoId => m_nview != null && m_nview.IsValid() ? m_nview.GetZDO().m_uid : ZDOID.None;
+
 	internal bool IsValid => this != null && isActiveAndEnabled && m_nview != null && m_nview.IsValid() && Upright;
 
 	private bool Upright => Vector3.Dot(transform.up, Vector3.up) > 0.999f;

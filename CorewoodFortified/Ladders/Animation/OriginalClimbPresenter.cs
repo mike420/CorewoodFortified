@@ -326,9 +326,10 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 
 	private string? _failure;
 
-	private Player? _closedPlayer;
+	// The last session each player's climb ended on, so late frames from it do not start the pose again
+	private readonly Dictionary<Player, int> _closed = new Dictionary<Player, int>();
 
-	private int _closedSession;
+	private readonly List<Player> _closedGone = new List<Player>();
 
 	internal OriginalClimbPresenter(Action<string> log)
 	{
@@ -383,7 +384,7 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 		{
 			throw new InvalidOperationException("Original presentation disabled after an IK fault: " + _failure);
 		}
-		if (!_ready || _disposing || !LocalOwner(player) || ((object)player == _closedPlayer && frame.Session == _closedSession))
+		if (!_ready || _disposing || !Presentable(player) || (_closed.TryGetValue(player, out int closedSession) && frame.Session == closedSession))
 		{
 			return;
 		}
@@ -401,9 +402,9 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 			}
 			if (actor == null)
 			{
-				if (_actors.Count >= 2)
+				if (_actors.Count >= 32)
 				{
-					throw new InvalidOperationException("Unexpected local presentation actor count.");
+					throw new InvalidOperationException("Too many climbing players to present.");
 				}
 				OriginalRigBinding originalRigBinding = OriginalRigBinding.Create(player);
 				actor = new Actor(originalRigBinding);
@@ -542,8 +543,10 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 					ContactTrace.Flush();
 				}
 				value.Active = false;
-				_closedPlayer = value.Rig.Player;
-				_closedSession = value.Frame.Session;
+				if (value.Rig.Player != null)
+				{
+					_closed[value.Rig.Player] = value.Frame.Session;
+				}
 			}
 		}
 	}
@@ -568,7 +571,7 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 					MeasureContacts(value);
 				}
 			}
-			if (!value.Rig.Valid || !LocalOwner(value.Rig.Player) || Time.time - value.Seen > 1f)
+			if (!value.Rig.Valid || !Presentable(value.Rig.Player) || Time.time - value.Seen > 1f)
 			{
 				value.Active = false;
 			}
@@ -581,9 +584,20 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 		{
 			_actors.Remove(item);
 		}
-		if (_closedPlayer == null)
+		if (_closed.Count > 0)
 		{
-			_closedPlayer = null;
+			_closedGone.Clear();
+			foreach (Player player in _closed.Keys)
+			{
+				if (player == null)
+				{
+					_closedGone.Add(player);
+				}
+			}
+			foreach (Player player in _closedGone)
+			{
+				_closed.Remove(player);
+			}
 		}
 	}
 
@@ -721,7 +735,7 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 				return;
 			}
 		}
-		if (value.Active && current._ready && !current._disposing && LocalOwner(value.Rig.Player))
+		if (value.Active && current._ready && !current._disposing && Presentable(value.Rig.Player))
 		{
 			try
 			{
@@ -745,18 +759,15 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 		}
 	}
 
-	private static bool LocalOwner(Player player)
+	// Any loaded player: the local climber from its own frames, other players from the climb they share
+	private static bool Presentable(Player player)
 	{
-		if (player == null || player != Player.m_localPlayer)
+		if (player == null)
 		{
 			return false;
 		}
 		ZNetView component = player.GetComponent<ZNetView>();
-		if (component != null && component.IsValid())
-		{
-			return component.IsOwner();
-		}
-		return false;
+		return component != null && component.IsValid();
 	}
 
 	private static void Validate(in ClimbPresentationFrame frame)
@@ -792,7 +803,7 @@ internal sealed class OriginalClimbPresenter : IClimbPresenter, IDisposable
 		}
 		_actors.Clear();
 		_remove.Clear();
-		_closedPlayer = null;
+		_closed.Clear();
 		try
 		{
 			_harmony?.UnpatchSelf();

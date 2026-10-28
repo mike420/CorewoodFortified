@@ -66,6 +66,11 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
         LadderClimber.Tick();
     }
 
+    public void FixedUpdate()
+    {
+        LadderClimber.FixedTick();
+    }
+
     public void OnDestroy()
     {
         Translations.Unload();
