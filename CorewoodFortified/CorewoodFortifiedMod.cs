@@ -63,6 +63,7 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
     {
         Translations.Tick();
         TurretMover.Tick();
+        LadderClimber.Tick();
     }
 
     public void OnDestroy()

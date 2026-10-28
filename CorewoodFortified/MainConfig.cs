@@ -45,6 +45,11 @@ namespace CorewoodFortified
         public static ConfigEntry<ZiplineMessages.Level> ziplineMessages;
         public static ConfigEntry<float> ziplineSoundVolume;
 
+        public static ConfigEntry<float> ladderClimbSpeed;
+        public static ConfigEntry<float> ladderFastClimbSpeed;
+        public static ConfigEntry<float> ladderFastClimbStamina;
+        public static ConfigEntry<bool> ladderClimbAnimation;
+
         public static ConfigEntry<bool> enableTurrets;
         public static ConfigEntry<int> turretScanArc;
         public static ConfigEntry<float> turretSweepTime;
@@ -139,6 +144,11 @@ namespace CorewoodFortified
             ziplineGrabOnTouch = config.BindConfigInOrder("Ziplines", "Grab Rope In Mid-Air", defaultValue: true, "If On, jumping or falling into a zipline rope catches it and rides on in the direction you were going. If Off, you only get on at a post.", synced: false, sectionOrder: true, settingOrder: true);
             ziplineGroundAfterLogout = config.BindConfigInOrder("Ziplines", "Log Back In On The Ground", defaultValue: true, "If On, logging out while riding brings you back on the ground by a post of that rope, not in the air where you hung.", synced: false, sectionOrder: true, settingOrder: true);
             ziplineMessages = config.BindConfigInOrder("Ziplines", "Messages", defaultValue: ZiplineMessages.Level.Short, "Short: a few words in the top-left corner. All: the full help in the middle of the screen. Off: no messages.", synced: false, sectionOrder: true, settingOrder: true);
+
+            ladderClimbSpeed = config.BindConfigInOrder("Ladders", "Climb Speed", defaultValue: 0.9f, "How fast you climb up and down a ladder, in metres per second. The climbing animation is made for 0.9. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.3f, 4f));
+            ladderFastClimbSpeed = config.BindConfigInOrder("Ladders", "Fast Climb Speed", defaultValue: 1.2f, "How fast you climb while holding Run, in metres per second. The climbing animation is made for 1.2. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.3f, 6f));
+            ladderFastClimbStamina = config.BindConfigInOrder("Ladders", "Fast Climb Stamina", defaultValue: 8f, "Stamina used per second while climbing fast. 0 = free. Out of stamina, you climb at the normal speed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 30f));
+            ladderClimbAnimation = config.BindConfigInOrder("Ladders", "Climbing Animation", defaultValue: true, "If On, hands and feet take hold of the rungs as you climb. If Off, you climb in the walking pose.", synced: false, sectionOrder: true, settingOrder: true);
 
             enableTurrets = config.BindConfigInOrder("Fortified Ballista", "Enable Fortified Ballista", defaultValue: true, "If Off, the fortified ballista is hidden from the build menu, and placed ones stay but do not turn, fire or take bolts, by hand or from chests. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             turretScanArc = config.BindConfigInOrder("Fortified Ballista", "Scan Arc", defaultValue: 100, "How wide the fortified ballista sweeps while looking for a target, in degrees from one side to the other. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(10, 178));

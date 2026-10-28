@@ -52,6 +52,8 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkway4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCorner);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayTjunction);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceLadder2m);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceLadder3m);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceLarge);
@@ -1137,6 +1139,42 @@ internal class AddFortified
                 {
                     Item = "Wood",
                     Amount = 16,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceLadder2m()
+    {
+        AddPieceLadder("mm_corewood_fortified_ladder_2m", 2f, 2);
+    }
+
+    public static void AddPieceLadder3m()
+    {
+        AddPieceLadder("mm_corewood_fortified_ladder_3m", 3f, 3);
+    }
+
+    private static void AddPieceLadder(string prefabName, float height, int logs)
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
+        gameObject.AddComponent<Ladder>().m_height = height;
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = logs,
                     Recover = true
                 }
             }

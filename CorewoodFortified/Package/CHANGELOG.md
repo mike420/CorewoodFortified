@@ -10,7 +10,8 @@
     <td>1.0.8</td>
     <td>
         <ul>
-            <li>Fortified Ballistas and Organ Cannons now take no damage from meteors, such as the meteor showers from Deep North, so they no longer get destroyed on your towers while a shower rains on your base.</li>
+            <li>New: climbable ladders, built with the hammer at the workbench. Fortified Ladder 2m (2 Round Log) and Fortified Ladder 3m (3 Round Log). Stack them on each other's snap points to climb as one ladder. Press Use to get on, from the ground or from the floor at the top. Forward climbs up and Backward climbs down, and Run climbs faster for stamina. At the top you step off onto the floor across the ladder. Jump pushes off, Crouch drops and Use lets go. Hands and feet take hold of the rungs as you climb. Climbing and its animation are ported from The Concerned Cat's Concerned Ladders.</li>
+            <li>New config section "Ladders": Climb Speed, Fast Climb Speed and Fast Climb Stamina (synced from the server), and Climbing Animation (Off climbs in the walking pose).</li>
             <li>New: translations in nine languages: English, Russian, German, Chinese, Brazilian Portuguese, Spanish, French, Polish and Turkish. The files are in BepInEx\config\CorewoodFortified\Translations, one folder per language, and you can edit them. Changes show in game straight away, with no restart. Any text missing from a file falls back to English.</li>
         </ul>
     </td>
