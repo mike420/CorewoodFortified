@@ -1,7 +1,7 @@
 [size=6][b]HD Corewood Fortified[/b][/size]
 
 
-HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, ziplines, traps, electric fences, a smarter ballista and more!
+HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, climbable ladders, ziplines, traps, electric fences, a smarter ballista and more!
 
 
 [size=5][b]Donations[/b][/size]
@@ -84,6 +84,13 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Walkway 4m[/b]: 4 Core Wood, 8 Wood
 [*][b]Walkway Corner[/b]: 8 Core Wood, 14 Wood
 [*][b]Walkway T-Junction[/b]: 8 Core Wood, 16 Wood
+[/list]
+
+[b]Ladders[/b]
+
+[list]
+[*][b]Ladder 2m[/b]: 2 Core Wood
+[*][b]Ladder 3m[/b]: 3 Core Wood
 [/list]
 
 [b]Forge[/b]
@@ -226,6 +233,24 @@ Tie a rope between two zipline posts and ride it, hanging from a trolley.
 [/list]
 
 
+[size=5][b]Ladders[/b][/size]
+
+[b]Ladder 2m[/b] and [b]Ladder 3m:[/b] ladders you can climb, with hands and feet taking hold of the rungs as you go.
+
+[list]
+[*]Press Use on a ladder to get on, from the ground, part way up, or from the floor at the top. You can climb either side.
+[*]Forward climbs up and Backward climbs down, whichever way you are looking. Hold Run to climb faster, which uses stamina. Carrying too much halves your speed.
+[*]At the top you step off onto the floor across the ladder, if there is room to stand. At the bottom you step off onto the ground.
+[*]Jump pushes off the ladder, the way you are holding or straight back. Crouch drops you, and Use lets go.
+[*]Stack ladders on each other's snap points, 2m and 3m in any mix, and they climb as one ladder.
+[*]The ladder's own height never counts as a fall: fall damage starts from where you leave it.
+[*]Other players see your hands and feet on the rungs too.
+[*]Climb speeds and stamina can be changed in the config, and each player can turn the climbing animation off.
+[/list]
+
+Climbing and its animation are ported from The Concerned Cat's Concerned Ladders.
+
+
 [size=5][b]Fortified Ballista[/b][/size]
 
 A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give it trophies to pick which creatures it shoots at, just like the vanilla ballista. On top of that:
@@ -352,6 +377,20 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Grab Rope In Mid-Air[/b] (default [b]true[/b]): catch a rope by jumping or falling into it.
 [*][b]Log Back In On The Ground[/b] (default [b]true[/b]): logging out mid-ride brings you back on the ground by a post.
 [*][b]Messages[/b] (default [b]Short[/b]): [b]Short[/b] shows a few words in the corner, [b]All[/b] the full help, [b]Off[/b] nothing.
+[/list]
+
+[b]Ladders[/b] (synced from the server)
+
+[list]
+[*][b]Climb Speed[/b] (default [b]0.9[/b]): how fast you climb up and down, in metres per second, from 0.3 to 4. The climbing animation is made for 0.9.
+[*][b]Fast Climb Speed[/b] (default [b]1.2[/b]): how fast you climb while holding Run, in metres per second, from 0.3 to 6. The climbing animation is made for 1.2.
+[*][b]Fast Climb Stamina[/b] (default [b]8[/b]): stamina used per second while climbing fast, from 0 to 30. 0 is free. Out of stamina, you climb at the normal speed.
+[/list]
+
+[b]Ladders[/b] (each player's own)
+
+[list]
+[*][b]Climbing Animation[/b] (default [b]true[/b]): hands and feet take hold of the rungs as you climb, and you see other players' hands and feet on the rungs when their own setting is on. If off, you climb in the walking pose and see everyone climb in it.
 [/list]
 
 [b]Fortified Ballista[/b] (synced from the server)

@@ -1,7 +1,7 @@
 # 🎯 HD Corewood Fortified
 
 
-HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, ziplines, traps, electric fences, a smarter ballista and more!
+HD Core Wood fortifications: palisade walls, roofed walls, gates, lift gates, drawbridges, fences, spikes, braziers, climbable ladders, ziplines, traps, electric fences, a smarter ballista and more!
 
 <br>
 
@@ -77,6 +77,11 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
   * **Walkway 4m**: 4 Core Wood, 8 Wood
   * **Walkway Corner**: 8 Core Wood, 14 Wood
   * **Walkway T-Junction**: 8 Core Wood, 16 Wood
+
+**Ladders**
+
+  * **Ladder 2m**: 2 Core Wood
+  * **Ladder 3m**: 3 Core Wood
 
 ### Forge
 
@@ -191,6 +196,23 @@ Tie a rope between two zipline posts and ride it, hanging from a trolley.
 
 <br>
 
+## 🪜 Ladders:
+
+**Ladder 2m** and **Ladder 3m:** ladders you can climb, with hands and feet taking hold of the rungs as you go.
+
+  * Press Use on a ladder to get on, from the ground, part way up, or from the floor at the top. You can climb either side.
+  * Forward climbs up and Backward climbs down, whichever way you are looking. Hold Run to climb faster, which uses stamina. Carrying too much halves your speed.
+  * At the top you step off onto the floor across the ladder, if there is room to stand. At the bottom you step off onto the ground.
+  * Jump pushes off the ladder, the way you are holding or straight back. Crouch drops you, and Use lets go.
+  * Stack ladders on each other's snap points, 2m and 3m in any mix, and they climb as one ladder.
+  * The ladder's own height never counts as a fall: fall damage starts from where you leave it.
+  * Other players see your hands and feet on the rungs too.
+  * Climb speeds and stamina can be changed in the config, and each player can turn the climbing animation off.
+
+Climbing and its animation are ported from The Concerned Cat's Concerned Ladders.
+
+<br>
+
 ## 🏹 Fortified Ballista:
 
 A ballista on a raised Core Wood base. Load it with any vanilla bolt, and give it trophies to pick which creatures it shoots at, just like the vanilla ballista. On top of that:
@@ -302,6 +324,16 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Grab Rope In Mid-Air** (default `true`): catch a rope by jumping or falling into it.
   * **Log Back In On The Ground** (default `true`): logging out mid-ride brings you back on the ground by a post.
   * **Messages** (default `Short`): `Short` shows a few words in the corner, `All` the full help, `Off` nothing.
+
+**Ladders** (synced from the server)
+
+  * **Climb Speed** (default `0.9`): how fast you climb up and down, in metres per second, from 0.3 to 4. The climbing animation is made for 0.9.
+  * **Fast Climb Speed** (default `1.2`): how fast you climb while holding Run, in metres per second, from 0.3 to 6. The climbing animation is made for 1.2.
+  * **Fast Climb Stamina** (default `8`): stamina used per second while climbing fast, from 0 to 30. 0 is free. Out of stamina, you climb at the normal speed.
+
+**Ladders** (each player's own)
+
+  * **Climbing Animation** (default `true`): hands and feet take hold of the rungs as you climb, and you see other players' hands and feet on the rungs when their own setting is on. If off, you climb in the walking pose and see everyone climb in it.
 
 **Fortified Ballista** (synced from the server)
 
