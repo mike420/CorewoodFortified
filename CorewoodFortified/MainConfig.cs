@@ -52,7 +52,6 @@ namespace CorewoodFortified
         public static ConfigEntry<float> ladderSlideSkillLevel;
         public static ConfigEntry<float> ladderSlideSpeed;
         public static ConfigEntry<float> ladderSlideStamina;
-        public static ConfigEntry<bool> ladderClimbAnimation;
 
         public static ConfigEntry<bool> enableTurrets;
         public static ConfigEntry<int> turretScanArc;
@@ -209,7 +208,6 @@ namespace CorewoodFortified
             ladderSlideSkillLevel = config.BindConfigInOrder("Ladders", "Slide Skill Level", defaultValue: 20f, "The Climbing skill level from which holding Run while climbing down slides you down the ladder. 0 = anyone can slide. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
             ladderSlideSpeed = config.BindConfigInOrder("Ladders", "Slide Speed", defaultValue: 4.5f, "How fast you slide down a ladder, in metres per second. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 10f));
             ladderSlideStamina = config.BindConfigInOrder("Ladders", "Slide Stamina", defaultValue: 2f, "Stamina used per second while sliding down, up to 25% less with the Climbing skill. 0 = free. Out of stamina, you climb down at the normal speed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 30f));
-            ladderClimbAnimation = config.BindConfigInOrder("Ladders", "Climbing Animation", defaultValue: true, "If On, hands and feet take hold of the rungs as you climb, and you see other players' hands and feet on the rungs too when their own setting is On. If Off, you climb in the walking pose and see everyone climb in it.", synced: false, sectionOrder: true, settingOrder: true);
 
             gateSoundVolume = config.BindConfigInOrder("Sounds", "Gate Sound Volume", defaultValue: 1f, "Volume of the fortified lift gate and drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             largeDrawbridgeSoundVolume = config.BindConfigInOrder("Sounds", "Large Drawbridge Sound Volume", defaultValue: 1f, "Volume of the large and roofed fortified drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));

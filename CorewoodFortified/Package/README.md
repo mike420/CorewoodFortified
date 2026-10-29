@@ -208,7 +208,7 @@ Tie a rope between two zipline posts and ride it, hanging from a trolley.
   * Stack ladders on each other's snap points, 2m and 3m in any mix, and they climb as one ladder.
   * The ladder's own height never counts as a fall: fall damage starts from where you leave it.
   * Other players see your hands and feet on the rungs too.
-  * Climb speeds and stamina can be changed in the config, and each player can turn the climbing animation off.
+  * Climb speeds and stamina can be changed in the config.
 
 Climbing and its animation are ported from The Concerned Cat's Concerned Ladders.
 
@@ -335,10 +335,6 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Slide Skill Level** (default `20`): the Climbing skill level from which holding Run while climbing down slides you down, from 0 to 100. 0 lets anyone slide.
   * **Slide Speed** (default `4.5`): how fast you slide down, in metres per second, from 1 to 10.
   * **Slide Stamina** (default `2`): stamina used per second while sliding, from 0 to 30, up to 25% less with the Climbing skill. 0 is free. Out of stamina, you climb down at the normal speed.
-
-**Ladders** (each player's own)
-
-  * **Climbing Animation** (default `true`): hands and feet take hold of the rungs as you climb, and you see other players' hands and feet on the rungs when their own setting is on. If off, you climb in the walking pose and see everyone climb in it.
 
 **Fortified Ballista** (synced from the server)
 

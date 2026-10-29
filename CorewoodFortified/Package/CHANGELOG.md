@@ -11,8 +11,9 @@
     <td>
         <ul>
             <li>New: climbable ladders, built with the hammer at the workbench. Ladder 2m (2 Round Log) and Ladder 3m (3 Round Log). Stack them on each other's snap points to climb as one ladder. Press Use to get on, from the ground or from the floor at the top. Forward climbs up and Backward climbs down, and Run climbs faster for stamina. At the top you step off onto the floor across the ladder. Jump pushes off, Crouch drops and Use lets go. A new Climbing skill rises as you climb: it makes fast climbing cheaper on stamina, and from level 20 holding Run while climbing down slides you down. Jumping off uses and raises your Jump skill. Hands and feet take hold of the rungs as you climb, and other players see it too. Climbing and its animation are ported from The Concerned Cat's Concerned Ladders.</li>
-            <li>New config section "Ladders": Enable Ladders, Climb Speed, Fast Climb Speed, Fast Climb Stamina, Slide Skill Level, Slide Speed and Slide Stamina (synced from the server), and Climbing Animation (Off climbs in the walking pose, and shows other climbers in it too).</li>
+            <li>New config section "Ladders": Enable Ladders, Climb Speed, Fast Climb Speed, Fast Climb Stamina, Slide Skill Level, Slide Speed and Slide Stamina (synced from the server).</li>
             <li>New: translations in nine languages: English, Russian, German, Chinese, Brazilian Portuguese, Spanish, French, Polish and Turkish. The files are in BepInEx\config\CorewoodFortified\Translations, one folder per language, and you can edit them. Changes show in game straight away, with no restart. Any text missing from a file falls back to English.</li>
+            <li>Fixed Walkway alignments.</li>
         </ul>
     </td>
   </tr>

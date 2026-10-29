@@ -752,7 +752,7 @@ internal static class LadderClimber
 	private static void BeginPresentation(Ladder anchor)
 	{
 		s_animating = false;
-		if (!MainConfig.ladderClimbAnimation.Value || !EnsurePresenter())
+		if (!EnsurePresenter())
 		{
 			return;
 		}
@@ -986,7 +986,7 @@ internal static class LadderClimber
 			s_remote.Clear();
 			return;
 		}
-		if (!MainConfig.ladderClimbAnimation.Value || s_presenterFailed)
+		if (s_presenterFailed)
 		{
 			EndAllRemote();
 			return;
