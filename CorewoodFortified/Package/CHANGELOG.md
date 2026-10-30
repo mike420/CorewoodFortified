@@ -7,6 +7,15 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.0</td>
+    <td>
+        <ul>
+            <li>New: docks, built with the hammer at the workbench. Dock Straight (8 Round Log, 12 Wood), Dock T-Junction (10 Round Log, 16 Wood) and Dock Cross (12 Round Log, 20 Wood). Once placed, each post reaches down to the ground below it, so a dock can be built out over water and stands on the sea floor with full support. The posts work out their length again when the ground under the dock is dug or raised.</li>
+            <li>New: Walkway Cross, built with the hammer at the workbench (10 Round Log, 18 Wood). It splits the walkway four ways.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.0.9</td>
     <td>
         <ul>

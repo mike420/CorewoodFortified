@@ -52,6 +52,10 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkway4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCorner);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayTjunction);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCross);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDocksStraight);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDocksTjunction);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCross);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerBeacon);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerLadder);
         CorewoodFortifiedMod.TryAddPiece(AddPieceLadder2m);
@@ -1124,7 +1128,6 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_walkway_tjunction");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
-            Description = "$piece_mm_corewood_walkway_tjunction_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1150,6 +1153,133 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
+    public static void AddPieceWalkwayCross()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_walkway_cross");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_mm_corewood_walkway_cross_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 18,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+    public static void AddPieceDocksStraight()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_docks_straight");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_mm_corewood_docks_straight_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 8,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 12,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        gameObject.AddComponent<DockSupports>();
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceDocksTjunction()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_docks_tjunction");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_mm_corewood_docks_tjunction_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 10,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 16,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        gameObject.AddComponent<DockSupports>();
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceDocksCross()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_docks_cross");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_mm_corewood_docks_cross_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 12,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 20,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        gameObject.AddComponent<DockSupports>();
+        PieceManager.Instance.AddPiece(customPiece);
+    }
 
     public static void AddPieceTowerBeacon()
     {

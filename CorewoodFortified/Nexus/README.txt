@@ -84,6 +84,17 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Walkway 4m[/b]: 4 Core Wood, 8 Wood
 [*][b]Walkway Corner[/b]: 8 Core Wood, 14 Wood
 [*][b]Walkway T-Junction[/b]: 8 Core Wood, 16 Wood
+[*][b]Walkway Cross[/b]: 10 Core Wood, 18 Wood
+[/list]
+
+[b]Docks[/b]
+
+Once placed, each post reaches down to the ground below it, so a dock can be built out over water and stands on the sea floor.
+
+[list]
+[*][b]Dock Straight[/b]: 8 Core Wood, 12 Wood
+[*][b]Dock T-Junction[/b]: 10 Core Wood, 16 Wood
+[*][b]Dock Cross[/b]: 12 Core Wood, 20 Wood
 [/list]
 
 [b]Ladders[/b]

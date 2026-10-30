@@ -108,6 +108,7 @@
     <Compile Include="ChainTowers\NetBarrier.cs" />
     <Compile Include="ChainTowers\NetMesh.cs" />
     <Compile Include="ChainTowers\TowerIcon.cs" />
+    <Compile Include="Docks\DockSupports.cs" />
     <Compile Include="Elevators\Elevator.cs" />
     <Compile Include="Elevators\ElevatorPatches.cs" />
     <Compile Include="Elevators\ElevatorSetup.cs" />
