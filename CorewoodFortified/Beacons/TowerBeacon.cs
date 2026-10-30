@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Reveals the map around a tower beacon while a lit small fortified brazier stands on its top, out to the Reveal Radius setting.
+// Reveals the map around a tower beacon while a lit small fortified brazier stands on its top, out to the Beacon Reveal Radius setting.
 // Each player's own map is revealed once the beacon is loaded near them, and is saved with their character like any explored land
 public class TowerBeacon : MonoBehaviour
 {

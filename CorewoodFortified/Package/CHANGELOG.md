@@ -12,7 +12,7 @@
         <ul>
             <li>New: Tower Beacon, built with the hammer at the workbench (2 Round Log, 4 Wood). Put a Fortified Brazier Small on the stand on its top and light it: while the brazier burns, the land around the beacon is revealed on your map. Each player's map is revealed when they come near the beacon, and stays revealed after the brazier goes out.</li>
             <li>New: Tower Ladder 6m, built with the hammer at the workbench (6 Round Log). It snaps onto the Tower Beacon and climbs like the other ladders.</li>
-            <li>New setting in General Settings: Reveal Radius, how far around a Tower Beacon the map is revealed, from 100m to 3000m (default 300m, synced from the server).</li>
+            <li>New setting in General Settings: Beacon Reveal Radius, how far around a Tower Beacon the map is revealed, from 100m to 3000m (default 300m, synced from the server).</li>
         </ul>
     </td>
   </tr>
