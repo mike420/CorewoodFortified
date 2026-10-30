@@ -10,14 +10,12 @@ namespace CorewoodFortified
     internal class MainConfig
     {
         public static ConfigEntry<bool> modEnabled;
-        public static ConfigEntry<float> gateSoundVolume;
-        public static ConfigEntry<float> largeDrawbridgeSoundVolume;
-        public static ConfigEntry<float> chainTowerSoundVolume;
-        public static ConfigEntry<float> elevatorSoundVolume;
         public static ConfigEntry<KeyboardShortcut> turretMoveKey;
         public static ConfigEntry<bool> enableElevators;
         public static ConfigEntry<bool> autoTriggers;
         public static ConfigEntry<float> elevatorSpeed;
+        public static ConfigEntry<bool> turretAllowMoving;
+        public static ConfigEntry<float> beaconRevealRadius;
         public static ConfigEntry<bool> enableChainTowers;
         public static ConfigEntry<float> chainMaxSpanSmall;
         public static ConfigEntry<float> chainMaxSpanMedium;
@@ -43,7 +41,6 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> ziplineGrabOnTouch;
         public static ConfigEntry<bool> ziplineGroundAfterLogout;
         public static ConfigEntry<ZiplineMessages.Level> ziplineMessages;
-        public static ConfigEntry<float> ziplineSoundVolume;
 
         public static ConfigEntry<bool> enableLadders;
         public static ConfigEntry<float> ladderClimbSpeed;
@@ -52,8 +49,6 @@ namespace CorewoodFortified
         public static ConfigEntry<float> ladderSlideSkillLevel;
         public static ConfigEntry<float> ladderSlideSpeed;
         public static ConfigEntry<float> ladderSlideStamina;
-
-        public static ConfigEntry<float> beaconRevealRadius;
 
         public static ConfigEntry<bool> enableTurrets;
         public static ConfigEntry<int> turretScanArc;
@@ -71,21 +66,6 @@ namespace CorewoodFortified
         public static ConfigEntry<int> turretMaxAmmo;
         public static ConfigEntry<bool> turretAutoReload;
         public static ConfigEntry<float> turretAutoReloadRange;
-        public static ConfigEntry<float> turretSoundVolume;
-        public static ConfigEntry<bool> turretAllowMoving;
-
-        public static ConfigEntry<bool> enableTraps;
-        public static ConfigEntry<float> trapControllerRadius;
-        public static ConfigEntry<float> flameTrapSoundVolume;
-        public static ConfigEntry<float> sawWallSoundVolume;
-        public static ConfigEntry<float> spikeFloorSoundVolume;
-        public static ConfigEntry<float> entranceTrapSoundVolume;
-
-        public static ConfigEntry<float> fenceControllerRadius;
-        public static ConfigEntry<float> fenceEitrMinutes;
-        public static ConfigEntry<float> electricFenceSoundVolume;
-        public static ConfigEntry<float> electricFenceDamage;
-        public static ConfigEntry<float> fenceControllerSoundVolume;
 
         public static ConfigEntry<bool> enableOrganCannon;
         public static ConfigEntry<int> cannonRange;
@@ -101,13 +81,20 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> cannonAutoReload;
         public static ConfigEntry<float> cannonAutoReloadRange;
         public static ConfigEntry<bool> cannonAllowMoving;
+
+
+
+        public static ConfigEntry<bool> enableTraps;
+        public static ConfigEntry<float> trapControllerRadius;
+        public static ConfigEntry<float> fenceControllerRadius;
+        public static ConfigEntry<float> fenceEitrMinutes;
+        public static ConfigEntry<float> electricFenceDamage;
         public static ConfigEntry<float> flameTrapTriggerRadius;
         public static ConfigEntry<float> sawWallTriggerRadius;
         public static ConfigEntry<float> spikeFloorTriggerRadius;
         public static ConfigEntry<float> entranceTrapTriggerRadius;
         public static ConfigEntry<float> floorBladesTriggerRadius;
         public static ConfigEntry<float> floorBladesDamage;
-        public static ConfigEntry<float> floorBladesSoundVolume;
         public static ConfigEntry<bool> groundTrapIgnoresPlayers;
         public static ConfigEntry<bool> groundTrapGrass;
         public static ConfigEntry<float> groundTrapDamage;
@@ -116,6 +103,22 @@ namespace CorewoodFortified
         public static ConfigEntry<float> spikeFloorDamage;
         public static ConfigEntry<float> entranceTrapDamage;
 
+
+        public static ConfigEntry<float> gateSoundVolume;
+        public static ConfigEntry<float> largeDrawbridgeSoundVolume;
+        public static ConfigEntry<float> chainTowerSoundVolume;
+        public static ConfigEntry<float> elevatorSoundVolume;
+        public static ConfigEntry<float> ziplineSoundVolume;
+        public static ConfigEntry<float> turretSoundVolume;
+        public static ConfigEntry<float> flameTrapSoundVolume;
+        public static ConfigEntry<float> sawWallSoundVolume;
+        public static ConfigEntry<float> spikeFloorSoundVolume;
+        public static ConfigEntry<float> entranceTrapSoundVolume;
+        public static ConfigEntry<float> electricFenceSoundVolume;
+        public static ConfigEntry<float> fenceControllerSoundVolume;
+        public static ConfigEntry<float> floorBladesSoundVolume;
+
+
         public static void InitConfigs(ConfigFile config)
         {
             modEnabled = config.BindConfigInOrder("General Settings", "Enable Plugin", defaultValue: true, "Enable the CorewoodFortified plugin.\n(Restart required. It is read before connecting to a server, so it is a local setting).\n", synced: false, sectionOrder: true, settingOrder: true);
@@ -123,6 +126,7 @@ namespace CorewoodFortified
             autoTriggers = config.BindConfigInOrder("General Settings", "Automatic Elevators", defaultValue: true, "If On, elevators move automatically when a player steps on the platform. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             elevatorSpeed = config.BindConfigInOrder("General Settings", "Elevator Speed", defaultValue: 2f, "How fast elevator platforms move, in metres per second. A trip already under way keeps the speed it started with. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));
             turretMoveKey = config.BindConfigInOrder("General Settings", "Turret Move Key", defaultValue: new KeyboardShortcut(UnityEngine.KeyCode.U), "Look at a fortified ballista or organ cannon and press this key to pick it up and put it down somewhere else: aim where it should go, scroll to turn it, attack to put it down, block or this key again to leave it where it was.", synced: false, sectionOrder: true, settingOrder: true);
+            beaconRevealRadius = config.BindConfigInOrder("General Settings", "Reveal Radius", defaultValue: 300f, "How far around a tower beacon the map is revealed while a lit small fortified brazier stands on its top, in metres. The brazier has to be burning: fuelled, not switched off and not covered over. The map is made of 64 m squares, so the edge of the circle is rough. Each player's map is revealed when the beacon is loaded near them, and raising this reveals the extra. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(100f, 3000f));
 
             enableChainTowers = config.BindConfigInOrder("Chain Towers", "Enable Chain Towers", defaultValue: true, "If Off, chain towers are hidden from the build menu, and placed towers stay but their winches cannot be used. A net keeps the height it had. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             chainMaxSpanSmall = config.BindConfigInOrder("Chain Towers", "Max Span Small", defaultValue: 15f, "The longest net a small chain tower can hold, in metres (ring to ring). Two towers of different sizes together hold the shorter of their two. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 64f));
@@ -210,8 +214,6 @@ namespace CorewoodFortified
             ladderSlideSkillLevel = config.BindConfigInOrder("Ladders", "Slide Skill Level", defaultValue: 20f, "The Climbing skill level from which holding Run while climbing down slides you down the ladder. 0 = anyone can slide. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
             ladderSlideSpeed = config.BindConfigInOrder("Ladders", "Slide Speed", defaultValue: 4.5f, "How fast you slide down a ladder, in metres per second. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 10f));
             ladderSlideStamina = config.BindConfigInOrder("Ladders", "Slide Stamina", defaultValue: 2f, "Stamina used per second while sliding down, up to 25% less with the Climbing skill. 0 = free. Out of stamina, you climb down at the normal speed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 30f));
-
-            beaconRevealRadius = config.BindConfigInOrder("Tower Beacon", "Reveal Radius", defaultValue: 300f, "How far around a tower beacon the map is revealed while a lit small fortified brazier stands on its top, in metres. The brazier has to be burning: fuelled, not switched off and not covered over. The map is made of 64 m squares, so the edge of the circle is rough. Each player's map is revealed when the beacon is loaded near them, and raising this reveals the extra. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(100f, 3000f));
 
             gateSoundVolume = config.BindConfigInOrder("Sounds", "Gate Sound Volume", defaultValue: 1f, "Volume of the fortified lift gate and drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             largeDrawbridgeSoundVolume = config.BindConfigInOrder("Sounds", "Large Drawbridge Sound Volume", defaultValue: 1f, "Volume of the large and roofed fortified drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
