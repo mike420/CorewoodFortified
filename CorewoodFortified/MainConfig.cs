@@ -53,6 +53,8 @@ namespace CorewoodFortified
         public static ConfigEntry<float> ladderSlideSpeed;
         public static ConfigEntry<float> ladderSlideStamina;
 
+        public static ConfigEntry<float> beaconRevealRadius;
+
         public static ConfigEntry<bool> enableTurrets;
         public static ConfigEntry<int> turretScanArc;
         public static ConfigEntry<float> turretSweepTime;
@@ -208,6 +210,8 @@ namespace CorewoodFortified
             ladderSlideSkillLevel = config.BindConfigInOrder("Ladders", "Slide Skill Level", defaultValue: 20f, "The Climbing skill level from which holding Run while climbing down slides you down the ladder. 0 = anyone can slide. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 100f));
             ladderSlideSpeed = config.BindConfigInOrder("Ladders", "Slide Speed", defaultValue: 4.5f, "How fast you slide down a ladder, in metres per second. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(1f, 10f));
             ladderSlideStamina = config.BindConfigInOrder("Ladders", "Slide Stamina", defaultValue: 2f, "Stamina used per second while sliding down, up to 25% less with the Climbing skill. 0 = free. Out of stamina, you climb down at the normal speed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 30f));
+
+            beaconRevealRadius = config.BindConfigInOrder("Tower Beacon", "Reveal Radius", defaultValue: 300f, "How far around a tower beacon the map is revealed while a lit small fortified brazier stands on its top, in metres. The brazier has to be burning: fuelled, not switched off and not covered over. The map is made of 64 m squares, so the edge of the circle is rough. Each player's map is revealed when the beacon is loaded near them, and raising this reveals the extra. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(100f, 3000f));
 
             gateSoundVolume = config.BindConfigInOrder("Sounds", "Gate Sound Volume", defaultValue: 1f, "Volume of the fortified lift gate and drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             largeDrawbridgeSoundVolume = config.BindConfigInOrder("Sounds", "Large Drawbridge Sound Volume", defaultValue: 1f, "Volume of the large and roofed fortified drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));

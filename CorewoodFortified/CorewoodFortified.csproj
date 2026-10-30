@@ -86,6 +86,7 @@
     <Compile Include="Ladders\Animation\SafeFailure.cs" />
     <Compile Include="Ladders\Animation\TransitionAction.cs" />
     <Compile Include="Ladders\Animation\TransitionKind.cs" />
+    <Compile Include="Beacons\TowerBeacon.cs" />
     <Compile Include="Ladders\ClimbingSkill.cs" />
     <Compile Include="Ladders\Ladder.cs" />
     <Compile Include="Ladders\LadderClimber.cs" />
