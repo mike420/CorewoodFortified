@@ -96,6 +96,8 @@
   "piece_mm_corewood_walkway_cross_description": "Yolu dört yöne ayıran ahşap bir geçit kavşağı.",
   "piece_mm_corewood_docks_straight": "Düz İskele",
   "piece_mm_corewood_docks_straight_description": "Düz bir ahşap iskele. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
+  "piece_mm_corewood_docks_corner": "İskele Köşesi",
+  "piece_mm_corewood_docks_corner_description": "Yolu dik açıyla döndüren ahşap bir iskele köşesi. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
   "piece_mm_corewood_docks_tjunction": "İskele T-Kavşağı",
   "piece_mm_corewood_docks_tjunction_description": "Yolu üç yöne ayıran ahşap bir iskele kavşağı. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
   "piece_mm_corewood_docks_cross": "İskele Kavşağı",

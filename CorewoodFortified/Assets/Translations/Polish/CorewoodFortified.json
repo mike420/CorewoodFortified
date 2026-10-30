@@ -96,6 +96,8 @@
   "piece_mm_corewood_walkway_cross_description": "Drewniane skrzyżowanie kładki, które dzieli ścieżkę na cztery strony.",
   "piece_mm_corewood_docks_straight": "Prosty pomost",
   "piece_mm_corewood_docks_straight_description": "Prosty drewniany pomost. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
+  "piece_mm_corewood_docks_corner": "Narożnik pomostu",
+  "piece_mm_corewood_docks_corner_description": "Drewniany narożnik pomostu, który skręca ścieżkę pod kątem prostym. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
   "piece_mm_corewood_docks_tjunction": "Rozwidlenie pomostu",
   "piece_mm_corewood_docks_tjunction_description": "Drewniane rozwidlenie pomostu, które dzieli ścieżkę na trzy strony. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
   "piece_mm_corewood_docks_cross": "Skrzyżowanie pomostu",

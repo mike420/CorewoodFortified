@@ -84,6 +84,7 @@ Thank you for your support, and happy gaming! ⚔️  ...... (A Paypal account i
 Once placed, each post reaches down to the ground below it, so a dock can be built out over water and stands on the sea floor.
 
   * **Dock Straight**: 8 Core Wood, 12 Wood
+  * **Dock Corner**: 9 Core Wood, 14 Wood
   * **Dock T-Junction**: 10 Core Wood, 16 Wood
   * **Dock Cross**: 12 Core Wood, 20 Wood
 

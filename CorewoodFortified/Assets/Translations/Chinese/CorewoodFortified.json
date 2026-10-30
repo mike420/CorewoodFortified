@@ -96,6 +96,8 @@
   "piece_mm_corewood_walkway_cross_description": "把道路分成四个方向的木走道十字路口。",
   "piece_mm_corewood_docks_straight": "直码头",
   "piece_mm_corewood_docks_straight_description": "一段笔直的木制码头。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
+  "piece_mm_corewood_docks_corner": "码头转角",
+  "piece_mm_corewood_docks_corner_description": "让道路直角转弯的木制码头转角。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
   "piece_mm_corewood_docks_tjunction": "T形码头",
   "piece_mm_corewood_docks_tjunction_description": "把道路分成三个方向的木制码头路口。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
   "piece_mm_corewood_docks_cross": "十字码头",

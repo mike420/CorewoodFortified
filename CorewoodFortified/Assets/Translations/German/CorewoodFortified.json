@@ -96,6 +96,8 @@
   "piece_mm_corewood_walkway_cross_description": "Eine hölzerne Stegkreuzung, die den Weg in vier Richtungen teilt.",
   "piece_mm_corewood_docks_straight": "Gerader Steg",
   "piece_mm_corewood_docks_straight_description": "Ein gerader Holzsteg. Seine Pfosten reichen bis zum Boden darunter, sodass er über dem Wasser gebaut werden kann.",
+  "piece_mm_corewood_docks_corner": "Steg-Ecke",
+  "piece_mm_corewood_docks_corner_description": "Eine hölzerne Stegecke, die den Weg im rechten Winkel abbiegen lässt. Ihre Pfosten reichen bis zum Boden darunter, sodass sie über dem Wasser gebaut werden kann.",
   "piece_mm_corewood_docks_tjunction": "Steg-T-Kreuzung",
   "piece_mm_corewood_docks_tjunction_description": "Eine hölzerne Stegkreuzung, die den Weg in drei Richtungen teilt. Ihre Pfosten reichen bis zum Boden darunter, sodass sie über dem Wasser gebaut werden kann.",
   "piece_mm_corewood_docks_cross": "Steg-Kreuz",

@@ -96,6 +96,8 @@
   "piece_mm_corewood_walkway_cross_description": "Un croisement de passerelle en bois qui divise le chemin en quatre directions.",
   "piece_mm_corewood_docks_straight": "Quai droit",
   "piece_mm_corewood_docks_straight_description": "Un quai en bois droit. Ses poteaux descendent jusqu'au sol en dessous, il peut donc être construit au-dessus de l'eau.",
+  "piece_mm_corewood_docks_corner": "Angle de quai",
+  "piece_mm_corewood_docks_corner_description": "Un angle de quai en bois qui fait tourner le chemin à angle droit. Ses poteaux descendent jusqu'au sol en dessous, il peut donc être construit au-dessus de l'eau.",
   "piece_mm_corewood_docks_tjunction": "Jonction de quai",
   "piece_mm_corewood_docks_tjunction_description": "Une jonction de quai en bois qui divise le chemin en trois directions. Ses poteaux descendent jusqu'au sol en dessous, elle peut donc être construite au-dessus de l'eau.",
   "piece_mm_corewood_docks_cross": "Croisement de quai",
