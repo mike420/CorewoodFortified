@@ -102,6 +102,8 @@
   "piece_mm_corewood_docks_tjunction_description": "Uma junção de doca de madeira que divide o caminho em três direções. Seus pilares descem até o chão abaixo, então ela pode ser construída sobre a água.",
   "piece_mm_corewood_docks_cross": "Cruzamento de doca",
   "piece_mm_corewood_docks_cross_description": "Um cruzamento de doca de madeira que divide o caminho em quatro direções. Seus pilares descem até o chão abaixo, então ele pode ser construído sobre a água.",
+  "piece_mm_corewood_docks_capstan": "Doca com cabrestante",
+  "piece_mm_corewood_docks_capstan_description": "Uma doca de madeira reta com um cabrestante para atracar. Seus pilares descem até o chão abaixo, então ela pode ser construída sobre a água.",
   "piece_mm_corewood_village_house_door": "Porta da casa da vila",
   "piece_mm_corewood_village_house_01": "Casa da vila 01",
   "text_fortified_lift_gate": "Grade levadiça fortificada",

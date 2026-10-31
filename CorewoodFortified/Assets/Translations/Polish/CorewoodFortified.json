@@ -102,6 +102,8 @@
   "piece_mm_corewood_docks_tjunction_description": "Drewniane rozwidlenie pomostu, które dzieli ścieżkę na trzy strony. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
   "piece_mm_corewood_docks_cross": "Skrzyżowanie pomostu",
   "piece_mm_corewood_docks_cross_description": "Drewniane skrzyżowanie pomostu, które dzieli ścieżkę na cztery strony. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
+  "piece_mm_corewood_docks_capstan": "Pomost z kabestanem",
+  "piece_mm_corewood_docks_capstan_description": "Prosty drewniany pomost z kabestanem do cumowania. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
   "piece_mm_corewood_village_house_door": "Drzwi wiejskiego domu",
   "piece_mm_corewood_village_house_01": "Wiejski dom 01",
   "text_fortified_lift_gate": "Ufortyfikowana brona",

@@ -96,6 +96,7 @@ Once placed, each post reaches down to the ground below it, so a dock can be bui
 [*][b]Dock Corner[/b]: 9 Core Wood, 14 Wood
 [*][b]Dock T-Junction[/b]: 10 Core Wood, 16 Wood
 [*][b]Dock Cross[/b]: 12 Core Wood, 20 Wood
+[*][b]Dock Capstan[/b]: 10 Core Wood, 16 Wood
 [/list]
 
 [b]Ladders[/b]

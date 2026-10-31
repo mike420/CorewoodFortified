@@ -102,6 +102,8 @@
   "piece_mm_corewood_docks_tjunction_description": "Деревянное разветвление причала, разделяющее путь на три стороны. Его сваи доходят до самого дна, поэтому его можно строить над водой.",
   "piece_mm_corewood_docks_cross": "Крестовой причал",
   "piece_mm_corewood_docks_cross_description": "Деревянный перекрёсток причала, разделяющий путь на четыре стороны. Его сваи доходят до самого дна, поэтому его можно строить над водой.",
+  "piece_mm_corewood_docks_capstan": "Причал с кабестаном",
+  "piece_mm_corewood_docks_capstan_description": "Прямой деревянный причал с кабестаном для швартовки. Его сваи доходят до самого дна, поэтому его можно строить над водой.",
   "piece_mm_corewood_village_house_door": "Дверь деревенского дома",
   "piece_mm_corewood_village_house_01": "Деревенский дом 01",
   "text_fortified_lift_gate": "Укреплённая подъёмная решётка",

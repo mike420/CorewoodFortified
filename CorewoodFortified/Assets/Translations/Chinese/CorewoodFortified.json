@@ -102,6 +102,8 @@
   "piece_mm_corewood_docks_tjunction_description": "把道路分成三个方向的木制码头路口。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
   "piece_mm_corewood_docks_cross": "十字码头",
   "piece_mm_corewood_docks_cross_description": "把道路分成四个方向的木制码头十字路口。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
+  "piece_mm_corewood_docks_capstan": "码头绞盘",
+  "piece_mm_corewood_docks_capstan_description": "带有系泊绞盘的笔直木制码头。它的支柱会一直延伸到下方的地面，因此可以建在水面上。",
   "piece_mm_corewood_village_house_door": "村屋门",
   "piece_mm_corewood_village_house_01": "村屋 01",
   "text_fortified_lift_gate": "加固升降闸门",
