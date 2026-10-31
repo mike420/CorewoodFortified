@@ -12,9 +12,18 @@ namespace CorewoodFortified;
 //
 // Every game works the length out from the terrain itself, so nothing is saved. It is worked out again when the
 // terrain under the dock is dug or raised. The placement ghost keeps its posts short, as long ones get in the way of
-// placing it
+// placing it.
+//
+// A piece resting on a dock, such as a torch, loses support with its distance from the dock's middle, so on a long
+// section the ends could not hold anything. The dock is one solid deck, so that distance is taken to the nearest part
+// of the dock instead
 internal sealed class DockSupports : MonoBehaviour
 {
+	private static readonly Dictionary<WearNTear, DockSupports> s_docks = new Dictionary<WearNTear, DockSupports>();
+
+	// The piece whose support is being worked out, while it is
+	private static WearNTear s_supported;
+
 	// How far a post goes into the ground, so it does not show a gap where the sea floor slopes
 	private const float SinkDepth = 0.3f;
 
@@ -57,6 +66,9 @@ internal sealed class DockSupports : MonoBehaviour
 
 	private float m_retryTime;
 
+	// The dock's colliders as built, posts at their normal length, in the piece's space
+	private Bounds m_deck;
+
 	private void Awake()
 	{
 		ZNetView nview = GetComponent<ZNetView>();
@@ -67,6 +79,11 @@ internal sealed class DockSupports : MonoBehaviour
 		}
 		m_wear = GetComponent<WearNTear>();
 		FindPosts();
+		m_deck = DeckBounds();
+		if (m_wear)
+		{
+			s_docks[m_wear] = this;
+		}
 		m_onTerrainChanged = OnTerrainChanged;
 	}
 
@@ -82,6 +99,10 @@ internal sealed class DockSupports : MonoBehaviour
 
 	private void OnDestroy()
 	{
+		if (m_wear)
+		{
+			s_docks.Remove(m_wear);
+		}
 		if (m_heightmap)
 		{
 			s_clearCache(m_heightmap) = (Action)Delegate.Remove(s_clearCache(m_heightmap), m_onTerrainChanged);
@@ -222,6 +243,68 @@ internal sealed class DockSupports : MonoBehaviour
 		{
 			post.Collider.size = post.ColliderSize + new Vector3(0f, extension, 0f);
 			post.Collider.center = post.ColliderCenter - new Vector3(0f, extension * 0.5f, 0f);
+		}
+	}
+
+	private Bounds DeckBounds()
+	{
+		Matrix4x4 toPiece = transform.worldToLocalMatrix;
+		Bounds deck = new Bounds();
+		bool any = false;
+		foreach (Collider collider in GetComponentsInChildren<Collider>(includeInactive: true))
+		{
+			if (collider.isTrigger || !(collider is BoxCollider box))
+			{
+				continue;
+			}
+			Bounds bounds = TransformBounds(new Bounds(box.center, box.size), toPiece * box.transform.localToWorldMatrix);
+			if (any)
+			{
+				deck.Encapsulate(bounds);
+			}
+			else
+			{
+				deck = bounds;
+				any = true;
+			}
+		}
+		return deck;
+	}
+
+	// The point of the dock nearest a piece's middle
+	private Vector3 NearestPointTo(Vector3 point)
+	{
+		return transform.TransformPoint(m_deck.ClosestPoint(transform.InverseTransformPoint(point)));
+	}
+
+	[HarmonyPatch(typeof(WearNTear), "UpdateSupport")]
+	private static class WearNTearUpdateSupportPatch
+	{
+		private static void Prefix(WearNTear __instance)
+		{
+			s_supported = __instance;
+		}
+
+		private static void Finalizer()
+		{
+			s_supported = null;
+		}
+	}
+
+	// Asked by the piece whose support is being worked out, a dock gives the nearest part of itself as its middle. Asked
+	// by itself, or by anything else, it gives its real middle
+	[HarmonyPatch(typeof(WearNTear), "GetCOM")]
+	private static class WearNTearGetCOMPatch
+	{
+		private static void Postfix(WearNTear __instance, ref Vector3 __result)
+		{
+			if (s_supported == null || s_supported == __instance || !s_docks.TryGetValue(__instance, out DockSupports dock))
+			{
+				return;
+			}
+			WearNTear supported = s_supported;
+			Vector3 com = supported.transform.position + supported.transform.rotation * supported.m_comOffset;
+			__result = dock.NearestPointTo(com);
 		}
 	}
 
