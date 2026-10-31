@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Слишком низко: ездок ударится о землю через $1 м. Поднимите один конец.",
   "text_zipline_hits_water": "Слишком низко: ездок будет волочиться по воде через $1 м",
   "text_zipline_blocked": "Мешает $1 через $2 м",
+  "text_docking_blocked": "Швартовка заблокирована!",
+  "text_auto_docking": "Автоматическая швартовка...",
   "text_zipline_building_piece": "постройка ($1)",
   "text_zipline_the_ground": "земля",
   "text_zipline_portal_short": "Канат соскользнул обратно (через порталы канаты не проходят)",

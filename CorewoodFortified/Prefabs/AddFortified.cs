@@ -1344,6 +1344,7 @@ internal class AddFortified
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
         gameObject.AddComponent<DockSupports>();
+        gameObject.AddComponent<DockCapstan>();
         PieceManager.Instance.AddPiece(customPiece);
     }
 

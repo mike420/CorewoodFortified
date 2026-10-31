@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Too low: a rider would hit the ground $1 m along. Raise one end.",
   "text_zipline_hits_water": "Too low: a rider would drag through the water $1 m along",
   "text_zipline_blocked": "Blocked by $1 $2 m along",
+  "text_docking_blocked": "Docking Blocked!",
+  "text_auto_docking": "Auto Docking...",
   "text_zipline_building_piece": "a building piece ($1)",
   "text_zipline_the_ground": "the ground",
   "text_zipline_portal_short": "The rope slipped back (no ropes through portals)",

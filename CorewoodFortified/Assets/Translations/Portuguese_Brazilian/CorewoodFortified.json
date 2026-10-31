@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Baixa demais: quem descer bateria no chão a $1 m. Erga uma das pontas.",
   "text_zipline_hits_water": "Baixa demais: quem descer se arrastaria na água a $1 m",
   "text_zipline_blocked": "Bloqueada por $1 a $2 m",
+  "text_docking_blocked": "Atracação bloqueada!",
+  "text_auto_docking": "Atracação automática...",
   "text_zipline_building_piece": "uma peça de construção ($1)",
   "text_zipline_the_ground": "o chão",
   "text_zipline_portal_short": "A corda escorregou de volta (cordas não passam por portais)",

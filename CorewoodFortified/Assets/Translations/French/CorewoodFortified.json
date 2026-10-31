@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Trop bas : un passager toucherait le sol à $1 m. Relevez une extrémité.",
   "text_zipline_hits_water": "Trop bas : un passager traînerait dans l'eau à $1 m",
   "text_zipline_blocked": "Bloquée par $1 à $2 m",
+  "text_docking_blocked": "Amarrage bloqué !",
+  "text_auto_docking": "Amarrage automatique...",
   "text_zipline_building_piece": "une pièce de construction ($1)",
   "text_zipline_the_ground": "le sol",
   "text_zipline_portal_short": "La corde est revenue (pas de corde à travers les portails)",

@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Çok alçak: binen kişi $1 m sonra yere çarpar. Bir ucu yükselt.",
   "text_zipline_hits_water": "Çok alçak: binen kişi $1 m sonra suda sürüklenir",
   "text_zipline_blocked": "$2 m sonra $1 engelliyor",
+  "text_docking_blocked": "Yanaşma Engellendi!",
+  "text_auto_docking": "Otomatik yanaşma...",
   "text_zipline_building_piece": "bir yapı parçası ($1)",
   "text_zipline_the_ground": "zemin",
   "text_zipline_portal_short": "Halat geri kaydı (halatlar portaldan geçmez)",

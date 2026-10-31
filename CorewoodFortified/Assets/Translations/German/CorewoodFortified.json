@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Zu tief: Ein Fahrer würde nach $1 m den Boden treffen. Hebe ein Ende an.",
   "text_zipline_hits_water": "Zu tief: Ein Fahrer würde nach $1 m durchs Wasser schleifen",
   "text_zipline_blocked": "Blockiert durch $1 nach $2 m",
+  "text_docking_blocked": "Anlegen blockiert!",
+  "text_auto_docking": "Automatisches Anlegen...",
   "text_zipline_building_piece": "ein Bauteil ($1)",
   "text_zipline_the_ground": "den Boden",
   "text_zipline_portal_short": "Das Seil ist zurückgerutscht (keine Seile durch Portale)",

@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "太低：乘坐者会在 $1 米处撞到地面。抬高一端。",
   "text_zipline_hits_water": "太低：乘坐者会在 $1 米处拖过水面",
   "text_zipline_blocked": "被 $1 挡住，位于 $2 米处",
+  "text_docking_blocked": "停靠受阻！",
+  "text_auto_docking": "自动停靠中……",
   "text_zipline_building_piece": "一个建筑部件（$1）",
   "text_zipline_the_ground": "地面",
   "text_zipline_portal_short": "绳索滑回去了（绳索不能穿过传送门）",

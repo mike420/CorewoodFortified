@@ -11,6 +11,7 @@
     <td>
         <ul>
             <li>New: docks, built with the hammer at the workbench. Dock Straight (8 Round Log, 12 Wood), Dock Corner (9 Round Log, 14 Wood), Dock T-Junction (10 Round Log, 16 Wood), Dock Cross (12 Round Log, 20 Wood) and Dock Capstan, a straight dock with a capstan for mooring (10 Round Log, 16 Wood). Once placed, each post reaches down to the ground below it, so a dock can be built out over water and stands on the sea floor with full support. The posts work out their length again when the ground under the dock is dug or raised.</li>
+            <li>New: auto docking. A ship bigger than the raft that sails towards a Dock Capstan from in front of it, within 30m, is brought in by itself, without turning, and held with its hull 6m out from the capstan. Raise the speed from the helm to sail off again. If anything is in the way, everyone on board sees "Docking Blocked!". New config section "Docks" with Auto Docking to turn it on or off (synced from the server).</li>
             <li>New: Walkway Cross, built with the hammer at the workbench (10 Round Log, 18 Wood). It splits the walkway four ways.</li>
         </ul>
     </td>

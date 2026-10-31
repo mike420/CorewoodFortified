@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Demasiado baja: quien baje chocaría con el suelo a $1 m. Sube un extremo.",
   "text_zipline_hits_water": "Demasiado baja: quien baje se arrastraría por el agua a $1 m",
   "text_zipline_blocked": "Bloqueada por $1 a $2 m",
+  "text_docking_blocked": "¡Atraque bloqueado!",
+  "text_auto_docking": "Atraque automático...",
   "text_zipline_building_piece": "una pieza de construcción ($1)",
   "text_zipline_the_ground": "el suelo",
   "text_zipline_portal_short": "La cuerda volvió atrás (las cuerdas no pasan por portales)",

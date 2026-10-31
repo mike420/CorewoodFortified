@@ -191,6 +191,8 @@
   "text_zipline_hits_ground": "Za nisko: jadący uderzyłby w ziemię po $1 m. Podnieś jeden koniec.",
   "text_zipline_hits_water": "Za nisko: jadący sunąłby po wodzie po $1 m",
   "text_zipline_blocked": "Zablokowana przez $1 po $2 m",
+  "text_docking_blocked": "Cumowanie zablokowane!",
+  "text_auto_docking": "Automatyczne cumowanie...",
   "text_zipline_building_piece": "element budowli ($1)",
   "text_zipline_the_ground": "ziemię",
   "text_zipline_portal_short": "Lina wróciła (liny nie przechodzą przez portale)",
