@@ -108,6 +108,14 @@ A ship bigger than the raft that sails towards a Dock Capstan from in front of i
 [*][b]Ladder 3m[/b]: 3 Core Wood
 [/list]
 
+[b]Tower Beacon[/b]
+
+[list]
+[*][b]Tower Beacon[/b]: 2 Core Wood, 4 Wood
+[/list]
+
+A log tower with a stand on top. Snap a Fortified Brazier Small onto the stand and light it: while it burns, the map is revealed for 300 m around the beacon (set by Beacon Reveal Radius). Each player's map is revealed when they come near the beacon, and is saved with their character like any explored land.
+
 [b]Forge[/b]
 
 [list]
@@ -346,6 +354,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [list]
 [*][b]Enable Plugin[/b] (default [b]true[/b]): turns the mod on or off. Restart required.
 [*][b]Turret Move Key[/b] (default [b]U[/b]): look at a Fortified Ballista or Organ Cannon and press it to move it.
+[*][b]Beacon Reveal Radius[/b] (default [b]300[/b], synced from the server): how far around a Tower Beacon the map is revealed while a lit Fortified Brazier Small stands on its top, in metres, from 100 to 3000. The map is made of 64 m squares, so the edge of the circle is rough.
 [/list]
 
 [b]Elevators[/b] (synced from the server)
