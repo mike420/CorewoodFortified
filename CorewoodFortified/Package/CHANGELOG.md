@@ -11,6 +11,7 @@
     <td>
         <ul>
             <li>Added multiple snappoints to the Straight dock piece for attaching ladders.</li>
+            <li>Fixed the Tower Beacon not revealing the map when a lit small fortified brazier was snapped on its top.</li>
         </ul>
     </td>
   </tr>
