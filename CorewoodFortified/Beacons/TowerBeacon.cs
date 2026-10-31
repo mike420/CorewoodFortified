@@ -13,7 +13,9 @@ public class TowerBeacon : MonoBehaviour
 	// How far a brazier's pivot may be from the beacon's top snap points and still count as standing on it
 	private const float TopTolerance = 0.5f;
 
-	private const float SideTolerance = 0.5f;
+	// The brazier snaps by the snap points on its corners, a metre out from its pivot each way, so its pivot can sit
+	// well over a metre from the beacon's snap points sideways and front to back
+	private const float SideTolerance = 1.5f;
 
 	private static readonly Collider[] s_hits = new Collider[64];
 
@@ -111,7 +113,7 @@ public class TowerBeacon : MonoBehaviour
 			topY = 6f;
 		}
 		Bounds bounds = new Bounds();
-		bounds.SetMinMax(new Vector3(minX - SideTolerance, topY - TopTolerance, minZ), new Vector3(maxX + SideTolerance, topY + TopTolerance, maxZ));
+		bounds.SetMinMax(new Vector3(minX - SideTolerance, topY - TopTolerance, minZ - SideTolerance), new Vector3(maxX + SideTolerance, topY + TopTolerance, maxZ + SideTolerance));
 		return bounds;
 	}
 }

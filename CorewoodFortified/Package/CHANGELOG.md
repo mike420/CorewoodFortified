@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.1</td>
+    <td>
+        <ul>
+            <li>Added multiple snappoints to the Straight dock piece for attaching ladders.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.0</td>
     <td>
         <ul>
