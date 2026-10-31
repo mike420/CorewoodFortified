@@ -110,6 +110,7 @@
     <Compile Include="ChainTowers\TowerIcon.cs" />
     <Compile Include="Docks\DockCapstan.cs" />
     <Compile Include="Docks\DockSupports.cs" />
+    <Compile Include="Docks\MooringRopes.cs" />
     <Compile Include="Docks\ShipDocking.cs" />
     <Compile Include="Elevators\Elevator.cs" />
     <Compile Include="Elevators\ElevatorPatches.cs" />

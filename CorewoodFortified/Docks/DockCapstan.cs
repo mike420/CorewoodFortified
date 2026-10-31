@@ -15,7 +15,7 @@ internal sealed class DockCapstan : MonoBehaviour
 
 	public static List<DockCapstan> All => s_all;
 
-	public ZDOID Id => m_nview && m_nview.IsValid() ? m_nview.GetZDO().m_uid : ZDOID.None;
+	public List<Transform> AttachPoints => m_attachPoints;
 
 	// Halfway between the attach points, on the front edge of the dock
 	public Vector3 DockPoint
@@ -64,15 +64,24 @@ internal sealed class DockCapstan : MonoBehaviour
 		s_all.Remove(this);
 	}
 
-	public static DockCapstan Find(ZDOID id)
+	// The capstan standing at a place, within a little of it
+	public static DockCapstan FindAt(Vector3 position)
 	{
+		DockCapstan best = null;
+		float bestDistance = 0.5f;
 		foreach (DockCapstan capstan in s_all)
 		{
-			if (capstan && capstan.Id == id)
+			if (!capstan)
 			{
-				return capstan;
+				continue;
+			}
+			float distance = Vector3.Distance(capstan.transform.position, position);
+			if (distance < bestDistance)
+			{
+				bestDistance = distance;
+				best = capstan;
 			}
 		}
-		return null;
+		return best;
 	}
 }
