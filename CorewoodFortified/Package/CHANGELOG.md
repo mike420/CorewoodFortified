@@ -12,6 +12,7 @@
         <ul>
             <li>Added multiple snappoints to the Straight dock piece for attaching ladders.</li>
             <li>Fixed the Tower Beacon not revealing the map when a lit small fortified brazier was snapped on its top.</li>
+            <li>Fixed a docked ship sometimes slipping its moorings when logging out or moving away from the dock, and drifting off in a storm. The ship now keeps its docking until it is let go from the helm or its Dock Capstan is taken down, and is held still while the dock loads back in.</li>
         </ul>
     </td>
   </tr>

@@ -12,7 +12,8 @@ namespace CorewoodFortified;
 // until it has sailed out of range. If anything is in the way the ship is left alone, and everyone on board is told.
 //
 // Only the game that owns the ship moves it, as it does all of the ship's physics. Which capstan it is docked at is kept
-// on the ship, so whoever owns it next keeps holding it there
+// on the ship, so whoever owns it next keeps holding it there. That is only cleared when the ship is let go or its capstan
+// is taken down, not when the capstan unloads before the ship, and while the capstan loads in the ship is held still
 internal sealed class ShipDocking : MonoBehaviour
 {
 	private const float Range = 30f;
@@ -45,6 +46,10 @@ internal sealed class ShipDocking : MonoBehaviour
 	private const float SideReach = 15f;
 
 	private const float SideGap = 0.05f;
+
+	// How long a ship docked at a capstan that has not loaded is held still for it, in seconds, as the ship and its
+	// capstan stand in different places and do not always load together
+	private const float CapstanWait = 30f;
 
 	private const float BlockedCheckInterval = 0.25f;
 
@@ -93,6 +98,15 @@ internal sealed class ShipDocking : MonoBehaviour
 
 	private DockCapstan m_capstan;
 
+	// The capstan's ZDO, so it can be told whether the capstan was taken down or has only unloaded
+	private ZDOID m_capstanId;
+
+	// Until when a ship docked at a capstan that has not loaded is held still for it
+	private float m_waitUntil;
+
+	// Held still waiting for its capstan this step
+	private bool m_waiting;
+
 	// The heading the ship came in on, which it keeps while it is brought in and held
 	private Quaternion m_heading;
 
@@ -124,6 +138,7 @@ internal sealed class ShipDocking : MonoBehaviour
 			s_blockMask = LayerMask.GetMask("Default", "static_solid", "Default_small", "piece", "terrain", "vehicle");
 		}
 		m_nview.Register(RpcBlocked, RPC_Blocked);
+		m_waitUntil = Time.time + CapstanWait;
 	}
 
 	// Run straight after the ship's own physics, so the ship's drag does not undo the steering until the next step
@@ -141,18 +156,34 @@ internal sealed class ShipDocking : MonoBehaviour
 			}
 			return;
 		}
+		m_waiting = false;
 		if (m_state == State.Free)
 		{
 			ResumeSaved();
 		}
 		if (m_state == State.Free)
 		{
+			if (WaitForCapstan())
+			{
+				return;
+			}
 			TryDock();
 			return;
 		}
 		if (!m_capstan)
 		{
-			Release();
+			// Taken down, or only unloaded, such as when its zone unloads before the ship's or the game is shutting down.
+			// Then the docking is kept for when it loads again
+			if (CapstanRemoved())
+			{
+				Release();
+			}
+			else
+			{
+				m_state = State.Free;
+				m_waitUntil = Time.time + CapstanWait;
+				WaitForCapstan();
+			}
 			return;
 		}
 		// The sail stays furled and the oars still until someone at the helm lets the ship go (see LetGo)
@@ -197,7 +228,7 @@ internal sealed class ShipDocking : MonoBehaviour
 	// in are ignored, as one is easily made to slow down just as it is caught
 	private void LetGo()
 	{
-		if (m_state != State.Docked || !m_nview.IsValid() || !m_nview.IsOwner())
+		if ((m_state != State.Docked && !m_waiting) || !m_nview.IsValid() || !m_nview.IsOwner())
 		{
 			return;
 		}
@@ -243,7 +274,7 @@ internal sealed class ShipDocking : MonoBehaviour
 			SayBlocked();
 			return;
 		}
-		m_capstan = best;
+		SetCapstan(best);
 		m_state = State.Docking;
 		m_heading = FlatHeading();
 		SetSideShift(Vector3.zero, false);
@@ -259,7 +290,7 @@ internal sealed class ShipDocking : MonoBehaviour
 		DockCapstan capstan = SavedCapstan(m_nview.GetZDO());
 		if (capstan)
 		{
-			m_capstan = capstan;
+			SetCapstan(capstan);
 			m_state = State.Docking;
 			m_heading = FlatHeading();
 			ZDO zdo = m_nview.GetZDO();
@@ -268,10 +299,53 @@ internal sealed class ShipDocking : MonoBehaviour
 		}
 	}
 
+	private void SetCapstan(DockCapstan capstan)
+	{
+		m_capstan = capstan;
+		ZDO zdo = capstan.GetComponent<ZNetView>().GetZDO();
+		m_capstanId = zdo != null ? zdo.m_uid : ZDOID.None;
+	}
+
+	// The capstan is gone from the world, not just unloaded: its ZDO was destroyed with it
+	private bool CapstanRemoved()
+	{
+		return ZDOMan.instance != null && !m_capstanId.IsNone() && ZDOMan.instance.GetZDO(m_capstanId) == null;
+	}
+
+	// The ship is docked at a capstan that has not loaded. For a while it is held still for it, so it does not drift off
+	// in the meantime, as it would in a storm. If it never loads, a ship that was still being brought in is let go, and
+	// one that was tied up keeps its docking for when the capstan loads again
+	private bool WaitForCapstan()
+	{
+		ZDO zdo = m_nview.GetZDO();
+		if (!IsCaught(zdo))
+		{
+			return false;
+		}
+		if (Time.time >= m_waitUntil)
+		{
+			if (!zdo.GetBool(s_mooredKey))
+			{
+				Release();
+			}
+			return false;
+		}
+		m_waiting = true;
+		m_ship.m_speed = Ship.Speed.Stop;
+		m_ship.m_sailForce = Vector3.zero;
+		Vector3 velocity = m_body.linearVelocity;
+		m_body.linearVelocity = new Vector3(0f, velocity.y, 0f);
+		Vector3 angular = m_body.angularVelocity;
+		angular.y = 0f;
+		m_body.angularVelocity = angular;
+		return true;
+	}
+
 	private void Release()
 	{
 		m_state = State.Free;
 		m_capstan = null;
+		m_capstanId = ZDOID.None;
 		if (m_nview.IsValid() && m_nview.IsOwner())
 		{
 			SaveCapstan(m_nview.GetZDO(), null);
@@ -577,7 +651,7 @@ internal sealed class ShipDocking : MonoBehaviour
 		private static void Prefix(Ship __instance, float time)
 		{
 			ShipDocking docking = __instance.GetComponent<ShipDocking>();
-			if (docking && docking.m_state == State.Docked)
+			if (docking && (docking.m_state == State.Docked || docking.m_waiting))
 			{
 				__instance.m_lastWaterImpactTime = time;
 			}
