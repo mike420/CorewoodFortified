@@ -333,7 +333,7 @@ internal sealed class ShipDocking : MonoBehaviour
 				found = true;
 			}
 			// Nothing that side, or what is there is not a dock
-			if (!found || !first.collider.GetComponentInParent<DockSupports>() || first.distance >= bestDistance)
+			if (!found || !first.collider.GetComponentInParent<DockSection>() || first.distance >= bestDistance)
 			{
 				continue;
 			}

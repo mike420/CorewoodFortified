@@ -5,26 +5,19 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Stretches each of a dock's posts down to the ground under it, so a dock built out over water stands on the sea floor.
-// Every post is a child named docks_..._support_NN, in both the new and the worn look, with a box collider round it.
-// The post keeps its top where it is and only its bottom moves, and its collider grows with it, so the dock counts as
-// standing on the ground and gets full support.
+// Stretches each of a piece's posts down to the ground under it, so a dock or bridge built out over water or a gap
+// stands on the ground below. Every post is a child mesh with "_support_" in its name (such as docks_straight_support_01),
+// in both the new and the worn look, with a box collider round it. The post keeps its top where it is and only its
+// bottom moves, and its collider grows with it, so the piece counts as standing on the ground and gets full support.
 //
 // Every game works the length out from the terrain itself, so nothing is saved. It is worked out again when the
-// terrain under the dock is dug or raised. The placement ghost keeps its posts short, as long ones get in the way of
+// terrain under the piece is dug or raised. The placement ghost keeps its posts short, as long ones get in the way of
 // placing it.
-//
-// A piece resting on a dock, such as a torch, loses support with its distance from the dock's middle, so on a long
-// section the ends could not hold anything. The dock is one solid deck, so that distance is taken to the nearest part
-// of the dock instead
-internal sealed class DockSupports : MonoBehaviour
+internal sealed class ExtendingSupports : MonoBehaviour
 {
-	private static readonly Dictionary<WearNTear, DockSupports> s_docks = new Dictionary<WearNTear, DockSupports>();
+	private const string PostMarker = "_support_";
 
-	// The piece whose support is being worked out, while it is
-	private static WearNTear s_supported;
-
-	// How far a post goes into the ground, so it does not show a gap where the sea floor slopes
+	// How far a post goes into the ground, so it does not show a gap where the ground slopes
 	private const float SinkDepth = 0.3f;
 
 	// A post is not stretched when the ground is further down than this, as it would be a pole hanging in deep water
@@ -66,9 +59,6 @@ internal sealed class DockSupports : MonoBehaviour
 
 	private float m_retryTime;
 
-	// The dock's colliders as built, posts at their normal length, in the piece's space
-	private Bounds m_deck;
-
 	private void Awake()
 	{
 		ZNetView nview = GetComponent<ZNetView>();
@@ -79,11 +69,6 @@ internal sealed class DockSupports : MonoBehaviour
 		}
 		m_wear = GetComponent<WearNTear>();
 		FindPosts();
-		m_deck = DeckBounds();
-		if (m_wear)
-		{
-			s_docks[m_wear] = this;
-		}
 		m_onTerrainChanged = OnTerrainChanged;
 	}
 
@@ -99,17 +84,13 @@ internal sealed class DockSupports : MonoBehaviour
 
 	private void OnDestroy()
 	{
-		if (m_wear)
-		{
-			s_docks.Remove(m_wear);
-		}
 		if (m_heightmap)
 		{
 			s_clearCache(m_heightmap) = (Action)Delegate.Remove(s_clearCache(m_heightmap), m_onTerrainChanged);
 		}
 	}
 
-	// Until the terrain under a placed dock has loaded
+	// Until the terrain under a placed piece has loaded
 	private void LateUpdate()
 	{
 		if (m_pending && Time.time >= m_retryTime)
@@ -131,12 +112,12 @@ internal sealed class DockSupports : MonoBehaviour
 		foreach (MeshFilter filter in GetComponentsInChildren<MeshFilter>(includeInactive: true))
 		{
 			string name = filter.name;
-			if (!name.StartsWith("docks_") || !name.Contains("_support_") || !filter.sharedMesh)
+			if (!name.Contains(PostMarker) || !filter.sharedMesh)
 			{
 				continue;
 			}
 			Transform mesh = filter.transform;
-			Bounds bounds = TransformBounds(filter.sharedMesh.bounds, toPiece * mesh.localToWorldMatrix);
+			Bounds bounds = PieceBounds.Transform(filter.sharedMesh.bounds, toPiece * mesh.localToWorldMatrix);
 			if (!byName.TryGetValue(name, out Post post))
 			{
 				post = new Post
@@ -164,7 +145,7 @@ internal sealed class DockSupports : MonoBehaviour
 	private Transform AddPivot(Transform mesh, float top)
 	{
 		Transform parent = mesh.parent;
-		Bounds bounds = TransformBounds(mesh.GetComponent<MeshFilter>().sharedMesh.bounds, parent.worldToLocalMatrix * mesh.localToWorldMatrix);
+		Bounds bounds = PieceBounds.Transform(mesh.GetComponent<MeshFilter>().sharedMesh.bounds, parent.worldToLocalMatrix * mesh.localToWorldMatrix);
 		Vector3 topInParent = parent.InverseTransformPoint(transform.TransformPoint(new Vector3(0f, top, 0f)));
 		Transform pivot = new GameObject(mesh.name + "_pivot").transform;
 		pivot.SetParent(parent, worldPositionStays: false);
@@ -180,7 +161,7 @@ internal sealed class DockSupports : MonoBehaviour
 		float bestDistance = 0.6f;
 		foreach (BoxCollider box in GetComponentsInChildren<BoxCollider>(includeInactive: true))
 		{
-			Bounds bounds = TransformBounds(new Bounds(box.center, box.size), toPiece * box.transform.localToWorldMatrix);
+			Bounds bounds = PieceBounds.Transform(new Bounds(box.center, box.size), toPiece * box.transform.localToWorldMatrix);
 			if (Mathf.Abs(bounds.min.y - post.Bottom.y) > 0.25f)
 			{
 				continue;
@@ -244,79 +225,5 @@ internal sealed class DockSupports : MonoBehaviour
 			post.Collider.size = post.ColliderSize + new Vector3(0f, extension, 0f);
 			post.Collider.center = post.ColliderCenter - new Vector3(0f, extension * 0.5f, 0f);
 		}
-	}
-
-	private Bounds DeckBounds()
-	{
-		Matrix4x4 toPiece = transform.worldToLocalMatrix;
-		Bounds deck = new Bounds();
-		bool any = false;
-		foreach (Collider collider in GetComponentsInChildren<Collider>(includeInactive: true))
-		{
-			if (collider.isTrigger || !(collider is BoxCollider box))
-			{
-				continue;
-			}
-			Bounds bounds = TransformBounds(new Bounds(box.center, box.size), toPiece * box.transform.localToWorldMatrix);
-			if (any)
-			{
-				deck.Encapsulate(bounds);
-			}
-			else
-			{
-				deck = bounds;
-				any = true;
-			}
-		}
-		return deck;
-	}
-
-	// The point of the dock nearest a piece's middle
-	private Vector3 NearestPointTo(Vector3 point)
-	{
-		return transform.TransformPoint(m_deck.ClosestPoint(transform.InverseTransformPoint(point)));
-	}
-
-	[HarmonyPatch(typeof(WearNTear), "UpdateSupport")]
-	private static class WearNTearUpdateSupportPatch
-	{
-		private static void Prefix(WearNTear __instance)
-		{
-			s_supported = __instance;
-		}
-
-		private static void Finalizer()
-		{
-			s_supported = null;
-		}
-	}
-
-	// Asked by the piece whose support is being worked out, a dock gives the nearest part of itself as its middle. Asked
-	// by itself, or by anything else, it gives its real middle
-	[HarmonyPatch(typeof(WearNTear), "GetCOM")]
-	private static class WearNTearGetCOMPatch
-	{
-		private static void Postfix(WearNTear __instance, ref Vector3 __result)
-		{
-			if (s_supported == null || s_supported == __instance || !s_docks.TryGetValue(__instance, out DockSupports dock))
-			{
-				return;
-			}
-			WearNTear supported = s_supported;
-			Vector3 com = supported.transform.position + supported.transform.rotation * supported.m_comOffset;
-			__result = dock.NearestPointTo(com);
-		}
-	}
-
-	private static Bounds TransformBounds(Bounds bounds, Matrix4x4 matrix)
-	{
-		Vector3 min = bounds.min;
-		Vector3 max = bounds.max;
-		Bounds result = new Bounds(matrix.MultiplyPoint3x4(min), Vector3.zero);
-		for (int i = 1; i < 8; i++)
-		{
-			result.Encapsulate(matrix.MultiplyPoint3x4(new Vector3((i & 1) == 0 ? min.x : max.x, (i & 2) == 0 ? min.y : max.y, (i & 4) == 0 ? min.z : max.z)));
-		}
-		return result;
 	}
 }

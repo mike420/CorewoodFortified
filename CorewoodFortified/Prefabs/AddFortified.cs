@@ -1215,7 +1215,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        gameObject.AddComponent<DockSupports>();
+        DockSection.AddTo(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1247,7 +1247,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        gameObject.AddComponent<DockSupports>();
+        DockSection.AddTo(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1279,7 +1279,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        gameObject.AddComponent<DockSupports>();
+        DockSection.AddTo(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1311,7 +1311,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        gameObject.AddComponent<DockSupports>();
+        DockSection.AddTo(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
 
@@ -1343,7 +1343,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        gameObject.AddComponent<DockSupports>();
+        DockSection.AddTo(gameObject);
         gameObject.AddComponent<DockCapstan>();
         PieceManager.Instance.AddPiece(customPiece);
     }

@@ -109,7 +109,7 @@
     <Compile Include="ChainTowers\NetMesh.cs" />
     <Compile Include="ChainTowers\TowerIcon.cs" />
     <Compile Include="Docks\DockCapstan.cs" />
-    <Compile Include="Docks\DockSupports.cs" />
+    <Compile Include="Docks\DockSection.cs" />
     <Compile Include="Docks\MooringRopes.cs" />
     <Compile Include="Docks\ShipDocking.cs" />
     <Compile Include="Elevators\Elevator.cs" />
@@ -122,6 +122,9 @@
     <Compile Include="Cannons\CannonRecoil.cs" />
     <Compile Include="Cannons\CannonWheels.cs" />
     <Compile Include="Cannons\OrganCannon.cs" />
+    <Compile Include="Supports\ExtendingSupports.cs" />
+    <Compile Include="Supports\PieceBounds.cs" />
+    <Compile Include="Supports\SolidDeck.cs" />
     <Compile Include="Turrets\HomingBolt.cs" />
     <Compile Include="Turrets\MovableTurret.cs" />
     <Compile Include="Turrets\TurretAiming.cs" />
