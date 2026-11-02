@@ -53,11 +53,15 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCorner);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayTjunction);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCross);
+
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksStraight);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCorner);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksTjunction);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCross);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCapstan);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDrawbridgeLarge);
+
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerBeacon);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerLadder);
         CorewoodFortifiedMod.TryAddPiece(AddPieceLadder2m);
@@ -1348,6 +1352,54 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
+
+    public static void AddPieceDrawbridgeLarge()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("piece_mm_corewood_drawbridge_large");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_mm_corewood_drawbridge_large_description",
+            CraftingStation = "forge",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Requirements = new RequirementConfig[4]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 12,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 24,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Chain",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 4,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, drawBridgeOC, drawBridgeOC);
+        gameObject.AddComponent<ExtendingSupports>();
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
+
     public static void AddPieceTowerBeacon()
     {
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_tower_beacon");
@@ -1379,7 +1431,6 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         PieceManager.Instance.AddPiece(customPiece);
     }
-
 
     public static void AddPieceTowerLadder()
     {

@@ -7,7 +7,7 @@ namespace CorewoodFortified;
 
 // Stretches each of a piece's posts down to the ground under it, so a dock or bridge built out over water or a gap
 // stands on the ground below. Every post is a child mesh with "_support_" in its name (such as docks_straight_support_01),
-// in both the new and the worn look, with a box collider round it. The post keeps its top where it is and only its
+// in both the new and the worn look, with a box collider round it (one the size of its mesh is made if it has none). The post keeps its top where it is and only its
 // bottom moves, and its collider grows with it, so the piece counts as standing on the ground and gets full support.
 //
 // Every game works the length out from the terrain itself, so nothing is saved. It is worked out again when the
@@ -34,6 +34,9 @@ internal sealed class ExtendingSupports : MonoBehaviour
 
 		// Its top, in the piece's space, which the pivots scale about
 		public float Top;
+
+		// Its mesh as built, in the piece's space
+		public Bounds MeshBounds;
 
 		// A pivot at the top of the post for each look it has, which the post's mesh hangs from
 		public readonly List<Transform> Pivots = new List<Transform>();
@@ -123,7 +126,8 @@ internal sealed class ExtendingSupports : MonoBehaviour
 				post = new Post
 				{
 					Bottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z),
-					Top = bounds.max.y
+					Top = bounds.max.y,
+					MeshBounds = bounds
 				};
 				byName.Add(name, post);
 				m_posts.Add(post);
@@ -132,7 +136,7 @@ internal sealed class ExtendingSupports : MonoBehaviour
 		}
 		foreach (Post post in m_posts)
 		{
-			post.Collider = FindCollider(post, toPiece);
+			post.Collider = FindCollider(post, toPiece) ?? AddCollider(post);
 			if (post.Collider)
 			{
 				post.ColliderCenter = post.Collider.center;
@@ -174,6 +178,24 @@ internal sealed class ExtendingSupports : MonoBehaviour
 			}
 		}
 		return best;
+	}
+
+	// A box round a post that has no collider of its own, the size of its mesh, so it still reaches the ground and
+	// gives the piece its support
+	private BoxCollider AddCollider(Post post)
+	{
+		Bounds bounds = post.MeshBounds;
+		GameObject holder = new GameObject("support_collider");
+		holder.layer = gameObject.layer;
+		holder.transform.SetParent(transform, worldPositionStays: false);
+		BoxCollider box = holder.AddComponent<BoxCollider>();
+		box.center = bounds.center;
+		box.size = bounds.size;
+		if (m_wear)
+		{
+			m_wear.m_colliders = null;
+		}
+		return box;
 	}
 
 	// Stretches every post to the ground. False when the ground under a post has not loaded yet

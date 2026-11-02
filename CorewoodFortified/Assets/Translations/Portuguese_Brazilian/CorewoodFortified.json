@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "Pesado demais para se puxar",
   "text_zipline_out_of_stamina": "Sem vigor: continue segurando $KEY_Forward para se segurar e recuperar o fôlego, depois você segue puxando. Solte $KEY_Forward para escorregar de volta.",
   "text_zipline_out_of_stamina_short": "Sem vigor: segure $KEY_Forward para se segurar",
-  "text_zipline_came_down": "A corda caiu"
+  "text_zipline_came_down": "A corda caiu",
+  "piece_mm_corewood_drawbridge_large": "Ponte levadiça grande",
+  "piece_mm_corewood_drawbridge_large_description": "Uma ponte levadiça de madeira sobre postes de toras. Suas pernas descem até o chão, para atravessar um fosso ou um rio."
 }

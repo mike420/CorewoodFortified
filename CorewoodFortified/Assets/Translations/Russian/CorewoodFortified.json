@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "Слишком тяжело, чтобы подтягиваться",
   "text_zipline_out_of_stamina": "Нет выносливости: продолжайте удерживать $KEY_Forward, чтобы висеть и отдышаться, потом подтягивайтесь дальше. Отпустите $KEY_Forward, чтобы скатиться назад.",
   "text_zipline_out_of_stamina_short": "Нет выносливости: удерживайте $KEY_Forward, чтобы висеть",
-  "text_zipline_came_down": "Канат оборвался"
+  "text_zipline_came_down": "Канат оборвался",
+  "piece_mm_corewood_drawbridge_large": "Большой подъёмный мост",
+  "piece_mm_corewood_drawbridge_large_description": "Деревянный подъёмный мост на бревенчатых столбах. Его опоры доходят до земли, поэтому он может перекрыть ров или реку."
 }

@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "Kendini çekmek için çok ağır",
   "text_zipline_out_of_stamina": "Dayanıklılık bitti: tutunup soluklanmak için $KEY_Forward basılı tutmaya devam et, sonra çekmeyi sürdürürsün. Geri kaymak için $KEY_Forward bırak.",
   "text_zipline_out_of_stamina_short": "Dayanıklılık bitti: tutunmak için $KEY_Forward basılı tut",
-  "text_zipline_came_down": "Halat düştü"
+  "text_zipline_came_down": "Halat düştü",
+  "piece_mm_corewood_drawbridge_large": "Büyük Asma Köprü",
+  "piece_mm_corewood_drawbridge_large_description": "Kütük direkler üzerinde ahşap bir asma köprü. Ayakları aşağıdaki zemine kadar iner, böylece bir hendeği ya da nehri aşabilir."
 }

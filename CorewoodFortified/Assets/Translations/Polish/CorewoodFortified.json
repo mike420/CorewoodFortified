@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "Za ciężko, by się podciągać",
   "text_zipline_out_of_stamina": "Brak wytrzymałości: dalej trzymaj $KEY_Forward, aby się utrzymać i złapać oddech, potem ciągniesz dalej. Puść $KEY_Forward, aby zjechać do tyłu.",
   "text_zipline_out_of_stamina_short": "Brak wytrzymałości: trzymaj $KEY_Forward, aby się utrzymać",
-  "text_zipline_came_down": "Lina spadła"
+  "text_zipline_came_down": "Lina spadła",
+  "piece_mm_corewood_drawbridge_large": "Duży most zwodzony",
+  "piece_mm_corewood_drawbridge_large_description": "Drewniany most zwodzony na słupach z bali. Jego nogi sięgają do ziemi, więc może przejść nad fosą lub rzeką."
 }

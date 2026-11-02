@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "Trop lourd pour vous tirer",
   "text_zipline_out_of_stamina": "À bout d'endurance : continuez à maintenir $KEY_Forward pour vous accrocher et reprendre votre souffle, puis vous repartez. Relâchez $KEY_Forward pour glisser en arrière.",
   "text_zipline_out_of_stamina_short": "À bout d'endurance : maintenez $KEY_Forward pour vous accrocher",
-  "text_zipline_came_down": "La corde est tombée"
+  "text_zipline_came_down": "La corde est tombée",
+  "piece_mm_corewood_drawbridge_large": "Grand pont-levis",
+  "piece_mm_corewood_drawbridge_large_description": "Un pont-levis en bois sur des poteaux de rondins. Ses pieds descendent jusqu'au sol, pour enjamber une douve ou une rivière."
 }

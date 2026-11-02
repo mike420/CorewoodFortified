@@ -223,5 +223,7 @@
   "text_zipline_too_heavy_short": "太重，无法拉动自己前进",
   "text_zipline_out_of_stamina": "耐力耗尽：继续按住 $KEY_Forward 挂着喘口气，然后再继续拉。松开 $KEY_Forward 会滑回去。",
   "text_zipline_out_of_stamina_short": "耐力耗尽：按住 $KEY_Forward 挂住",
-  "text_zipline_came_down": "绳索掉下来了"
+  "text_zipline_came_down": "绳索掉下来了",
+  "piece_mm_corewood_drawbridge_large": "大型吊桥",
+  "piece_mm_corewood_drawbridge_large_description": "建在原木柱上的木制吊桥。桥腿会一直延伸到下方地面，因此可以横跨护城河或河流。"
 }
