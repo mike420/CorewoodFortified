@@ -234,6 +234,9 @@ namespace CorewoodFortified
             fenceControllerSoundVolume = config.BindConfigInOrder("Sounds", "Fence Controller Sound Volume", defaultValue: 0.5f, "Volume of the fence controller's sound while it powers its fences, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             CarryOverOldSections(config);
+
+            // Decimal settings rounded (and kept in range) whichever editor sets them
+            MagicMike.ModSettings.ConfigRounding.RoundAll(config);
         }
 
         private static readonly Dictionary<string, string[]> OldSections = new Dictionary<string, string[]>
