@@ -91,6 +91,12 @@ Once placed, each post reaches down to the ground below it, so a dock can be bui
 
 A ship bigger than the raft that sails towards a Dock Capstan from in front of it, within 30 m, is brought in by itself, without turning, and held with its hull 6 m out from the capstan, tied to the capstan by two ropes, and takes no damage from waves while docked. If a dock lies alongside the ship once it is there, within 15 m, the ship is moved sideways up to it, stopping just short. Raise the speed from the helm to sail off again. If anything is in the way you are told docking is blocked. Auto Docking can be turned off in the Docks config section.
 
+**Drawbridges**
+
+  * **Large Drawbridge**: 12 Core Wood, 24 Wood, 6 Linen Thread, 2 Wolf Trophy (for each half)
+
+Once placed, its legs reach down to the ground below, so it can span a moat or a river. Placing one also places a second half facing it, so the two meet in the middle as one full drawbridge, and both halves open and close together. You need materials for both halves, and nothing is built if the other half would be inside a ward you cannot build in.
+
 **Ladders**
 
   * **Ladder 2m**: 2 Core Wood
@@ -304,6 +310,7 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, in game or on the main menu, to open a panel with the settings of all your installed Magic Mike mods).
 
   * **Enable Plugin** (default `true`): turns the mod on or off. Restart required.
+  * **Disable HD** (default `false`, experimental): swaps the piece materials for low quality versions that look more vanilla like. Changing it applies straight away, including to pieces already built.
   * **Turret Move Key** (default `U`): look at a Fortified Ballista or Organ Cannon and press it to move it.
   * **Beacon Reveal Radius** (default `300`, synced from the server): how far around a Tower Beacon the map is revealed while a lit Fortified Brazier Small stands on its top, in metres, from 100 to 3000. The map is made of 64 m squares, so the edge of the circle is rough.
 
