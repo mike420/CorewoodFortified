@@ -10,6 +10,7 @@ namespace CorewoodFortified
     internal class MainConfig
     {
         public static ConfigEntry<bool> modEnabled;
+        public static ConfigEntry<bool> disableHDTextures;
         public static ConfigEntry<KeyboardShortcut> turretMoveKey;
         public static ConfigEntry<bool> enableElevators;
         public static ConfigEntry<bool> autoTriggers;
@@ -124,7 +125,9 @@ namespace CorewoodFortified
         public static void InitConfigs(ConfigFile config)
         {
             modEnabled = config.BindConfigInOrder("General Settings", "Enable Plugin", defaultValue: true, "Enable the CorewoodFortified plugin.\n(Restart required. It is read before connecting to a server, so it is a local setting).\n", synced: false, sectionOrder: true, settingOrder: true);
-            enableElevators = config.BindConfigInOrder("General Settings", "Enable Elevators", defaultValue: true, "If Off, elevators are hidden from the build menu and placed elevators do not move. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+            disableHDTextures = config.BindConfigInOrder("General Settings", "Disable HD", defaultValue: false, "Enabling this swaps the piece materials for low quality versions that look more vanilla like.\n", synced: false, sectionOrder: true, settingOrder: true);
+            disableHDTextures.SettingChanged += (_, _) => LowQualityMaterials.OnSettingChanged();
+            enableElevators =config.BindConfigInOrder("General Settings", "Enable Elevators", defaultValue: true, "If Off, elevators are hidden from the build menu and placed elevators do not move. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             autoTriggers = config.BindConfigInOrder("General Settings", "Automatic Elevators", defaultValue: true, "If On, elevators move automatically when a player steps on the platform. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             elevatorSpeed = config.BindConfigInOrder("General Settings", "Elevator Speed", defaultValue: 2f, "How fast elevator platforms move, in metres per second. A trip already under way keeps the speed it started with. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));
             turretMoveKey = config.BindConfigInOrder("General Settings", "Turret Move Key", defaultValue: new KeyboardShortcut(UnityEngine.KeyCode.U), "Look at a fortified ballista or organ cannon and press this key to pick it up and put it down somewhere else: aim where it should go, scroll to turn it, attack to put it down, block or this key again to leave it where it was.", synced: false, sectionOrder: true, settingOrder: true);
