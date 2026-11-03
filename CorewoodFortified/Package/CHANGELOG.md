@@ -7,10 +7,26 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.4</td>
+    <td>
+        <ul>
+            <li></li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>1.1.3</td>
+    <td>
+        <ul>
+            <li>Added more materials to the Low Quality toggle.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.2</td>
     <td>
         <ul>
-            <li>Added a Disable HD setting. It swaps the piece materials for low quality versions that look more vanilla like, and toggling it applies straight away, including to pieces already built.</li>
+            <li>(Experimental): Added a Disable HD setting. It swaps the piece materials for low quality versions that look more vanilla like, and toggling it applies straight away, including to pieces already built.</li>
             <li>Fixed a docked ship sometimes slipping its moorings when logging out or moving away from the dock, and drifting off in a storm. The ship now keeps its docking until it is let go from the helm or its Dock Capstan is taken down, and is held still while the dock loads back in.</li>
         </ul>
     </td>

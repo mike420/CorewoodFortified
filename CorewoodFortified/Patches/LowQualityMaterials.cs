@@ -28,7 +28,8 @@ public static class LowQualityMaterials
 		{ "corewood_log_flat", "corewood_log_flat_lq" },
 		{ "corewood_log_flat_worn", "corewood_log_flat_worn_lq" },
 		{ "corewood_logwall", "corewood_logwall_lq" },
-		{ "corewood_logwall_worn", "corewood_logwall_worn_lq" },
+        { "corewood_logwall2", "corewood_logwall_lq" },
+        { "corewood_logwall_worn", "corewood_logwall_worn_lq" },
 		{ "corelogs", "corelogs_lq" },
 		{ "corelogs_worn", "corelogs_worn_lq" },
 		{ "corewood_wood_bark", "log_bark_lq" },
@@ -39,7 +40,8 @@ public static class LowQualityMaterials
 		{ "wood_parts", "wood_parts_lq" },
 		{ "wood_planks", "wood_planks_lq" },
 		{ "wood_planks_worn", "wood_planks_worn_lq" },
-	};
+        { "power_generator", "power_generator_lq" }
+    };
 
 	private static Dictionary<string, Material> lowQualityMaterials;
 
