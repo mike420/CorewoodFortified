@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Нет выносливости: удерживайте $KEY_Forward, чтобы висеть",
   "text_zipline_came_down": "Канат оборвался",
   "piece_mm_corewood_drawbridge_large": "Большой подъёмный мост",
-  "piece_mm_corewood_drawbridge_large_description": "Деревянный подъёмный мост на бревенчатых столбах. Его опоры доходят до земли, поэтому он может перекрыть ров или реку."
+  "piece_mm_corewood_drawbridge_large_description": "Деревянный подъёмный мост на бревенчатых столбах. Его опоры доходят до земли, поэтому он может перекрыть ров или реку.",
+  "text_drawbridge_mirror_no_materials": "Недостаточно материалов для второй половины подъёмного моста",
+  "text_drawbridge_mirror_warded": "Вторая половина подъёмного моста окажется в защищённой зоне"
 }

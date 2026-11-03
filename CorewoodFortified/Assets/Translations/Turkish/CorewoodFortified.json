@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Dayanıklılık bitti: tutunmak için $KEY_Forward basılı tut",
   "text_zipline_came_down": "Halat düştü",
   "piece_mm_corewood_drawbridge_large": "Büyük Asma Köprü",
-  "piece_mm_corewood_drawbridge_large_description": "Kütük direkler üzerinde ahşap bir asma köprü. Ayakları aşağıdaki zemine kadar iner, böylece bir hendeği ya da nehri aşabilir."
+  "piece_mm_corewood_drawbridge_large_description": "Kütük direkler üzerinde ahşap bir asma köprü. Ayakları aşağıdaki zemine kadar iner, böylece bir hendeği ya da nehri aşabilir.",
+  "text_drawbridge_mirror_no_materials": "Asma köprünün diğer yarısı için yeterli malzeme yok",
+  "text_drawbridge_mirror_warded": "Asma köprünün diğer yarısı korunan bir alanda kalır"
 }

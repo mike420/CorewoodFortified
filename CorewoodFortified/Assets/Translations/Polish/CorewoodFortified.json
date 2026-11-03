@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Brak wytrzymałości: trzymaj $KEY_Forward, aby się utrzymać",
   "text_zipline_came_down": "Lina spadła",
   "piece_mm_corewood_drawbridge_large": "Duży most zwodzony",
-  "piece_mm_corewood_drawbridge_large_description": "Drewniany most zwodzony na słupach z bali. Jego nogi sięgają do ziemi, więc może przejść nad fosą lub rzeką."
+  "piece_mm_corewood_drawbridge_large_description": "Drewniany most zwodzony na słupach z bali. Jego nogi sięgają do ziemi, więc może przejść nad fosą lub rzeką.",
+  "text_drawbridge_mirror_no_materials": "Za mało materiałów na drugą połowę mostu zwodzonego",
+  "text_drawbridge_mirror_warded": "Druga połowa mostu zwodzonego znalazłaby się w strefie ochronnej"
 }

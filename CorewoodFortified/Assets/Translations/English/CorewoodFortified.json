@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Out of stamina: hold $KEY_Forward to hang on",
   "text_zipline_came_down": "The rope came down",
   "piece_mm_corewood_drawbridge_large": "Large Drawbridge",
-  "piece_mm_corewood_drawbridge_large_description": "A wooden drawbridge on log posts. Its legs reach down to the ground below, so it can span a moat or a river."
+  "piece_mm_corewood_drawbridge_large_description": "A wooden drawbridge on log posts. Its legs reach down to the ground below, so it can span a moat or a river.",
+  "text_drawbridge_mirror_no_materials": "Not enough materials for the other half of the drawbridge",
+  "text_drawbridge_mirror_warded": "The other half of the drawbridge would be inside a ward"
 }

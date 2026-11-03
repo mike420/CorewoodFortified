@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Sem vigor: segure $KEY_Forward para se segurar",
   "text_zipline_came_down": "A corda caiu",
   "piece_mm_corewood_drawbridge_large": "Ponte levadiça grande",
-  "piece_mm_corewood_drawbridge_large_description": "Uma ponte levadiça de madeira sobre postes de toras. Suas pernas descem até o chão, para atravessar um fosso ou um rio."
+  "piece_mm_corewood_drawbridge_large_description": "Uma ponte levadiça de madeira sobre postes de toras. Suas pernas descem até o chão, para atravessar um fosso ou um rio.",
+  "text_drawbridge_mirror_no_materials": "Materiais insuficientes para a outra metade da ponte levadiça",
+  "text_drawbridge_mirror_warded": "A outra metade da ponte levadiça ficaria dentro de uma área protegida"
 }

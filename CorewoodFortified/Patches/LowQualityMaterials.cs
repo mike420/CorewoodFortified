@@ -22,7 +22,7 @@ public static class LowQualityMaterials
 	}
 
 	// Original material name -> low quality material name in the corewood_fortified bundle.
-	// Each low quality material is used by one original only, so they can be swapped back by material.
+	// A low quality material may serve several originals; each original gets its own copy so it can be swapped back.
 	private static readonly Dictionary<string, string> LowQualityNames = new Dictionary<string, string>
 	{
 		{ "corewood_log_flat", "corewood_log_flat_lq" },
@@ -48,7 +48,8 @@ public static class LowQualityMaterials
 	// Low quality material -> the HD material it replaced, filled in as materials are swapped.
 	private static readonly Dictionary<Material, Material> OriginalMaterials = new Dictionary<Material, Material>();
 
-	private static readonly HashSet<Material> ShaderFixed = new HashSet<Material>();
+	// Original material name -> the low quality material used in its place, one per original.
+	private static readonly Dictionary<string, Material> LowQualityByOriginal = new Dictionary<string, Material>();
 
 	private static HashSet<string> fortifiedPrefabs;
 
@@ -168,15 +169,25 @@ public static class LowQualityMaterials
 
 	private static Material GetLowQuality(Material material)
 	{
-		if (!material || !LowQualityNames.TryGetValue(CleanName(material.name), out string lqName)
-			|| !lowQualityMaterials.TryGetValue(lqName, out Material lqMaterial))
+		if (!material)
 		{
 			return null;
 		}
-		if (!OriginalMaterials.ContainsKey(lqMaterial))
+		string originalName = CleanName(material.name);
+		if (LowQualityByOriginal.TryGetValue(originalName, out Material lqMaterial) && lqMaterial)
 		{
-			OriginalMaterials[lqMaterial] = material;
+			return lqMaterial;
 		}
+		if (!LowQualityNames.TryGetValue(originalName, out string lqName)
+			|| !lowQualityMaterials.TryGetValue(lqName, out Material source))
+		{
+			return null;
+		}
+		// The bundle material is already standing in for another original: use a copy, so each
+		// low quality material maps back to exactly one original.
+		lqMaterial = OriginalMaterials.ContainsKey(source) ? new Material(source) { name = source.name } : source;
+		LowQualityByOriginal[originalName] = lqMaterial;
+		OriginalMaterials[lqMaterial] = material;
 		FixShader(lqMaterial, material);
 		return lqMaterial;
 	}
@@ -190,10 +201,6 @@ public static class LowQualityMaterials
 	// piece prefabs, which Jotunn fixes. Give them the real shader the original material uses.
 	private static void FixShader(Material lqMaterial, Material original)
 	{
-		if (!ShaderFixed.Add(lqMaterial))
-		{
-			return;
-		}
 		lqMaterial.shader = original.shader;
 		lqMaterial.renderQueue = original.renderQueue;
 		lqMaterial.shaderKeywords = original.shaderKeywords;

@@ -1359,10 +1359,10 @@ internal class AddFortified
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
             Description = "$piece_mm_corewood_drawbridge_large_description",
-            CraftingStation = "forge",
+            CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
-            Usage = new[] { PieceUsages.Building, PieceUsages.Defense },
+            Usage = new[] { PieceUsages.Building },
             Requirements = new RequirementConfig[4]
             {
                 new RequirementConfig
@@ -1379,14 +1379,14 @@ internal class AddFortified
                 },
                 new RequirementConfig
                 {
-                    Item = "Chain",
+                    Item = "LinenThread",
                     Amount = 6,
                     Recover = true
                 },
                 new RequirementConfig
                 {
-                    Item = "Bronze",
-                    Amount = 4,
+                    Item = "TrophyWolf",
+                    Amount = 2,
                     Recover = true
                 }
             }
@@ -1395,6 +1395,7 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         SetDoorEffects(gameObject, drawBridgeOC, drawBridgeOC);
         gameObject.AddComponent<ExtendingSupports>();
+        gameObject.AddComponent<DrawbridgeMirror>();
         PieceManager.Instance.AddPiece(customPiece);
     }
 

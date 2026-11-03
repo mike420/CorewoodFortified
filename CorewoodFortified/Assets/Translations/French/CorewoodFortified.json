@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "À bout d'endurance : maintenez $KEY_Forward pour vous accrocher",
   "text_zipline_came_down": "La corde est tombée",
   "piece_mm_corewood_drawbridge_large": "Grand pont-levis",
-  "piece_mm_corewood_drawbridge_large_description": "Un pont-levis en bois sur des poteaux de rondins. Ses pieds descendent jusqu'au sol, pour enjamber une douve ou une rivière."
+  "piece_mm_corewood_drawbridge_large_description": "Un pont-levis en bois sur des poteaux de rondins. Ses pieds descendent jusqu'au sol, pour enjamber une douve ou une rivière.",
+  "text_drawbridge_mirror_no_materials": "Pas assez de matériaux pour l'autre moitié du pont-levis",
+  "text_drawbridge_mirror_warded": "L'autre moitié du pont-levis serait dans une zone protégée"
 }

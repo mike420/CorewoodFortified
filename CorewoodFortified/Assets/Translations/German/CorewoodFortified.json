@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Keine Ausdauer: Halte $KEY_Forward, um dich festzuhalten",
   "text_zipline_came_down": "Das Seil ist heruntergekommen",
   "piece_mm_corewood_drawbridge_large": "Große Zugbrücke",
-  "piece_mm_corewood_drawbridge_large_description": "Eine hölzerne Zugbrücke auf Holzpfosten. Ihre Stützen reichen bis zum Boden hinab, so kann sie einen Graben oder Fluss überspannen."
+  "piece_mm_corewood_drawbridge_large_description": "Eine hölzerne Zugbrücke auf Holzpfosten. Ihre Stützen reichen bis zum Boden hinab, so kann sie einen Graben oder Fluss überspannen.",
+  "text_drawbridge_mirror_no_materials": "Nicht genug Material für die andere Hälfte der Zugbrücke",
+  "text_drawbridge_mirror_warded": "Die andere Hälfte der Zugbrücke läge in einem geschützten Bereich"
 }

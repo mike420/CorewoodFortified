@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "Sin aguante: mantén $KEY_Forward para sujetarte",
   "text_zipline_came_down": "La cuerda se ha caído",
   "piece_mm_corewood_drawbridge_large": "Puente levadizo grande",
-  "piece_mm_corewood_drawbridge_large_description": "Un puente levadizo de madera sobre postes de troncos. Sus patas bajan hasta el suelo, así puede cruzar un foso o un río."
+  "piece_mm_corewood_drawbridge_large_description": "Un puente levadizo de madera sobre postes de troncos. Sus patas bajan hasta el suelo, así puede cruzar un foso o un río.",
+  "text_drawbridge_mirror_no_materials": "No hay suficientes materiales para la otra mitad del puente levadizo",
+  "text_drawbridge_mirror_warded": "La otra mitad del puente levadizo quedaría dentro de una zona protegida"
 }

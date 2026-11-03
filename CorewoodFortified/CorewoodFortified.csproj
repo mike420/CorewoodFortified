@@ -124,6 +124,7 @@
     <Compile Include="Cannons\CannonWheels.cs" />
     <Compile Include="Cannons\OrganCannon.cs" />
     <Compile Include="Supports\ExtendingSupports.cs" />
+    <Compile Include="Supports\DrawbridgeMirror.cs" />
     <Compile Include="Supports\PieceBounds.cs" />
     <Compile Include="Supports\SolidDeck.cs" />
     <Compile Include="Turrets\HomingBolt.cs" />

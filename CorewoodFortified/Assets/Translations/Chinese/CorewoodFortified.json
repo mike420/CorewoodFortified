@@ -225,5 +225,7 @@
   "text_zipline_out_of_stamina_short": "耐力耗尽：按住 $KEY_Forward 挂住",
   "text_zipline_came_down": "绳索掉下来了",
   "piece_mm_corewood_drawbridge_large": "大型吊桥",
-  "piece_mm_corewood_drawbridge_large_description": "建在原木柱上的木制吊桥。桥腿会一直延伸到下方地面，因此可以横跨护城河或河流。"
+  "piece_mm_corewood_drawbridge_large_description": "建在原木柱上的木制吊桥。桥腿会一直延伸到下方地面，因此可以横跨护城河或河流。",
+  "text_drawbridge_mirror_no_materials": "材料不足，无法建造吊桥的另一半",
+  "text_drawbridge_mirror_warded": "吊桥的另一半位于守护范围内"
 }
