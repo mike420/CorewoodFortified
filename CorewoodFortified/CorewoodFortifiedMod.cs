@@ -95,6 +95,8 @@ public class CorewoodFortifiedMod : BaseUnityPlugin
         "sfx_open_fortified_cwf",
         "sfx_close_fortified_cwf",
         "sfx_oc_drawbridge_cwf",
+        "sfx_open_drawbridge_cwf",
+        "sfx_close_drawbridge_cwf",
         "sfx_tower_chains_cwf",
         "sfx_elevator_cwf",
         "sfx_turret_scan_cwf",

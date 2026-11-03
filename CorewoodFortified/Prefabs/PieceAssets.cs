@@ -19,6 +19,8 @@ internal static class PieceAssets
     public static EffectList fortifiedOpen;
     public static EffectList fortifiedClose;
     public static EffectList drawBridgeOC;
+    public static EffectList drawBridgeOpen;
+    public static EffectList drawBridgeClose;
     public static EffectList addFuel;
 
     public static ItemDrop fuelCoal;
@@ -51,6 +53,8 @@ internal static class PieceAssets
         fortifiedClose = Effects("sfx_close_fortified_cwf");
 
         drawBridgeOC = Effects("sfx_oc_drawbridge_cwf");
+        drawBridgeOpen = Effects("sfx_open_drawbridge_cwf");
+        drawBridgeClose = Effects("sfx_close_drawbridge_cwf");
 
         addFuel = Effects("vfx_walltorch_addFuel", "sfx_FireAddFuel");
 

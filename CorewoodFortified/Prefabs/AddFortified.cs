@@ -1398,7 +1398,7 @@ internal class AddFortified
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
-        SetDoorEffects(gameObject, drawBridgeOC, drawBridgeOC);
+        SetDoorEffects(gameObject, drawBridgeOpen, drawBridgeClose);
         gameObject.AddComponent<ExtendingSupports>();
         gameObject.AddComponent<DrawbridgeMirror>();
         PieceManager.Instance.AddPiece(customPiece);

@@ -51,7 +51,8 @@ public class SoundPatches
 	private static readonly string[] LargeDrawbridgePrefabs =
 	{
 		"mm_corewood_fortified_drawbridge_large",
-		"mm_corewood_fortified_drawbridge_roofed"
+		"mm_corewood_fortified_drawbridge_roofed",
+		"mm_corewood_drawbridge_large"
 	};
 
 	// True while a large drawbridge's Door.SetState runs, which is where its open and close sounds are created
@@ -78,7 +79,9 @@ public class SoundPatches
 	{
 		"sfx_open_fortified_cwf",
 		"sfx_close_fortified_cwf",
-		"sfx_oc_drawbridge_cwf"
+		"sfx_oc_drawbridge_cwf",
+		"sfx_open_drawbridge_cwf",
+		"sfx_close_drawbridge_cwf"
 	};
 
 	// The gate and drawbridge sounds are scaled by the player's volume setting as each one spawns.
