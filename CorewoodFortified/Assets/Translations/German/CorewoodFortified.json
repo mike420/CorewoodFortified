@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Große Zugbrücke",
   "piece_mm_corewood_drawbridge_large_description": "Eine hölzerne Zugbrücke auf Holzpfosten. Ihre Stützen reichen bis zum Boden hinab, so kann sie einen Graben oder Fluss überspannen.",
   "text_drawbridge_mirror_no_materials": "Nicht genug Material für die andere Hälfte der Zugbrücke",
-  "text_drawbridge_mirror_warded": "Die andere Hälfte der Zugbrücke läge in einem geschützten Bereich"
+  "text_drawbridge_mirror_warded": "Die andere Hälfte der Zugbrücke läge in einem geschützten Bereich",
+  "piece_mm_corewood_wooden_bridge_4m": "Holzbrücke 4 m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Eine 4 Meter lange Holzbrücke auf Holzpfosten, die bis zum Boden hinabreichen.",
+  "piece_mm_corewood_wooden_bridge_8m": "Holzbrücke 8 m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Eine 8 Meter lange Holzbrücke auf Holzpfosten, die bis zum Boden hinabreichen.",
+  "piece_mm_corewood_wooden_bridge_corner": "Holzbrücken-Ecke",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Eine Holzbrücken-Ecke, die den Weg im rechten Winkel abbiegen lässt.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Holzbrücken-T-Kreuzung",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Eine Holzbrücken-Kreuzung, die den Weg in drei Richtungen teilt.",
+  "piece_mm_corewood_wooden_bridge_cross": "Holzbrücken-Kreuzung",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Eine Holzbrücken-Kreuzung, die den Weg in vier Richtungen teilt."
 }

@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Ponte levadiça grande",
   "piece_mm_corewood_drawbridge_large_description": "Uma ponte levadiça de madeira sobre postes de toras. Suas pernas descem até o chão, para atravessar um fosso ou um rio.",
   "text_drawbridge_mirror_no_materials": "Materiais insuficientes para a outra metade da ponte levadiça",
-  "text_drawbridge_mirror_warded": "A outra metade da ponte levadiça ficaria dentro de uma área protegida"
+  "text_drawbridge_mirror_warded": "A outra metade da ponte levadiça ficaria dentro de uma área protegida",
+  "piece_mm_corewood_wooden_bridge_4m": "Ponte de madeira 4 m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Uma ponte de madeira de 4 metros sobre postes de tora que descem até o chão.",
+  "piece_mm_corewood_wooden_bridge_8m": "Ponte de madeira 8 m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Uma ponte de madeira de 8 metros sobre postes de tora que descem até o chão.",
+  "piece_mm_corewood_wooden_bridge_corner": "Canto de ponte de madeira",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Um canto de ponte de madeira que vira o caminho em ângulo reto.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Junção em T de ponte de madeira",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Uma junção de ponte de madeira que divide o caminho em três.",
+  "piece_mm_corewood_wooden_bridge_cross": "Cruzamento de ponte de madeira",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Um cruzamento de ponte de madeira que divide o caminho em quatro."
 }

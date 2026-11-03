@@ -97,6 +97,16 @@ A ship bigger than the raft that sails towards a Dock Capstan from in front of i
 
 Once placed, its legs reach down to the ground below, so it can span a moat or a river. Placing one also places a second half facing it, so the two meet in the middle as one full drawbridge, and both halves open and close together. You need materials for both halves, and nothing is built if the other half would be inside a ward you cannot build in.
 
+**Wooden Bridges**
+
+Once placed, each post reaches down to the ground below it, so a bridge can be built over a moat, a river or a gap.
+
+  * **Wooden Bridge 4m**: 6 Core Wood, 10 Wood
+  * **Wooden Bridge 8m**: 10 Core Wood, 18 Wood
+  * **Wooden Bridge Corner**: 8 Core Wood, 14 Wood
+  * **Wooden Bridge T-Junction**: 10 Core Wood, 16 Wood
+  * **Wooden Bridge Cross**: 12 Core Wood, 20 Wood
+
 **Ladders**
 
   * **Ladder 2m**: 2 Core Wood

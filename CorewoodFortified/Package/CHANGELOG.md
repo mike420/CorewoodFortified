@@ -12,6 +12,7 @@
         <ul>
             <li>Added the Large Drawbridge, a wooden drawbridge on log posts whose legs reach down to the ground below, so it can span a moat or a river. It is built at the Workbench from Core Wood, Wood, Linen Thread and Wolf Trophies.</li>
             <li>Placing a Large Drawbridge also places a second half facing it, so the two meet in the middle as one full drawbridge. This takes materials for both halves, and nothing is built if the other half would be inside a ward or there are not enough materials. The two halves open and close together.</li>
+            <li>Added Wooden Bridges at the Workbench: 4m, 8m, Corner, T-Junction and Cross. Their posts reach down to the ground below, so a bridge can be built over a moat, a river or a gap.</li>
             <li>Fixed pieces turning transparent when Disable HD was switched back off.</li>
         </ul>
     </td>

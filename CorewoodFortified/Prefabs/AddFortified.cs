@@ -61,6 +61,11 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCapstan);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceDrawbridgeLarge);
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_4m", 6, 10));
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_8m", 10, 18));
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_corner", 8, 14));
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_tjunction", 10, 16));
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_cross", 12, 20));
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerBeacon);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerLadder);
@@ -1396,6 +1401,41 @@ internal class AddFortified
         SetDoorEffects(gameObject, drawBridgeOC, drawBridgeOC);
         gameObject.AddComponent<ExtendingSupports>();
         gameObject.AddComponent<DrawbridgeMirror>();
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    // The wooden bridge pieces only differ by prefab and cost. Posts named with "_support_" reach down to the ground.
+    public static void AddPieceWoodenBridge(string prefabName, int coreWood, int wood)
+    {
+        // Called from a lambda, so TryAddPiece's log would not name the piece: say which one is missing here.
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName)
+            ?? throw new System.Exception(prefabName + " not found in the bundle");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_" + prefabName + "_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = coreWood,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = wood,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        gameObject.AddComponent<ExtendingSupports>();
         PieceManager.Instance.AddPiece(customPiece);
     }
 

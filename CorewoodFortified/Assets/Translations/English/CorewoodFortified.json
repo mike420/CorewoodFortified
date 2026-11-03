@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Large Drawbridge",
   "piece_mm_corewood_drawbridge_large_description": "A wooden drawbridge on log posts. Its legs reach down to the ground below, so it can span a moat or a river.",
   "text_drawbridge_mirror_no_materials": "Not enough materials for the other half of the drawbridge",
-  "text_drawbridge_mirror_warded": "The other half of the drawbridge would be inside a ward"
+  "text_drawbridge_mirror_warded": "The other half of the drawbridge would be inside a ward",
+  "piece_mm_corewood_wooden_bridge_4m": "Wooden Bridge 4m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "A 4 metre wooden bridge on log posts that reach down to the ground below.",
+  "piece_mm_corewood_wooden_bridge_8m": "Wooden Bridge 8m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "An 8 metre wooden bridge on log posts that reach down to the ground below.",
+  "piece_mm_corewood_wooden_bridge_corner": "Wooden Bridge Corner",
+  "piece_mm_corewood_wooden_bridge_corner_description": "A wooden bridge corner that turns the path at a right angle.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Wooden Bridge T-Junction",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "A wooden bridge junction that splits the path three ways.",
+  "piece_mm_corewood_wooden_bridge_cross": "Wooden Bridge Cross",
+  "piece_mm_corewood_wooden_bridge_cross_description": "A wooden bridge crossing that splits the path four ways."
 }

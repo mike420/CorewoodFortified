@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "大型吊桥",
   "piece_mm_corewood_drawbridge_large_description": "建在原木柱上的木制吊桥。桥腿会一直延伸到下方地面，因此可以横跨护城河或河流。",
   "text_drawbridge_mirror_no_materials": "材料不足，无法建造吊桥的另一半",
-  "text_drawbridge_mirror_warded": "吊桥的另一半位于守护范围内"
+  "text_drawbridge_mirror_warded": "吊桥的另一半位于守护范围内",
+  "piece_mm_corewood_wooden_bridge_4m": "木桥 4 米",
+  "piece_mm_corewood_wooden_bridge_4m_description": "一座 4 米长的木桥，原木柱一直延伸到下方地面。",
+  "piece_mm_corewood_wooden_bridge_8m": "木桥 8 米",
+  "piece_mm_corewood_wooden_bridge_8m_description": "一座 8 米长的木桥，原木柱一直延伸到下方地面。",
+  "piece_mm_corewood_wooden_bridge_corner": "木桥转角",
+  "piece_mm_corewood_wooden_bridge_corner_description": "将道路转成直角的木桥转角。",
+  "piece_mm_corewood_wooden_bridge_tjunction": "木桥 T 形路口",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "将道路分成三条的木桥路口。",
+  "piece_mm_corewood_wooden_bridge_cross": "木桥十字路口",
+  "piece_mm_corewood_wooden_bridge_cross_description": "将道路分成四条的木桥十字路口。"
 }

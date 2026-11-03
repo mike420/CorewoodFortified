@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Grand pont-levis",
   "piece_mm_corewood_drawbridge_large_description": "Un pont-levis en bois sur des poteaux de rondins. Ses pieds descendent jusqu'au sol, pour enjamber une douve ou une rivière.",
   "text_drawbridge_mirror_no_materials": "Pas assez de matériaux pour l'autre moitié du pont-levis",
-  "text_drawbridge_mirror_warded": "L'autre moitié du pont-levis serait dans une zone protégée"
+  "text_drawbridge_mirror_warded": "L'autre moitié du pont-levis serait dans une zone protégée",
+  "piece_mm_corewood_wooden_bridge_4m": "Pont en bois 4 m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Un pont en bois de 4 mètres sur des poteaux de rondins qui descendent jusqu'au sol.",
+  "piece_mm_corewood_wooden_bridge_8m": "Pont en bois 8 m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Un pont en bois de 8 mètres sur des poteaux de rondins qui descendent jusqu'au sol.",
+  "piece_mm_corewood_wooden_bridge_corner": "Angle de pont en bois",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Un angle de pont en bois qui tourne le chemin à angle droit.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Jonction en T de pont en bois",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Une jonction de pont en bois qui divise le chemin en trois.",
+  "piece_mm_corewood_wooden_bridge_cross": "Croisement de pont en bois",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Un croisement de pont en bois qui divise le chemin en quatre."
 }

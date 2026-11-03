@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Büyük Asma Köprü",
   "piece_mm_corewood_drawbridge_large_description": "Kütük direkler üzerinde ahşap bir asma köprü. Ayakları aşağıdaki zemine kadar iner, böylece bir hendeği ya da nehri aşabilir.",
   "text_drawbridge_mirror_no_materials": "Asma köprünün diğer yarısı için yeterli malzeme yok",
-  "text_drawbridge_mirror_warded": "Asma köprünün diğer yarısı korunan bir alanda kalır"
+  "text_drawbridge_mirror_warded": "Asma köprünün diğer yarısı korunan bir alanda kalır",
+  "piece_mm_corewood_wooden_bridge_4m": "Ahşap Köprü 4 m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Aşağıdaki zemine kadar inen kütük direkler üzerinde 4 metrelik ahşap köprü.",
+  "piece_mm_corewood_wooden_bridge_8m": "Ahşap Köprü 8 m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Aşağıdaki zemine kadar inen kütük direkler üzerinde 8 metrelik ahşap köprü.",
+  "piece_mm_corewood_wooden_bridge_corner": "Ahşap Köprü Köşesi",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Yolu dik açıyla döndüren ahşap köprü köşesi.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Ahşap Köprü T Kavşağı",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Yolu üç yöne ayıran ahşap köprü kavşağı.",
+  "piece_mm_corewood_wooden_bridge_cross": "Ahşap Köprü Kavşağı",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Yolu dört yöne ayıran ahşap köprü kavşağı."
 }

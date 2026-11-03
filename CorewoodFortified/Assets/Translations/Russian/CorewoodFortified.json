@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Большой подъёмный мост",
   "piece_mm_corewood_drawbridge_large_description": "Деревянный подъёмный мост на бревенчатых столбах. Его опоры доходят до земли, поэтому он может перекрыть ров или реку.",
   "text_drawbridge_mirror_no_materials": "Недостаточно материалов для второй половины подъёмного моста",
-  "text_drawbridge_mirror_warded": "Вторая половина подъёмного моста окажется в защищённой зоне"
+  "text_drawbridge_mirror_warded": "Вторая половина подъёмного моста окажется в защищённой зоне",
+  "piece_mm_corewood_wooden_bridge_4m": "Деревянный мост 4 м",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Деревянный мост длиной 4 метра на бревенчатых опорах, доходящих до земли.",
+  "piece_mm_corewood_wooden_bridge_8m": "Деревянный мост 8 м",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Деревянный мост длиной 8 метров на бревенчатых опорах, доходящих до земли.",
+  "piece_mm_corewood_wooden_bridge_corner": "Угол деревянного моста",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Угол деревянного моста, поворачивающий путь под прямым углом.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Т-образный перекрёсток деревянного моста",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Развилка деревянного моста, разделяющая путь на три стороны.",
+  "piece_mm_corewood_wooden_bridge_cross": "Перекрёсток деревянного моста",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Перекрёсток деревянного моста, разделяющий путь на четыре стороны."
 }

@@ -227,5 +227,15 @@
   "piece_mm_corewood_drawbridge_large": "Duży most zwodzony",
   "piece_mm_corewood_drawbridge_large_description": "Drewniany most zwodzony na słupach z bali. Jego nogi sięgają do ziemi, więc może przejść nad fosą lub rzeką.",
   "text_drawbridge_mirror_no_materials": "Za mało materiałów na drugą połowę mostu zwodzonego",
-  "text_drawbridge_mirror_warded": "Druga połowa mostu zwodzonego znalazłaby się w strefie ochronnej"
+  "text_drawbridge_mirror_warded": "Druga połowa mostu zwodzonego znalazłaby się w strefie ochronnej",
+  "piece_mm_corewood_wooden_bridge_4m": "Drewniany most 4 m",
+  "piece_mm_corewood_wooden_bridge_4m_description": "Drewniany most o długości 4 metrów na palach sięgających do ziemi.",
+  "piece_mm_corewood_wooden_bridge_8m": "Drewniany most 8 m",
+  "piece_mm_corewood_wooden_bridge_8m_description": "Drewniany most o długości 8 metrów na palach sięgających do ziemi.",
+  "piece_mm_corewood_wooden_bridge_corner": "Narożnik drewnianego mostu",
+  "piece_mm_corewood_wooden_bridge_corner_description": "Narożnik drewnianego mostu, który skręca ścieżkę pod kątem prostym.",
+  "piece_mm_corewood_wooden_bridge_tjunction": "Rozwidlenie T drewnianego mostu",
+  "piece_mm_corewood_wooden_bridge_tjunction_description": "Rozwidlenie drewnianego mostu, które dzieli ścieżkę na trzy strony.",
+  "piece_mm_corewood_wooden_bridge_cross": "Skrzyżowanie drewnianego mostu",
+  "piece_mm_corewood_wooden_bridge_cross_description": "Skrzyżowanie drewnianego mostu, które dzieli ścieżkę na cztery strony."
 }
