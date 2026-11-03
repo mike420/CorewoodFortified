@@ -1360,7 +1360,7 @@ internal class AddFortified
 
     public static void AddPieceDrawbridgeLarge()
     {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("piece_mm_corewood_drawbridge_large");
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_drawbridge_large");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
             Description = "$piece_mm_corewood_drawbridge_large_description",
