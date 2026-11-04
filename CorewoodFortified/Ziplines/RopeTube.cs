@@ -101,12 +101,11 @@ internal sealed class RopeTube
 		Visible = true;
 	}
 
+	// Called from the owner's OnDestroy: the tube's GameObject is a child of the owner and is
+	// already going down with it, so destroying it again logs "Destroying object multiple times".
+	// Only the mesh lives outside the hierarchy and needs freeing here.
 	public void Destroy()
 	{
-		if (m_object != null)
-		{
-			Object.Destroy(m_object);
-		}
 		if (m_mesh != null)
 		{
 			Object.Destroy(m_mesh);
