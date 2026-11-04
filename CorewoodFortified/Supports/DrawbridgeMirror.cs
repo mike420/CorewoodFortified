@@ -6,7 +6,7 @@ namespace CorewoodFortified;
 
 // Placing a large drawbridge also places a second one turned around to face it, so the two halves
 // meet at the prefab's bridge_attach_01 / bridge_attach_02 points and make one full drawbridge.
-// The two halves open and close together.
+// The two halves open and close together, and destroying one destroys the other.
 internal sealed class DrawbridgeMirror : MonoBehaviour, IPlaced
 {
 	private const string Attach1 = "bridge_attach_01";
@@ -26,6 +26,9 @@ internal sealed class DrawbridgeMirror : MonoBehaviour, IPlaced
 	private Door m_door;
 
 	private DrawbridgeMirror m_partner;
+
+	// Set once this half is being destroyed, so its partner does not try to take it down again.
+	private bool m_destroyed;
 
 	private void Awake()
 	{
@@ -226,6 +229,41 @@ internal sealed class DrawbridgeMirror : MonoBehaviour, IPlaced
 			}
 			__result = false;
 			return false;
+		}
+	}
+
+	// Runs on the owner of the half being destroyed, whether by damage, the hammer or losing support:
+	// the other half goes with it and drops its own materials, unless this one's drops are blocked.
+	[HarmonyPatch(typeof(WearNTear), nameof(WearNTear.Destroy), typeof(HitData), typeof(bool))]
+	private static class DestroyPatch
+	{
+		private static void Prefix(WearNTear __instance, out DrawbridgeMirror __state)
+		{
+			__state = null;
+			DrawbridgeMirror half = __instance.GetComponent<DrawbridgeMirror>();
+			if (!half || half.m_destroyed)
+			{
+				return;
+			}
+			half.m_destroyed = true;
+			DrawbridgeMirror partner = half.GetPartner();
+			if (partner && !partner.m_destroyed)
+			{
+				__state = partner;
+			}
+		}
+
+		private static void Postfix(bool blockDrop, DrawbridgeMirror __state)
+		{
+			if (!__state || !__state.m_nview || !__state.m_nview.IsValid())
+			{
+				return;
+			}
+			WearNTear wearNTear = __state.GetComponent<WearNTear>();
+			if (wearNTear)
+			{
+				wearNTear.Remove(blockDrop);
+			}
 		}
 	}
 
