@@ -1390,8 +1390,8 @@ internal class AddFortified
                 },
                 new RequirementConfig
                 {
-                    Item = "TrophyWolf",
-                    Amount = 2,
+                    Item = "Stone",
+                    Amount = 20,
                     Recover = true
                 }
             }
