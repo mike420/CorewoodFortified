@@ -10,10 +10,13 @@
     <td>1.1.4</td>
     <td>
         <ul>
-            <li>Added the Large Drawbridge, a wooden drawbridge on log posts whose legs reach down to the ground below, so it can span a moat or a river. It is built at the Workbench from Core Wood, Wood, Linen Thread and Wolf Trophies.</li>
-            <li>Placing a Large Drawbridge also places a second half facing it, so the two meet in the middle as one full drawbridge. This takes materials for both halves, and nothing is built if the other half would be inside a ward or there are not enough materials. The two halves open and close together.</li>
+            <li>Added the Large Drawbridge, a wooden drawbridge on log posts whose legs reach down to the ground below, so it can span a moat or a river. It is built at the Workbench from Core Wood, Wood, Linen Thread and Stone, and has its own open and close sounds.</li>
+            <li>Placing a Large Drawbridge also places a second half facing it, so the two meet in the middle as one full drawbridge. This takes materials for both halves, and nothing is built if the other half would be inside a ward or there are not enough materials. The two halves open and close together, and destroying one half destroys the other, each dropping its own materials.</li>
             <li>Added Wooden Bridges at the Workbench: 4m, 8m, Corner, T-Junction and Cross. Their posts reach down to the ground below, so a bridge can be built over a moat, a river or a gap.</li>
+            <li>Pieces now show a short description in the build menu, translated in all nine languages.</li>
+            <li>Zipline post rope coils now use the rope material.</li>
             <li>Fixed pieces turning transparent when Disable HD was switched back off.</li>
+            <li>Fixed a "Destroying object multiple times" warning in the log when a rope was taken down.</li>
         </ul>
     </td>
   </tr>

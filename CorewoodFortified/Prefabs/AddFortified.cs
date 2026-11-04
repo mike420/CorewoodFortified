@@ -113,6 +113,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_entrance");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_entrance_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -143,6 +144,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge_large");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_drawbridge_large_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -188,6 +190,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -217,6 +220,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_stairs_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -246,6 +250,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_alt");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_stairs_alt_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -276,6 +281,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_tjunction");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_tjunction_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -305,6 +311,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -334,6 +341,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_alt");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_alt_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -364,6 +372,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_curved");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_curved_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -394,6 +403,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_elevator");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_elevator_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -425,6 +435,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_tower");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_watchtower_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -463,6 +474,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_entrance_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_entrance_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -493,6 +505,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_drawbridge_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -536,6 +549,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -566,6 +580,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_stairs_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -596,6 +611,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_wall_stairs_alt_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_wall_stairs_alt_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -626,6 +642,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_tjunction_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_tjunction_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -656,6 +673,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -686,6 +704,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_roofed_alt");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_roofed_alt_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -716,6 +735,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_corner_curved_roofed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_corner_curved_roofed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -747,6 +767,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_gates");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_gates_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -783,6 +804,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_drawbridge");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_drawbridge_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -826,6 +848,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_liftgate");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_liftgate_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -864,6 +887,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_wall");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_internal_wall_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -894,6 +918,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_doorway");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_internal_doorway_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -924,6 +949,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_corner");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_internal_corner_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -954,6 +980,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_corner_curved");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_internal_corner_curved_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -984,6 +1011,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_internal_tjunction");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_internal_tjunction_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1139,6 +1167,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_walkway_tjunction");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_walkway_tjunction_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1496,6 +1525,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_fence_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1520,6 +1550,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_large");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_fence_large_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1544,6 +1575,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_windowed");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_fence_windowed_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1568,6 +1600,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_fence_gate");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_fence_gate_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1702,6 +1735,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1732,6 +1766,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_bronze");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_bronze_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1768,6 +1803,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_iron");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_iron_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1804,6 +1840,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_blackmetal");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_blackmetal_description",
             CraftingStation = "piece_artisanstation",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1840,6 +1877,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_flametal");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_flametal_description",
             CraftingStation = "blackforge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1876,6 +1914,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_spikes_gold");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_spikes_gold_description",
             CraftingStation = "piece_FrostFoundry",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1914,6 +1953,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_brazier_small");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_brazier_small_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -1961,6 +2001,7 @@ internal class AddFortified
         GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_fortified_brazier_large");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_mm_corewood_fortified_brazier_large_description",
             CraftingStation = "forge",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
@@ -2167,6 +2208,7 @@ internal class AddFortified
         gameObject.AddComponent<Ladder>().m_height = height;
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Description = "$piece_" + prefabName + "_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",

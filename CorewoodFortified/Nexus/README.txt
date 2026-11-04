@@ -104,10 +104,10 @@ A ship bigger than the raft that sails towards a Dock Capstan from in front of i
 [b]Drawbridges[/b]
 
 [list]
-[*][b]Large Drawbridge[/b]: 12 Core Wood, 24 Wood, 6 Linen Thread, 2 Wolf Trophy (for each half)
+[*][b]Large Drawbridge[/b]: 12 Core Wood, 24 Wood, 6 Linen Thread, 20 Stone (for each half)
 [/list]
 
-Once placed, its legs reach down to the ground below, so it can span a moat or a river. Placing one also places a second half facing it, so the two meet in the middle as one full drawbridge, and both halves open and close together. You need materials for both halves, and nothing is built if the other half would be inside a ward you cannot build in.
+Once placed, its legs reach down to the ground below, so it can span a moat or a river. Placing one also places a second half facing it, so the two meet in the middle as one full drawbridge, and both halves open and close together. You need materials for both halves, and nothing is built if the other half would be inside a ward you cannot build in. Destroying one half, by damage, the hammer or losing support, destroys the other too, and each half drops its own materials.
 
 [b]Wooden Bridges[/b]
 
