@@ -106,6 +106,9 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHut01);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHutDoor);
     }
 
     public static void AddPieceFortifiedEntrance()
@@ -2227,6 +2230,82 @@ internal class AddFortified
         SetWearEffects(gameObject, hitWood, breakWood);
         PieceManager.Instance.AddPiece(customPiece);
     }
+
+
+
+
+    public static void AddPieceVillageHut01()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_hut_01");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_hut_01",
+            Description = "$piece_mm_corewood_hut_01_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[3]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 40,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 20,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Stone",
+                    Amount = 20,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceVillageHutDoor()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_hut_door");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_hut_door",
+            Description = "$piece_mm_corewood_hut_door_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Bronze",
+                    Amount = 1,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        SetDoorEffects(gameObject, doorOpen, doorClose);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+
 
     private static EffectList GetCannonShotEffect(Turret vanilla)
     {

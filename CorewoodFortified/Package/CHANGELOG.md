@@ -7,6 +7,17 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.5</td>
+    <td>
+        <ul>
+            <li>Added the Village Hut, a small log hut built at the Workbench from Core Wood, Wood and Stone.</li>
+            <li>Added the Village Hut Door, made to fit the Village Hut, built at the Workbench from Core Wood and Bronze.</li>
+            <li>The Village Hut and its door are named and described in all nine languages.</li>
+            <li>Added stone and straw roof materials to the Low Quality toggle.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.4</td>
     <td>
         <ul>

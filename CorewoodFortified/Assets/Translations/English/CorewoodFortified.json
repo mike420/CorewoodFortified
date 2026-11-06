@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Wooden Bridge T-Junction",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "A wooden bridge junction that splits the path three ways.",
   "piece_mm_corewood_wooden_bridge_cross": "Wooden Bridge Cross",
-  "piece_mm_corewood_wooden_bridge_cross_description": "A wooden bridge crossing that splits the path four ways."
+  "piece_mm_corewood_wooden_bridge_cross_description": "A wooden bridge crossing that splits the path four ways.",
+  "piece_mm_corewood_hut_01": "Village Hut",
+  "piece_mm_corewood_hut_01_description": "A small log hut, ready-built for a village.",
+  "piece_mm_corewood_hut_door": "Village Hut Door",
+  "piece_mm_corewood_hut_door_description": "A sturdy wooden door made to fit the Village Hut."
 }

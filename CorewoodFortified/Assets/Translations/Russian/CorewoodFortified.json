@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Т-образный перекрёсток деревянного моста",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "Развилка деревянного моста, разделяющая путь на три стороны.",
   "piece_mm_corewood_wooden_bridge_cross": "Перекрёсток деревянного моста",
-  "piece_mm_corewood_wooden_bridge_cross_description": "Перекрёсток деревянного моста, разделяющий путь на четыре стороны."
+  "piece_mm_corewood_wooden_bridge_cross_description": "Перекрёсток деревянного моста, разделяющий путь на четыре стороны.",
+  "piece_mm_corewood_hut_01": "Деревенская хижина",
+  "piece_mm_corewood_hut_01_description": "Небольшая бревенчатая хижина, готовая для деревни.",
+  "piece_mm_corewood_hut_door": "Дверь деревенской хижины",
+  "piece_mm_corewood_hut_door_description": "Прочная деревянная дверь для деревенской хижины."
 }

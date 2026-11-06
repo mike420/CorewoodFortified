@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Junção em T de ponte de madeira",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "Uma junção de ponte de madeira que divide o caminho em três.",
   "piece_mm_corewood_wooden_bridge_cross": "Cruzamento de ponte de madeira",
-  "piece_mm_corewood_wooden_bridge_cross_description": "Um cruzamento de ponte de madeira que divide o caminho em quatro."
+  "piece_mm_corewood_wooden_bridge_cross_description": "Um cruzamento de ponte de madeira que divide o caminho em quatro.",
+  "piece_mm_corewood_hut_01": "Cabana de vila",
+  "piece_mm_corewood_hut_01_description": "Uma pequena cabana de toras, pronta para uma vila.",
+  "piece_mm_corewood_hut_door": "Porta da cabana de vila",
+  "piece_mm_corewood_hut_door_description": "Uma porta de madeira resistente feita para a cabana de vila."
 }

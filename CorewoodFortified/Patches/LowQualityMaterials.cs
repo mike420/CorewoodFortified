@@ -40,7 +40,12 @@ public static class LowQualityMaterials
 		{ "wood_parts", "wood_parts_lq" },
 		{ "wood_planks", "wood_planks_lq" },
 		{ "wood_planks_worn", "wood_planks_worn_lq" },
-        { "power_generator", "power_generator_lq" }
+        { "power_generator", "power_generator_lq" },
+        { "stone_mat", "stone_mat_lq" },
+        { "straw_roof", "straw_roof_lq" },
+        { "straw_roof_alpha", "straw_roof_alpha_lq" },
+        { "straw_roof_worn", "straw_roof_worn_lq" },
+        { "straw_roof_worn_alpha", "straw_roof_worn_alpha_lq" }
     };
 
 	private static Dictionary<string, Material> lowQualityMaterials;

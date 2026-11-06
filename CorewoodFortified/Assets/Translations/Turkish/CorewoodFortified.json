@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Ahşap Köprü T Kavşağı",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "Yolu üç yöne ayıran ahşap köprü kavşağı.",
   "piece_mm_corewood_wooden_bridge_cross": "Ahşap Köprü Kavşağı",
-  "piece_mm_corewood_wooden_bridge_cross_description": "Yolu dört yöne ayıran ahşap köprü kavşağı."
+  "piece_mm_corewood_wooden_bridge_cross_description": "Yolu dört yöne ayıran ahşap köprü kavşağı.",
+  "piece_mm_corewood_hut_01": "Köy Kulübesi",
+  "piece_mm_corewood_hut_01_description": "Bir köy için hazır yapılmış küçük bir kütük kulübe.",
+  "piece_mm_corewood_hut_door": "Köy Kulübesi Kapısı",
+  "piece_mm_corewood_hut_door_description": "Köy kulübesine uyacak şekilde yapılmış sağlam bir ahşap kapı."
 }

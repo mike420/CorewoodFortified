@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "木桥 T 形路口",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "将道路分成三条的木桥路口。",
   "piece_mm_corewood_wooden_bridge_cross": "木桥十字路口",
-  "piece_mm_corewood_wooden_bridge_cross_description": "将道路分成四条的木桥十字路口。"
+  "piece_mm_corewood_wooden_bridge_cross_description": "将道路分成四条的木桥十字路口。",
+  "piece_mm_corewood_hut_01": "村庄小屋",
+  "piece_mm_corewood_hut_01_description": "一座为村庄建好的小原木屋。",
+  "piece_mm_corewood_hut_door": "村庄小屋门",
+  "piece_mm_corewood_hut_door_description": "一扇为村庄小屋打造的结实木门。"
 }

@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Jonction en T de pont en bois",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "Une jonction de pont en bois qui divise le chemin en trois.",
   "piece_mm_corewood_wooden_bridge_cross": "Croisement de pont en bois",
-  "piece_mm_corewood_wooden_bridge_cross_description": "Un croisement de pont en bois qui divise le chemin en quatre."
+  "piece_mm_corewood_wooden_bridge_cross_description": "Un croisement de pont en bois qui divise le chemin en quatre.",
+  "piece_mm_corewood_hut_01": "Hutte de village",
+  "piece_mm_corewood_hut_01_description": "Une petite hutte en rondins, toute prête pour un village.",
+  "piece_mm_corewood_hut_door": "Porte de hutte de village",
+  "piece_mm_corewood_hut_door_description": "Une solide porte en bois faite pour la hutte de village."
 }

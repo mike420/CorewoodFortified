@@ -280,5 +280,9 @@
   "piece_mm_corewood_wooden_bridge_tjunction": "Cruce en T de puente de madera",
   "piece_mm_corewood_wooden_bridge_tjunction_description": "Un cruce de puente de madera que divide el camino en tres.",
   "piece_mm_corewood_wooden_bridge_cross": "Cruce de puente de madera",
-  "piece_mm_corewood_wooden_bridge_cross_description": "Un cruce de puente de madera que divide el camino en cuatro."
+  "piece_mm_corewood_wooden_bridge_cross_description": "Un cruce de puente de madera que divide el camino en cuatro.",
+  "piece_mm_corewood_hut_01": "Cabaña de aldea",
+  "piece_mm_corewood_hut_01_description": "Una pequeña cabaña de troncos, lista para una aldea.",
+  "piece_mm_corewood_hut_door": "Puerta de cabaña de aldea",
+  "piece_mm_corewood_hut_door_description": "Una robusta puerta de madera hecha para la cabaña de aldea."
 }
