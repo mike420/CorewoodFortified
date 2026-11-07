@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using HarmonyLib;
 using UnityEngine;
 
 namespace CorewoodFortified;
@@ -20,6 +22,14 @@ public class TowerBeacon : MonoBehaviour
 	private static readonly Collider[] s_hits = new Collider[64];
 
 	private static int s_pieceMask;
+
+	// Braziers kept dry by Beacon Unlimited Fuel: wind and rain do not put them out
+	private static readonly HashSet<Fireplace> s_sheltered = new HashSet<Fireplace>();
+
+	private static readonly AccessTools.FieldRef<Fireplace, bool> s_wet = AccessTools.FieldRefAccess<Fireplace, bool>("m_wet");
+
+	// The brazier this beacon is keeping dry, if any
+	private Fireplace m_sheltered;
 
 	private ZNetView m_nview;
 
@@ -58,11 +68,13 @@ public class TowerBeacon : MonoBehaviour
 			return;
 		}
 		Piece brazier = FindBrazier();
+		bool unlimited = MainConfig.beaconUnlimitedFuel.Value;
+		Shelter(unlimited && brazier != null ? brazier.GetComponent<Fireplace>() : null);
 		if (brazier == null)
 		{
 			return;
 		}
-		if (MainConfig.beaconUnlimitedFuel.Value)
+		if (unlimited)
 		{
 			Refuel(brazier);
 		}
@@ -73,6 +85,43 @@ public class TowerBeacon : MonoBehaviour
 		}
 		Minimap.instance.Explore(transform.position, radius);
 		m_revealedRadius = radius;
+	}
+
+	private void OnDestroy()
+	{
+		Shelter(null);
+	}
+
+	private void Shelter(Fireplace fireplace)
+	{
+		if (m_sheltered == fireplace)
+		{
+			return;
+		}
+		if (m_sheltered != null)
+		{
+			s_sheltered.Remove(m_sheltered);
+		}
+		s_sheltered.RemoveWhere(f => f == null);
+		m_sheltered = fireplace;
+		if (fireplace != null)
+		{
+			s_sheltered.Add(fireplace);
+			s_wet(fireplace) = false;
+		}
+	}
+
+	// Wind and rain make a fire wet, and the game then switches a wet brazier off; a sheltered one stays dry
+	[HarmonyPatch(typeof(Fireplace), "CheckWet")]
+	private static class Fireplace_CheckWet
+	{
+		private static void Postfix(Fireplace __instance)
+		{
+			if (s_sheltered.Contains(__instance) && MainConfig.beaconUnlimitedFuel.Value)
+			{
+				s_wet(__instance) = false;
+			}
+		}
 	}
 
 	// The small fortified brazier standing on the beacon's top, if any; a lit one first
@@ -97,7 +146,7 @@ public class TowerBeacon : MonoBehaviour
 	}
 
 	// Beacon Unlimited Fuel: the brazier's owner keeps it full, so it lights even when empty and never burns out.
-	// Switching it off or covering it over still puts it out
+	// Switching it off or covering it over still puts it out; wind and rain do not
 	private static void Refuel(Piece brazier)
 	{
 		Fireplace fireplace = brazier.GetComponent<Fireplace>();

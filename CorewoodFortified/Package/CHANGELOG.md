@@ -10,7 +10,7 @@
     <td>1.1.6</td>
     <td>
         <ul>
-            <li>New setting in General Settings: Beacon Unlimited Fuel. If On, a Fortified Brazier Small on a Tower Beacon never runs out of fuel: it is kept full and lights even when empty, but switching it off or covering it over still puts it out (default Off, synced from the server).</li>
+            <li>New setting in General Settings: Beacon Unlimited Fuel. If On, a Fortified Brazier Small on a Tower Beacon never runs out of fuel: it is kept full, lights even when empty, and wind and rain do not put it out, but switching it off or covering it over still puts it out (default Off, synced from the server).</li>
             <li>Added the new setting to the readme.</li>
         </ul>
     </td>

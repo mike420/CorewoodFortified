@@ -323,7 +323,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Disable HD** (default `false`, experimental): swaps the piece materials for low quality versions that look more vanilla like. Changing it applies straight away, including to pieces already built.
   * **Turret Move Key** (default `U`): look at a Fortified Ballista or Organ Cannon and press it to move it.
   * **Beacon Reveal Radius** (default `300`, synced from the server): how far around a Tower Beacon the map is revealed while a lit Fortified Brazier Small stands on its top, in metres, from 100 to 3000. The map is made of 64 m squares, so the edge of the circle is rough.
-  * **Beacon Unlimited Fuel** (default `Off`, synced from the server): if On, a Fortified Brazier Small standing on a Tower Beacon never runs out of fuel. It is kept full and lights even when empty; switching it off or covering it over still puts it out.
+  * **Beacon Unlimited Fuel** (default `Off`, synced from the server): if On, a Fortified Brazier Small standing on a Tower Beacon never runs out of fuel. It is kept full, lights even when empty, and wind and rain do not put it out; switching it off or covering it over still puts it out.
 
 **Elevators** (synced from the server)
 

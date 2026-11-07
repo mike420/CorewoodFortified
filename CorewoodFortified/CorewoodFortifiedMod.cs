@@ -14,7 +14,7 @@ namespace CorewoodFortified;
 [BepInPlugin(PluginGUID, PluginName, PluginVersion)]
 [BepInDependency("com.jotunn.jotunn", BepInDependency.DependencyFlags.HardDependency)]
 [BepInDependency(EasyRelocateCompat.Guid, BepInDependency.DependencyFlags.SoftDependency)]
-[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Patch)]
+[NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.Major)]
 public class CorewoodFortifiedMod : BaseUnityPlugin
 {
     public const string PluginName = "CorewoodFortified";
