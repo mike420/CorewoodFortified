@@ -462,6 +462,14 @@ For Nexus downloads you will need to install manually.
 
 <br>
 
+## 🌐 Multiplayer:
+
+  * Every player and the server need this mod installed.
+  * Versions only need to match on the first number: anyone on 1.x.x can play with anyone else on 1.x.x, so a server and its players do not all have to update at the same time.
+  * Settings marked "synced from the server" use the server's values for everyone.
+
+<br>
+
 ## 🙏 Credits:
 
   * **Ladder climbing** and its climbing animation are ported from The Concerned Cat's <a href="https://github.com/Weakened/ConcernedCatMods">Concerned Ladders</a>.
