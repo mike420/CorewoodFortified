@@ -376,6 +376,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [*][b]Disable HD[/b] (default [b]false[/b], experimental): swaps the piece materials for low quality versions that look more vanilla like. Changing it applies straight away, including to pieces already built.
 [*][b]Turret Move Key[/b] (default [b]U[/b]): look at a Fortified Ballista or Organ Cannon and press it to move it.
 [*][b]Beacon Reveal Radius[/b] (default [b]300[/b], synced from the server): how far around a Tower Beacon the map is revealed while a lit Fortified Brazier Small stands on its top, in metres, from 100 to 3000. The map is made of 64 m squares, so the edge of the circle is rough.
+[*][b]Beacon Unlimited Fuel[/b] (default [b]Off[/b], synced from the server): if On, a Fortified Brazier Small standing on a Tower Beacon never runs out of fuel. It is kept full and lights even when empty; switching it off or covering it over still puts it out.
 [/list]
 
 [b]Elevators[/b] (synced from the server)
@@ -547,17 +548,18 @@ For Nexus downloads you will need to install manually.
 [size=5][b]Plugins Created by Magic Mike[/b][/size]
 
 [list]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/CoreWoodExtras/]Corewood Extras[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/CorewoodFortified/]Corewood Fortified[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/CorewoodAdditions/]Corewood Additions[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/MyDirtyHoe/]My Dirty Hoe[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/ChestPreview/]Chest Preview[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/YabbaDabbaDoo/]YabbaDabbaDoo[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/BetterBuildMenu/]BetterBuildMenu[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/BetterCraftMenu/]BetterCraftMenu[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/ExtraInventorySlots/]ExtraInventorySlots[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/VillagePlebs/]VillagePlebs[/url]
-[*][url=https://thunderstore.io/c/valheim/p/MagicMike/BodyReplacer/]BodyReplacer[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/CoreWoodExtras]Corewood Extras[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/CorewoodFortified]Corewood Fortified[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/CorewoodAdditions]Corewood Additions[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/MyDirtyHoe]My Dirty Hoe[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/ChestPreview]Chest Preview[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/YabbaDabbaDoo]YabbaDabbaDoo[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/BetterBuildMenu]Better Build Menu[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/BetterCrafting]Better Crafting[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/BetterEquipSlots]Better Equip Slots[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/ExtraInventorySlots]Extra Inventory Slots[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/VillagePlebs]Village Plebs[/url]
+[*][url=https://valheim.hexium.gg/mods/MagicMike/BodyReplacer]Body Replacer[/url]
 [/list]
 
 

@@ -7,13 +7,22 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.6</td>
+    <td>
+        <ul>
+            <li>New setting in General Settings: Beacon Unlimited Fuel. If On, a Fortified Brazier Small on a Tower Beacon never runs out of fuel: it is kept full and lights even when empty, but switching it off or covering it over still puts it out (default Off, synced from the server).</li>
+            <li>Added the new setting to the readme.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.5</td>
     <td>
         <ul>
             <li>Added the Village Hut, a small log hut built at the Workbench from Core Wood, Wood and Stone.</li>
             <li>Added the Village Hut Door, made to fit the Village Hut, built at the Workbench from Core Wood and Bronze.</li>
-            <li>The Village Hut and its door are named and described in all nine languages.</li>
-            <li>Added stone and straw roof materials to the Low Quality toggle.</li>
+            <li>Added Dock Steps, wooden steps leading down from a dock, built at the Workbench from Core Wood and Wood. Like the other docks, their posts reach down to the ground below.</li>
+            <li>Updated readme and links.</li>
         </ul>
     </td>
   </tr>

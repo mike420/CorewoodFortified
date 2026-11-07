@@ -147,6 +147,8 @@
   "piece_mm_corewood_docks_cross_description": "Un cruce de muelle de madera que divide el camino en cuatro direcciones. Sus pilotes llegan hasta el suelo de abajo, así que puede construirse sobre el agua.",
   "piece_mm_corewood_docks_capstan": "Muelle con cabrestante",
   "piece_mm_corewood_docks_capstan_description": "Un muelle de madera recto con un cabrestante para amarrar. Sus pilotes llegan hasta el suelo de abajo, así que puede construirse sobre el agua.",
+  "piece_mm_corewood_dock_steps": "Escalones de muelle",
+  "piece_mm_corewood_dock_steps_description": "Escalones de madera que bajan desde un muelle. Sus pilotes llegan hasta el suelo de abajo, así que pueden construirse sobre el agua.",
   "piece_mm_corewood_village_house_door": "Puerta de casa de aldea",
   "piece_mm_corewood_village_house_01": "Casa de aldea 01",
   "text_fortified_lift_gate": "Rastrillo fortificado",

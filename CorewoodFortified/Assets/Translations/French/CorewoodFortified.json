@@ -147,6 +147,8 @@
   "piece_mm_corewood_docks_cross_description": "Un croisement de quai en bois qui divise le chemin en quatre directions. Ses poteaux descendent jusqu'au sol en dessous, il peut donc être construit au-dessus de l'eau.",
   "piece_mm_corewood_docks_capstan": "Quai à cabestan",
   "piece_mm_corewood_docks_capstan_description": "Un quai en bois droit avec un cabestan d'amarrage. Ses poteaux descendent jusqu'au sol en dessous, il peut donc être construit au-dessus de l'eau.",
+  "piece_mm_corewood_dock_steps": "Marches de quai",
+  "piece_mm_corewood_dock_steps_description": "Des marches en bois qui descendent d'un quai. Leurs poteaux descendent jusqu'au sol en dessous, elles peuvent donc être construites au-dessus de l'eau.",
   "piece_mm_corewood_village_house_door": "Porte de maison de village",
   "piece_mm_corewood_village_house_01": "Maison de village 01",
   "text_fortified_lift_gate": "Herse fortifiée",

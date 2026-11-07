@@ -147,6 +147,8 @@
   "piece_mm_corewood_docks_cross_description": "A wooden dock crossing that splits the path four ways. Its posts reach down to the ground below, so it can be built out over water.",
   "piece_mm_corewood_docks_capstan": "Dock Capstan",
   "piece_mm_corewood_docks_capstan_description": "A straight wooden dock with a capstan for mooring. Its posts reach down to the ground below, so it can be built out over water.",
+  "piece_mm_corewood_dock_steps": "Dock Steps",
+  "piece_mm_corewood_dock_steps_description": "Wooden steps leading down from a dock. Their posts reach down to the ground below, so they can be built out over water.",
   "piece_mm_corewood_village_house_door": "Village House Door",
   "piece_mm_corewood_village_house_01": "Village House 01",
   "text_fortified_lift_gate": "Fortified Lift Gate",

@@ -59,6 +59,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksTjunction);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCross);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCapstan);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDockSteps);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceDrawbridgeLarge);
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_4m", 6, 10));
@@ -1389,6 +1390,39 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
+    public static void AddPieceDockSteps()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_dock_steps");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_dock_steps",
+            Description = "$piece_mm_corewood_dock_steps_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 10,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        DockSection.AddTo(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
 
     public static void AddPieceDrawbridgeLarge()
     {
@@ -1990,7 +2024,6 @@ internal class AddFortified
         {
             component2.m_fuelItem = fuelCoal;
             component2.m_fuelAddedEffects = addFuel;
-            //component2.m_firePrefab = firePrefab;
         }
         else
         {

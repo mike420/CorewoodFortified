@@ -57,8 +57,17 @@ public class TowerBeacon : MonoBehaviour
 		{
 			return;
 		}
+		Piece brazier = FindBrazier();
+		if (brazier == null)
+		{
+			return;
+		}
+		if (MainConfig.beaconUnlimitedFuel.Value)
+		{
+			Refuel(brazier);
+		}
 		float radius = MainConfig.beaconRevealRadius.Value;
-		if (radius <= m_revealedRadius || !HasLitBrazier())
+		if (radius <= m_revealedRadius || !IsLit(brazier))
 		{
 			return;
 		}
@@ -66,19 +75,42 @@ public class TowerBeacon : MonoBehaviour
 		m_revealedRadius = radius;
 	}
 
-	private bool HasLitBrazier()
+	// The small fortified brazier standing on the beacon's top, if any; a lit one first
+	private Piece FindBrazier()
 	{
 		Vector3 center = transform.TransformPoint(m_top.center);
 		int count = Physics.OverlapSphereNonAlloc(center, m_top.extents.magnitude + 1f, s_hits, s_pieceMask);
+		Piece found = null;
 		for (int i = 0; i < count; i++)
 		{
 			Piece piece = s_hits[i].GetComponentInParent<Piece>();
-			if (piece != null && piece != m_piece && Utils.GetPrefabName(piece.gameObject) == BrazierPrefab && m_top.Contains(transform.InverseTransformPoint(piece.transform.position)) && IsLit(piece))
+			if (piece != null && piece != m_piece && Utils.GetPrefabName(piece.gameObject) == BrazierPrefab && m_top.Contains(transform.InverseTransformPoint(piece.transform.position)))
 			{
-				return true;
+				if (IsLit(piece))
+				{
+					return piece;
+				}
+				found ??= piece;
 			}
 		}
-		return false;
+		return found;
+	}
+
+	// Beacon Unlimited Fuel: the brazier's owner keeps it full, so it lights even when empty and never burns out.
+	// Switching it off or covering it over still puts it out
+	private static void Refuel(Piece brazier)
+	{
+		Fireplace fireplace = brazier.GetComponent<Fireplace>();
+		ZNetView nview = brazier.GetComponent<ZNetView>();
+		if (fireplace == null || nview == null || !nview.IsValid() || !nview.IsOwner())
+		{
+			return;
+		}
+		ZDO zdo = nview.GetZDO();
+		if (zdo.GetFloat(ZDOVars.s_fuel) < fireplace.m_maxFuel)
+		{
+			zdo.Set(ZDOVars.s_fuel, fireplace.m_maxFuel);
+		}
 	}
 
 	// Burning as the game sees it: fuelled, switched on, not covered over and not under water

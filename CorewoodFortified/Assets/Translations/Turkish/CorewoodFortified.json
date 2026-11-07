@@ -147,6 +147,8 @@
   "piece_mm_corewood_docks_cross_description": "Yolu dört yöne ayıran ahşap bir iskele kavşağı. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
   "piece_mm_corewood_docks_capstan": "Irgatlı İskele",
   "piece_mm_corewood_docks_capstan_description": "Bağlama için ırgatı olan düz bir ahşap iskele. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
+  "piece_mm_corewood_dock_steps": "İskele Basamakları",
+  "piece_mm_corewood_dock_steps_description": "Bir iskeleden aşağı inen ahşap basamaklar. Direkleri aşağıdaki zemine kadar uzanır, bu yüzden suyun üzerine inşa edilebilir.",
   "piece_mm_corewood_village_house_door": "Köy Evi Kapısı",
   "piece_mm_corewood_village_house_01": "Köy Evi 01",
   "text_fortified_lift_gate": "Tahkimli Kalkan Kapı",
