@@ -11,7 +11,8 @@
     <td>
         <ul>
             <li>New setting in General Settings: Beacon Unlimited Fuel. If On, a Fortified Brazier Small on a Tower Beacon never runs out of fuel: it is kept full, lights even when empty, and wind and rain do not put it out, but switching it off or covering it over still puts it out (default Off, synced from the server).</li>
-            <li>Added the new setting to the readme.</li>
+            <li>Added the Dock End, built at the Workbench from Core Wood and Wood. Like the other docks, its posts reach down to the ground below.</li>
+            <li>Added the Wooden Bridge End, built at the Workbench from Core Wood and Wood.</li>
         </ul>
     </td>
   </tr>

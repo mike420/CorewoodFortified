@@ -60,6 +60,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCross);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCapstan);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDockSteps);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceDocksEnd);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceDrawbridgeLarge);
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_4m", 6, 10));
@@ -67,6 +68,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_corner", 8, 14));
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_tjunction", 10, 16));
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_cross", 12, 20));
+        CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_end", 6, 10));
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerBeacon);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerLadder);
@@ -1423,6 +1425,39 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
+    public static void AddPieceDocksEnd()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_docks_end");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_docks_end",
+            Description = "$piece_mm_corewood_docks_end_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 10,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        DockSection.AddTo(gameObject);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
 
     public static void AddPieceDrawbridgeLarge()
     {
@@ -1478,6 +1513,7 @@ internal class AddFortified
             ?? throw new System.Exception(prefabName + " not found in the bundle");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
+            Name = "$piece_" + prefabName,
             Description = "$piece_" + prefabName + "_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
