@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Une jonction de passerelle en bois qui divise le chemin en trois directions.",
   "piece_mm_corewood_walkway_cross": "Croisement de passerelle",
   "piece_mm_corewood_walkway_cross_description": "Un croisement de passerelle en bois qui divise le chemin en quatre directions.",
+  "piece_mm_corewood_walkway_end": "Bout de passerelle",
+  "piece_mm_corewood_walkway_end_description": "Le bout d'une passerelle en bois, qui termine le chemin.",
   "piece_mm_corewood_docks_straight": "Quai droit",
   "piece_mm_corewood_docks_straight_description": "Un quai en bois droit. Ses poteaux descendent jusqu'au sol en dessous, il peut donc être construit au-dessus de l'eau.",
   "piece_mm_corewood_docks_corner": "Angle de quai",

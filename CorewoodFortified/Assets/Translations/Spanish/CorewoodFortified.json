@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Un cruce de pasarela de madera que divide el camino en tres direcciones.",
   "piece_mm_corewood_walkway_cross": "Cruce de pasarela",
   "piece_mm_corewood_walkway_cross_description": "Un cruce de pasarela de madera que divide el camino en cuatro direcciones.",
+  "piece_mm_corewood_walkway_end": "Final de pasarela",
+  "piece_mm_corewood_walkway_end_description": "El final de una pasarela de madera, que cierra el camino.",
   "piece_mm_corewood_docks_straight": "Muelle recto",
   "piece_mm_corewood_docks_straight_description": "Un muelle de madera recto. Sus pilotes llegan hasta el suelo de abajo, así que puede construirse sobre el agua.",
   "piece_mm_corewood_docks_corner": "Esquina de muelle",

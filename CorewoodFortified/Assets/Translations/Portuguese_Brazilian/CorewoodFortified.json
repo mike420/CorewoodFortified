@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Uma junção de passarela de madeira que divide o caminho em três direções.",
   "piece_mm_corewood_walkway_cross": "Cruzamento de passarela",
   "piece_mm_corewood_walkway_cross_description": "Um cruzamento de passarela de madeira que divide o caminho em quatro direções.",
+  "piece_mm_corewood_walkway_end": "Fim de passarela",
+  "piece_mm_corewood_walkway_end_description": "O fim de uma passarela de madeira, que encerra o caminho.",
   "piece_mm_corewood_docks_straight": "Doca reta",
   "piece_mm_corewood_docks_straight_description": "Uma doca de madeira reta. Seus pilares descem até o chão abaixo, então ela pode ser construída sobre a água.",
   "piece_mm_corewood_docks_corner": "Canto de doca",

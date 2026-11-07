@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Drewniane rozgałęzienie pomostu, które dzieli ścieżkę na trzy strony.",
   "piece_mm_corewood_walkway_cross": "Skrzyżowanie kładki",
   "piece_mm_corewood_walkway_cross_description": "Drewniane skrzyżowanie kładki, które dzieli ścieżkę na cztery strony.",
+  "piece_mm_corewood_walkway_end": "Koniec kładki",
+  "piece_mm_corewood_walkway_end_description": "Koniec drewnianej kładki, zamykający ścieżkę.",
   "piece_mm_corewood_docks_straight": "Prosty pomost",
   "piece_mm_corewood_docks_straight_description": "Prosty drewniany pomost. Jego pale sięgają aż do gruntu pod spodem, więc można go budować nad wodą.",
   "piece_mm_corewood_docks_corner": "Narożnik pomostu",

@@ -85,6 +85,7 @@ Thank you for your support, and happy gaming! ...... (A Paypal account is NOT re
 [*][b]Walkway Corner[/b]: 8 Core Wood, 14 Wood
 [*][b]Walkway T-Junction[/b]: 8 Core Wood, 16 Wood
 [*][b]Walkway Cross[/b]: 10 Core Wood, 18 Wood
+[*][b]Walkway End[/b]: 2 Core Wood, 6 Wood
 [/list]
 
 [b]Docks[/b]

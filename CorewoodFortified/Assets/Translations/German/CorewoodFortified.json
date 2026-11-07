@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Eine Abzweigung für Holzstege, die den Weg in drei Richtungen teilt.",
   "piece_mm_corewood_walkway_cross": "Steg-Kreuzung",
   "piece_mm_corewood_walkway_cross_description": "Eine hölzerne Stegkreuzung, die den Weg in vier Richtungen teilt.",
+  "piece_mm_corewood_walkway_end": "Steg-Ende",
+  "piece_mm_corewood_walkway_end_description": "Das Ende eines Holzstegs, das den Weg abschließt.",
   "piece_mm_corewood_docks_straight": "Gerader Steg",
   "piece_mm_corewood_docks_straight_description": "Ein gerader Holzsteg. Seine Pfosten reichen bis zum Boden darunter, sodass er über dem Wasser gebaut werden kann.",
   "piece_mm_corewood_docks_corner": "Steg-Ecke",

@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "A wooden walkway junction that splits the path three ways.",
   "piece_mm_corewood_walkway_cross": "Walkway Cross",
   "piece_mm_corewood_walkway_cross_description": "A wooden walkway crossing that splits the path four ways.",
+  "piece_mm_corewood_walkway_end": "Walkway End",
+  "piece_mm_corewood_walkway_end_description": "The end of a wooden walkway, closing off the path.",
   "piece_mm_corewood_docks_straight": "Straight Dock",
   "piece_mm_corewood_docks_straight_description": "A straight wooden dock. Its posts reach down to the ground below, so it can be built out over water.",
   "piece_mm_corewood_docks_corner": "Dock Corner",

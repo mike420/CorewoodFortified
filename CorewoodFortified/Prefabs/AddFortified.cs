@@ -53,6 +53,7 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCorner);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayTjunction);
         CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayCross);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceWalkwayEnd);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksStraight);
         CorewoodFortifiedMod.TryAddPiece(AddPieceDocksCorner);
@@ -1221,6 +1222,38 @@ internal class AddFortified
                 {
                     Item = "Wood",
                     Amount = 18,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
+
+    public static void AddPieceWalkwayEnd()
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_walkway_end");
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Name = "$piece_mm_corewood_walkway_end",
+            Description = "$piece_mm_corewood_walkway_end_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[2]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = 2,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 6,
                     Recover = true
                 }
             }

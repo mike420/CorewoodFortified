@@ -137,6 +137,8 @@
   "piece_mm_corewood_walkway_tjunction_description": "Развилка деревянных мостков, делящая путь на три стороны.",
   "piece_mm_corewood_walkway_cross": "Перекрёсток мостков",
   "piece_mm_corewood_walkway_cross_description": "Деревянный перекрёсток мостков, разделяющий путь на четыре стороны.",
+  "piece_mm_corewood_walkway_end": "Конец мостков",
+  "piece_mm_corewood_walkway_end_description": "Конец деревянных мостков, завершающий путь.",
   "piece_mm_corewood_docks_straight": "Прямой причал",
   "piece_mm_corewood_docks_straight_description": "Прямой деревянный причал. Его сваи доходят до самого дна, поэтому его можно строить над водой.",
   "piece_mm_corewood_docks_corner": "Угол причала",
