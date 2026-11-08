@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.1.7</td>
+    <td>
+        <ul>
+            <li>Fixed a conflict with other mods that refuse items going into an inventory: an item they refused could be lost on Take All instead of staying in the chest.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.6</td>
     <td>
         <ul>

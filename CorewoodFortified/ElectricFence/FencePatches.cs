@@ -17,12 +17,24 @@ internal static class FencePatches
 		return IsFenceStore(inventory) && !FenceController.IsEitr(item);
 	}
 
+	// Only a refusal touches the result. Every prefix runs even after another mod's has skipped the method, so writing
+	// true here would turn that mod's refusal into a success, and a Take All would then delete the item from the chest
+	private static bool Allows(Inventory inventory, ItemDrop.ItemData item, ref bool result)
+	{
+		if (!Refuses(inventory, item))
+		{
+			return true;
+		}
+		result = false;
+		return false;
+	}
+
 	[HarmonyPatch(typeof(Inventory), nameof(Inventory.AddItem), typeof(ItemDrop.ItemData))]
 	private static class AddItemPatch
 	{
 		private static bool Prefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result)
 		{
-			return __result = !Refuses(__instance, item);
+			return Allows(__instance, item, ref __result);
 		}
 	}
 
@@ -31,7 +43,7 @@ internal static class FencePatches
 	{
 		private static bool Prefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result)
 		{
-			return __result = !Refuses(__instance, item);
+			return Allows(__instance, item, ref __result);
 		}
 	}
 
@@ -40,7 +52,7 @@ internal static class FencePatches
 	{
 		private static bool Prefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result)
 		{
-			return __result = !Refuses(__instance, item);
+			return Allows(__instance, item, ref __result);
 		}
 	}
 
@@ -49,7 +61,7 @@ internal static class FencePatches
 	{
 		private static bool Prefix(Inventory __instance, ItemDrop.ItemData item, ref bool __result)
 		{
-			return __result = !Refuses(__instance, item);
+			return Allows(__instance, item, ref __result);
 		}
 	}
 
