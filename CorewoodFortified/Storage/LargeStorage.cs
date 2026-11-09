@@ -40,7 +40,7 @@ internal static class LargeStorage
 	}
 
 	// Items that do not stack at all, like weapons and armour, stay that way
-	private static int MaxStack(int normal, Inventory inventory)
+	public static int MaxStack(int normal, Inventory inventory)
 	{
 		return normal > 1 && IsLargeStorage(inventory) ? Mathf.Max(normal, MainConfig.largeStorageMaxStack.Value) : normal;
 	}

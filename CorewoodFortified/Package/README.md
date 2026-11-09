@@ -336,6 +336,7 @@ While a Large Storage is open:
   * **Deposit All:** the button under the chest's name, or `F`, moves your whole inventory into it. Your hotbar and equipped items stay with you.
   * **Search:** type in the box to dim everything that does not match, and click the X to clear it. Type part of an item's name, or use `@` to search by mod (`@mod` for any modded item, or part of a mod's name), by kind of item (such as `@material`, `@weapon` or `@food`), or by what it is crafted from (such as `@iron`).
   * **Sort:** the three icons sort by name (A-Z, click again for Z-A), by weight (heaviest first, click again for lightest first), and by type.
+  * **Trash:** pick up an item in the chest and click the Trash tab on the side of the panel, or press `Delete`. If it has a crafting recipe, it is recycled and what it was crafted from goes back into the chest (anything that does not fit falls beside it). Otherwise it is deleted. Only whole crafts are recycled, so dragging 25 arrows of a recipe that makes 20 leaves 5 in the chest. Only items from the chest can be trashed, and trashing more than one normal stack of an item asks you to confirm first.
   * **Keep an item:** hold `Left Alt` and right-click an item in your inventory to give it a gold frame. Framed items stay with you when you use Deposit All or Place Stacks. Do the same again to remove the frame.
   * **Split a stack:** the split dialog gets + and - buttons, and the mouse wheel changes the amount. Hold Shift to change it by 10, or Ctrl by 100.
 
@@ -354,11 +355,13 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 **Large Storage** (synced from the server)
 
   * **Max Stack Size** (default `65535`): how many of an item one slot of a Large Storage can hold, from 100 to 65535. Lowering it never removes items already stored.
+  * **Recycle Return** (default `1`): how much of what an item was crafted from comes back when it is trashed, from 0 (nothing, trashed items are deleted) to 1 (all of it).
 
 **Large Storage** (each player's own)
 
   * **Deposit All Key** (default `F`): the key for Deposit All while a Large Storage is open.
   * **Keep Item Key** (default `LeftAlt`): hold it and right-click an item in your inventory to mark it to keep.
+  * **Trash Key** (default `Delete`): trashes the item you are holding from a Large Storage.
 
 **Elevators** (synced from the server)
 
@@ -478,6 +481,7 @@ Every volume goes from 0 (silent) to 1 (full).
   * **Flame Trap Sound Volume**, **Saw Wall Sound Volume** and **Spike Floor Sound Volume** (default `1`): each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade.
   * **Entrance Trap Sound Volume** and **Floor Blades Sound Volume** (default `1`): the Fortified Entrance Trap's whirring spikes and the Floor Blades' whine.
   * **Electric Fence Sound Volume** (default `1`): the fence's hum while it is live.
+  * **Large Storage Trash Sound Volume** (default `1`): the sound when an item is trashed at a Large Storage.
   * **Fence Controller Sound Volume** (default `0.5`): the controller's sound while it powers its fences.
 
 <br>

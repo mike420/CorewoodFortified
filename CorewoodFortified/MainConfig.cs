@@ -21,6 +21,9 @@ namespace CorewoodFortified
         public static ConfigEntry<int> largeStorageMaxStack;
         public static ConfigEntry<UnityEngine.KeyCode> largeStorageDepositKey;
         public static ConfigEntry<UnityEngine.KeyCode> largeStorageKeepKey;
+        public static ConfigEntry<UnityEngine.KeyCode> largeStorageTrashKey;
+        public static ConfigEntry<float> largeStorageRecycleReturn;
+        public static ConfigEntry<float> largeStorageTrashSoundVolume;
         public static ConfigEntry<bool> enableChainTowers;
         public static ConfigEntry<float> chainMaxSpanSmall;
         public static ConfigEntry<float> chainMaxSpanMedium;
@@ -142,6 +145,9 @@ namespace CorewoodFortified
             largeStorageDepositKey = config.BindConfigInOrder("Large Storage", "Deposit All Key", defaultValue: UnityEngine.KeyCode.F, "While a large storage is open, moves everything in your inventory into it, the same as the Deposit All button. Your hotbar, equipped items and items marked to keep stay with you.", synced: false, sectionOrder: true, settingOrder: true);
             largeStorageKeepKey = config.BindConfigInOrder("Large Storage", "Keep Item Key", defaultValue: UnityEngine.KeyCode.LeftAlt, "Hold this and right-click an item in your inventory to mark it to stay with you when depositing into a large storage, or to unmark it.", synced: false, sectionOrder: true, settingOrder: true);
 
+            largeStorageTrashKey = config.BindConfigInOrder("Large Storage", "Trash Key", defaultValue: UnityEngine.KeyCode.Delete, "While a large storage is open and you are holding an item from it, trashes that item, the same as clicking the Trash tab.", synced: false, sectionOrder: true, settingOrder: true);
+            largeStorageRecycleReturn = config.BindConfigInOrder("Large Storage", "Recycle Return", defaultValue: 1f, "How much of what an item was crafted from comes back into the chest when it is trashed. 1 = all of it, 0 = nothing, so trashed items are simply deleted. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+
             enableChainTowers = config.BindConfigInOrder("Chain Towers", "Enable Chain Towers", defaultValue: true, "If Off, chain towers are hidden from the build menu, and placed towers stay but their winches cannot be used. A net keeps the height it had. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             chainMaxSpanSmall = config.BindConfigInOrder("Chain Towers", "Max Span Small", defaultValue: 15f, "The longest net a small chain tower can hold, in metres (ring to ring). Two towers of different sizes together hold the shorter of their two. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 64f));
             chainMaxSpanMedium = config.BindConfigInOrder("Chain Towers", "Max Span Medium", defaultValue: 30f, "The longest net a medium chain tower can hold, in metres (ring to ring). Two towers of different sizes together hold the shorter of their two. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 64f));
@@ -243,6 +249,7 @@ namespace CorewoodFortified
             entranceTrapSoundVolume = config.BindConfigInOrder("Sounds", "Entrance Trap Sound Volume", defaultValue: 1f, "Volume of the fortified entrance trap's sound while its spikes spin, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             floorBladesSoundVolume = config.BindConfigInOrder("Sounds", "Floor Blades Sound Volume", defaultValue: 1f, "Volume of the floor blades' sound while they spin, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             electricFenceSoundVolume = config.BindConfigInOrder("Sounds", "Electric Fence Sound Volume", defaultValue: 1f, "Volume of the electric fence's hum while it is live, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
+            largeStorageTrashSoundVolume = config.BindConfigInOrder("Sounds", "Large Storage Trash Sound Volume", defaultValue: 1f, "Volume of the sound when an item is trashed at a large storage, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             fenceControllerSoundVolume = config.BindConfigInOrder("Sounds", "Fence Controller Sound Volume", defaultValue: 0.5f, "Volume of the fence controller's sound while it powers its fences, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
 
             CarryOverOldSections(config);

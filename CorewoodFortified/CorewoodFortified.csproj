@@ -148,6 +148,7 @@
     <Compile Include="Storage\LargeStorage.cs" />
     <Compile Include="Storage\LargeStorageControls.cs" />
     <Compile Include="Storage\LargeStoragePanel.cs" />
+    <Compile Include="Storage\LargeStorageTrash.cs" />
     <EmbeddedResource Include="Assets\Images\*.png">
       <LogicalName>CorewoodFortified.Images.%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
@@ -176,6 +177,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\trash.wav"><LogicalName>CorewoodFortified.Sounds.trash.wav</LogicalName></EmbeddedResource>
     <Content Include="Package\icon.png" />
     <Content Include="Package\manifest.json" />
     <Content Include="Package\CHANGELOG.md" />
@@ -190,7 +192,8 @@
   <ItemGroup>
     <PackageReference Include="JotunnLib">
       <Version>2.30.2</Version>
-    </PackageReference>  </ItemGroup>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GetAssemblyVersion" AfterTargets="$(AfterTargets)">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">

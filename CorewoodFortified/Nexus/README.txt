@@ -393,6 +393,7 @@ While a Large Storage is open:
 [*][b]Deposit All:[/b] the button under the chest's name, or [b]F[/b], moves your whole inventory into it. Your hotbar and equipped items stay with you.
 [*][b]Search:[/b] type in the box to dim everything that does not match, and click the X to clear it. Type part of an item's name, or use [b]@[/b] to search by mod ([b]@mod[/b] for any modded item, or part of a mod's name), by kind of item (such as [b]@material[/b], [b]@weapon[/b] or [b]@food[/b]), or by what it is crafted from (such as [b]@iron[/b]).
 [*][b]Sort:[/b] the three icons sort by name (A-Z, click again for Z-A), by weight (heaviest first, click again for lightest first), and by type.
+[*][b]Trash:[/b] pick up an item in the chest and click the Trash tab on the side of the panel, or press [b]Delete[/b]. If it has a crafting recipe, it is recycled and what it was crafted from goes back into the chest (anything that does not fit falls beside it). Otherwise it is deleted. Only whole crafts are recycled, so dragging 25 arrows of a recipe that makes 20 leaves 5 in the chest. Only items from the chest can be trashed, and trashing more than one normal stack of an item asks you to confirm first.
 [*][b]Keep an item:[/b] hold [b]Left Alt[/b] and right-click an item in your inventory to give it a gold frame. Framed items stay with you when you use Deposit All or Place Stacks. Do the same again to remove the frame.
 [*][b]Split a stack:[/b] the split dialog gets + and - buttons, and the mouse wheel changes the amount. Hold Shift to change it by 10, or Ctrl by 100.
 [/list]
@@ -414,6 +415,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 
 [list]
 [*][b]Max Stack Size[/b] (default [b]65535[/b]): how many of an item one slot of a Large Storage can hold, from 100 to 65535. Lowering it never removes items already stored.
+[*][b]Recycle Return[/b] (default [b]1[/b]): how much of what an item was crafted from comes back when it is trashed, from 0 (nothing, trashed items are deleted) to 1 (all of it).
 [/list]
 
 [b]Large Storage[/b] (each player's own)
@@ -421,6 +423,7 @@ Settings are in [b]BepInEx/config/MagicMike.CorewoodFortified.cfg[/b] (or press 
 [list]
 [*][b]Deposit All Key[/b] (default [b]F[/b]): the key for Deposit All while a Large Storage is open.
 [*][b]Keep Item Key[/b] (default [b]LeftAlt[/b]): hold it and right-click an item in your inventory to mark it to keep.
+[*][b]Trash Key[/b] (default [b]Delete[/b]): trashes the item you are holding from a Large Storage.
 [/list]
 
 [b]Elevators[/b] (synced from the server)
@@ -562,6 +565,7 @@ Every volume goes from 0 (silent) to 1 (full).
 [*][b]Flame Trap Sound Volume[/b], [b]Saw Wall Sound Volume[/b] and [b]Spike Floor Sound Volume[/b] (default [b]1[/b]): each trap's sound, such as the Flame Trap's fire or the Saw Wall's blade.
 [*][b]Entrance Trap Sound Volume[/b] and [b]Floor Blades Sound Volume[/b] (default [b]1[/b]): the Fortified Entrance Trap's whirring spikes and the Floor Blades' whine.
 [*][b]Electric Fence Sound Volume[/b] (default [b]1[/b]): the fence's hum while it is live.
+[*][b]Large Storage Trash Sound Volume[/b] (default [b]1[/b]): the sound when an item is trashed at a Large Storage.
 [*][b]Fence Controller Sound Volume[/b] (default [b]0.5[/b]): the controller's sound while it powers its fences.
 [/list]
 

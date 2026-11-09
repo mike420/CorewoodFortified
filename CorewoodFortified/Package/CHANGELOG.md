@@ -10,7 +10,7 @@
     <td>1.1.8</td>
     <td>
         <ul>
-            <li>Added the Large Storage, built at the Workbench from Core Wood, Wood and Iron. Each slot holds up to 65,535 of an item (see Max Stack Size in the config), and items keep their normal stack size everywhere else. While one is open you can Deposit All, search its items, sort them by name, weight or type, mark items to keep with you, and split stacks with + and - buttons or the mouse wheel.</li>
+            <li>Added the Large Storage, built at the Workbench from Core Wood, Wood and Iron. Each slot holds up to 65,535 of an item (see Max Stack Size in the config), and items keep their normal stack size everywhere else. While one is open you can Deposit All, trash or recycle its items from the Trash tab (materials go back into the chest, and big stacks ask to confirm first), search its items, sort them by name, weight or type, mark items to keep with you, and split stacks with + and - buttons or the mouse wheel.</li>
         </ul>
     </td>
   </tr>

@@ -69,6 +69,7 @@ internal static class LargeStoragePanel
 		CreateSortButton(gui, "sort_type", SortMode.Type);
 		CreateSortButton(gui, "sort_weight", SortMode.Weight);
 		CreateSortButton(gui, "sort_name", SortMode.Name);
+		LargeStorageTrash.Create(gui, row);
 		row.gameObject.SetActive(false);
 	}
 
@@ -100,7 +101,7 @@ internal static class LargeStoragePanel
 		iconImage.raycastTarget = false;
 	}
 
-	private static Sprite LoadSprite(string name)
+	public static Sprite LoadSprite(string name)
 	{
 		using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CorewoodFortified.Images." + name + ".png");
 		if (stream == null)
@@ -251,6 +252,7 @@ internal static class LargeStoragePanel
 		float tallerGrid = Mathf.Max(0f, VisibleRows * gui.m_containerGrid.m_elementSpace - grid.rect.height);
 		float growth = shift + Mathf.Min(tallerGrid, Mathf.Max(0f, RoomBelow(panel) - shift));
 		PlaceRow(panel, takeAll, stackAll, rowTop, rowHeight);
+		LargeStorageTrash.Place(gridTop + shift - rowTop);
 		foreach (RectTransform child in children)
 		{
 			bool stretched = !Mathf.Approximately(child.anchorMin.y, child.anchorMax.y);
