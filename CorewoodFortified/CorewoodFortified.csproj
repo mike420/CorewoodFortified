@@ -145,6 +145,12 @@
     <Compile Include="ElectricFence\ElectricFenceArcs.cs" />
     <Compile Include="ElectricFence\FenceController.cs" />
     <Compile Include="ElectricFence\FencePatches.cs" />
+    <Compile Include="Storage\LargeStorage.cs" />
+    <Compile Include="Storage\LargeStorageControls.cs" />
+    <Compile Include="Storage\LargeStoragePanel.cs" />
+    <EmbeddedResource Include="Assets\Images\*.png">
+      <LogicalName>CorewoodFortified.Images.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
     <Compile Include="Traps\EntranceTrap.cs" />
     <Compile Include="Traps\GroundTrap.cs" />
     <Compile Include="Traps\GroundTrapGrass.cs" />
@@ -184,8 +190,7 @@
   <ItemGroup>
     <PackageReference Include="JotunnLib">
       <Version>2.30.2</Version>
-    </PackageReference>
-  </ItemGroup>
+    </PackageReference>  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GetAssemblyVersion" AfterTargets="$(AfterTargets)">
     <GetAssemblyIdentity AssemblyFiles="$(TargetPath)">

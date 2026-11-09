@@ -71,6 +71,13 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_cross", 12, 20));
         CorewoodFortifiedMod.TryAddPiece(() => AddPieceWoodenBridge("mm_corewood_wooden_bridge_end", 6, 10));
 
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerSmall);
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerMedium);
+        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerLarge);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierSmall);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierLarge);
+
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerBeacon);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTowerLadder);
         CorewoodFortifiedMod.TryAddPiece(AddPieceLadder2m);
@@ -81,9 +88,6 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceWindowed);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedFenceGate);
 
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedOrganCannon);
-
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikes);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBronze);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesIron);
@@ -91,14 +95,8 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesFlametal);
         CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedSpikesBloodgold);
 
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierSmall);
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBrazierLarge);
-
-        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerSmall);
-        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerMedium);
-        CorewoodFortifiedMod.TryAddPiece(ChainTowerPieces.AddPieceChainTowerLarge);
-
-        CorewoodFortifiedMod.TryAddPiece(ZiplineSetup.AddPieceZiplinePost);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedBallista);
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFortifiedOrganCannon);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceFlameTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceSawWall);
@@ -107,9 +105,12 @@ internal class AddFortified
         CorewoodFortifiedMod.TryAddPiece(AddPieceGroundTrap);
         CorewoodFortifiedMod.TryAddPiece(AddPieceTrapController);
 
+        CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence);
         CorewoodFortifiedMod.TryAddPiece(AddPieceElectricFence4m);
-        CorewoodFortifiedMod.TryAddPiece(AddPieceFenceController);
+
+        CorewoodFortifiedMod.TryAddPiece(AddPieceLargeStorage);
+        CorewoodFortifiedMod.TryAddPiece(ZiplineSetup.AddPieceZiplinePost);
 
         CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHut01);
         CorewoodFortifiedMod.TryAddPiece(AddPieceVillageHutDoor);
@@ -1538,7 +1539,6 @@ internal class AddFortified
         PieceManager.Instance.AddPiece(customPiece);
     }
 
-    // The wooden bridge pieces only differ by prefab and cost. Posts named with "_support_" reach down to the ground.
     public static void AddPieceWoodenBridge(string prefabName, int coreWood, int wood)
     {
         // Called from a lambda, so TryAddPiece's log would not name the piece: say which one is missing here.
@@ -2307,32 +2307,45 @@ internal class AddFortified
 
 
 
-    private static void AddPieceLadder(string prefabName, float height, int logs)
+    public static void AddPieceLargeStorage()
     {
-        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
-        gameObject.AddComponent<Ladder>().m_height = height;
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>("mm_corewood_large_storage");
         CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
         {
-            Description = "$piece_" + prefabName + "_description",
+            Name = "$piece_mm_corewood_large_storage",
+            Description = "$piece_mm_corewood_large_storage_description",
             CraftingStation = "piece_workbench",
             PieceTable = "_HammerPieceTable",
             Category = "CoreWood-Fortified",
-            Usage = new[] { PieceUsages.Building },
-            Requirements = new RequirementConfig[1]
+            Usage = new[] { PieceUsages.Storage },
+            Requirements = new RequirementConfig[3]
             {
                 new RequirementConfig
                 {
                     Item = "RoundLog",
-                    Amount = logs,
+                    Amount = 8,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Wood",
+                    Amount = 6,
+                    Recover = true
+                },
+                new RequirementConfig
+                {
+                    Item = "Iron",
+                    Amount = 6,
                     Recover = true
                 }
             }
         });
         gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
         SetWearEffects(gameObject, hitWood, breakWood);
+        SetChestEffects(gameObject, chestOpen, chestClose);
+        LargeStorage.Setup(gameObject);
         PieceManager.Instance.AddPiece(customPiece);
     }
-
 
 
 
@@ -2408,6 +2421,32 @@ internal class AddFortified
     }
 
 
+
+    private static void AddPieceLadder(string prefabName, float height, int logs)
+    {
+        GameObject gameObject = CorewoodFortifiedMod.cwfortified.LoadAsset<GameObject>(prefabName);
+        gameObject.AddComponent<Ladder>().m_height = height;
+        CustomPiece customPiece = new CustomPiece(gameObject, fixReference: true, new PieceConfig
+        {
+            Description = "$piece_" + prefabName + "_description",
+            CraftingStation = "piece_workbench",
+            PieceTable = "_HammerPieceTable",
+            Category = "CoreWood-Fortified",
+            Usage = new[] { PieceUsages.Building },
+            Requirements = new RequirementConfig[1]
+            {
+                new RequirementConfig
+                {
+                    Item = "RoundLog",
+                    Amount = logs,
+                    Recover = true
+                }
+            }
+        });
+        gameObject.GetComponent<Piece>().m_placeEffect = buildWood;
+        SetWearEffects(gameObject, hitWood, breakWood);
+        PieceManager.Instance.AddPiece(customPiece);
+    }
 
     private static EffectList GetCannonShotEffect(Turret vanilla)
     {
@@ -2647,8 +2686,6 @@ internal class AddFortified
         wearNTear.m_hitEffect = hit;
     }
 
-    // A wooden turret loses too much support with distance to stand on the top of a tall piece such as the corner
-    // tower, and breaks when its support is next worked out. Iron loses far less, so it holds anywhere on the top
     private static void SetTurretSupport(GameObject piece)
     {
         WearNTear wearNTear = piece.GetComponent<WearNTear>();
@@ -2668,5 +2705,17 @@ internal class AddFortified
         }
         door.m_openEffects = open;
         door.m_closeEffects = close;
+    }
+
+    private static void SetChestEffects(GameObject piece, EffectList open, EffectList close)
+    {
+        Container chest = piece.GetComponent<Container>();
+        if (!chest)
+        {
+            Jotunn.Logger.LogWarning("[CorewoodFortified] " + piece.name + " has no Container component, skipping its open and close effects.");
+            return;
+        }
+        chest.m_openEffects = open;
+        chest.m_closeEffects = close;
     }
 }

@@ -18,6 +18,9 @@ namespace CorewoodFortified
         public static ConfigEntry<bool> turretAllowMoving;
         public static ConfigEntry<float> beaconRevealRadius;
         public static ConfigEntry<bool> beaconUnlimitedFuel;
+        public static ConfigEntry<int> largeStorageMaxStack;
+        public static ConfigEntry<UnityEngine.KeyCode> largeStorageDepositKey;
+        public static ConfigEntry<UnityEngine.KeyCode> largeStorageKeepKey;
         public static ConfigEntry<bool> enableChainTowers;
         public static ConfigEntry<float> chainMaxSpanSmall;
         public static ConfigEntry<float> chainMaxSpanMedium;
@@ -134,6 +137,10 @@ namespace CorewoodFortified
             turretMoveKey = config.BindConfigInOrder("General Settings", "Turret Move Key", defaultValue: new KeyboardShortcut(UnityEngine.KeyCode.U), "Look at a fortified ballista or organ cannon and press this key to pick it up and put it down somewhere else: aim where it should go, scroll to turn it, attack to put it down, block or this key again to leave it where it was.", synced: false, sectionOrder: true, settingOrder: true);
             beaconRevealRadius = config.BindConfigInOrder("General Settings", "Beacon Reveal Radius", defaultValue: 300f, "How far around a tower beacon the map is revealed while a lit small fortified brazier stands on its top, in metres. The brazier has to be burning: fuelled, not switched off and not covered over. The map is made of 64 m squares, so the edge of the circle is rough. Each player's map is revealed when the beacon is loaded near them, and raising this reveals the extra. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(100f, 3000f));
             beaconUnlimitedFuel = config.BindConfigInOrder("General Settings", "Beacon Unlimited Fuel", defaultValue: false, "If On, a small fortified brazier standing on a tower beacon's top never runs out of fuel: it is kept full, lights even when empty, and wind and rain do not put it out. Switching it off or covering it over still puts it out. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+
+            largeStorageMaxStack = config.BindConfigInOrder("Large Storage", "Max Stack Size", defaultValue: LargeStorage.HighestStack, "How many of an item one slot of a large storage can hold. Items that do not stack, like weapons and armour, still take a slot each. Lowering it never removes items already stored. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<int>(100, LargeStorage.HighestStack));
+            largeStorageDepositKey = config.BindConfigInOrder("Large Storage", "Deposit All Key", defaultValue: UnityEngine.KeyCode.F, "While a large storage is open, moves everything in your inventory into it, the same as the Deposit All button. Your hotbar, equipped items and items marked to keep stay with you.", synced: false, sectionOrder: true, settingOrder: true);
+            largeStorageKeepKey = config.BindConfigInOrder("Large Storage", "Keep Item Key", defaultValue: UnityEngine.KeyCode.LeftAlt, "Hold this and right-click an item in your inventory to mark it to stay with you when depositing into a large storage, or to unmark it.", synced: false, sectionOrder: true, settingOrder: true);
 
             enableChainTowers = config.BindConfigInOrder("Chain Towers", "Enable Chain Towers", defaultValue: true, "If Off, chain towers are hidden from the build menu, and placed towers stay but their winches cannot be used. A net keeps the height it had. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             chainMaxSpanSmall = config.BindConfigInOrder("Chain Towers", "Max Span Small", defaultValue: 15f, "The longest net a small chain tower can hold, in metres (ring to ring). Two towers of different sizes together hold the shorter of their two. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(15f, 64f));

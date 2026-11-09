@@ -121,6 +121,10 @@ Once placed, each post reaches down to the ground below it, so a bridge can be b
 
 A log tower with a stand on top. Snap a Fortified Brazier Small onto the stand and light it: while it burns, the map is revealed for 300 m around the beacon (set by Beacon Reveal Radius). Each player's map is revealed when they come near the beacon, and is saved with their character like any explored land.
 
+**Storage**
+
+  * **Large Storage**: 8 Core Wood, 6 Wood, 6 Iron
+
 ### Forge
 
   * **Fortified Gates**: 10 Core Wood, 6 Wood, 1 Bronze
@@ -318,6 +322,25 @@ Thirteen barrels on a wheeled carriage. Load it with Cannon Balls and it fires a
 
 <br>
 
+## 📦 Large Storage:
+
+**Large Storage:** a chest whose slots hold far bigger stacks than normal, up to 65,535 of an item in each slot (set by Max Stack Size). Items that do not stack, like weapons and armour, still take a slot each.
+
+  * Only this chest does this. Everywhere else, items keep their normal stack size.
+  * Opening the chest merges matching stacks.
+  * Dragging an item out takes one normal stack at a time. Take All and quick-moving take as many stacks as fit in your inventory, and the rest stays in the chest.
+  * If the chest is destroyed, each slot falls as one pile. Picking a pile up takes what fits and leaves the rest on the ground.
+
+While a Large Storage is open:
+
+  * **Deposit All:** the button under the chest's name, or `F`, moves your whole inventory into it. Your hotbar and equipped items stay with you.
+  * **Search:** type in the box to dim everything that does not match, and click the X to clear it. Type part of an item's name, or use `@` to search by mod (`@mod` for any modded item, or part of a mod's name), by kind of item (such as `@material`, `@weapon` or `@food`), or by what it is crafted from (such as `@iron`).
+  * **Sort:** the three icons sort by name (A-Z, click again for Z-A), by weight (heaviest first, click again for lightest first), and by type.
+  * **Keep an item:** hold `Left Alt` and right-click an item in your inventory to give it a gold frame. Framed items stay with you when you use Deposit All or Place Stacks. Do the same again to remove the frame.
+  * **Split a stack:** the split dialog gets + and - buttons, and the mouse wheel changes the amount. Hold Shift to change it by 10, or Ctrl by 100.
+
+<br>
+
 ## ⚙️ Configuration:
 
 Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, in game or on the main menu, to open a panel with the settings of all your installed Magic Mike mods).
@@ -327,6 +350,15 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
   * **Turret Move Key** (default `U`): look at a Fortified Ballista or Organ Cannon and press it to move it.
   * **Beacon Reveal Radius** (default `300`, synced from the server): how far around a Tower Beacon the map is revealed while a lit Fortified Brazier Small stands on its top, in metres, from 100 to 3000. The map is made of 64 m squares, so the edge of the circle is rough.
   * **Beacon Unlimited Fuel** (default `Off`, synced from the server): if On, a Fortified Brazier Small standing on a Tower Beacon never runs out of fuel. It is kept full, lights even when empty, and wind and rain do not put it out; switching it off or covering it over still puts it out.
+
+**Large Storage** (synced from the server)
+
+  * **Max Stack Size** (default `65535`): how many of an item one slot of a Large Storage can hold, from 100 to 65535. Lowering it never removes items already stored.
+
+**Large Storage** (each player's own)
+
+  * **Deposit All Key** (default `F`): the key for Deposit All while a Large Storage is open.
+  * **Keep Item Key** (default `LeftAlt`): hold it and right-click an item in your inventory to mark it to keep.
 
 **Elevators** (synced from the server)
 
