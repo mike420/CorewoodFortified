@@ -14,10 +14,9 @@ public static class LowQualityMaterials
 		[HarmonyPriority(Priority.Low)]
 		private static void Postfix()
 		{
-			if (MainConfig.disableHDTextures.Value)
-			{
-				Apply();
-			}
+			// Always run: the prefabs keep their swapped materials between worlds, so a setting
+			// turned off in the main menu still has to be swapped back here.
+			Apply();
 		}
 	}
 
@@ -55,6 +54,9 @@ public static class LowQualityMaterials
 
 	// Original material name -> the low quality material used in its place, one per original.
 	private static readonly Dictionary<string, Material> LowQualityByOriginal = new Dictionary<string, Material>();
+
+	// Low quality material name -> the HD material it replaced, for material instances.
+	private static readonly Dictionary<string, Material> OriginalsByLowQualityName = new Dictionary<string, Material>();
 
 	private static HashSet<string> fortifiedPrefabs;
 
@@ -99,6 +101,11 @@ public static class LowQualityMaterials
 				SwapRenderers(nview.gameObject, lowQuality);
 			}
 		}
+		// The trolley is not a ZNetScene prefab, riders get a copy of this model.
+		if (ZiplineVisuals.TrolleyPrefab)
+		{
+			SwapRenderers(ZiplineVisuals.TrolleyPrefab, lowQuality);
+		}
 		swapped = lowQuality;
 	}
 
@@ -119,6 +126,8 @@ public static class LowQualityMaterials
 					fortifiedPrefabs.Add(Path.GetFileNameWithoutExtension(assetPath).ToLowerInvariant());
 				}
 			}
+			// The zipline post is renamed after loading, so its asset name does not match its prefab name.
+			fortifiedPrefabs.Add(ZiplineSetup.PostPrefab.ToLowerInvariant());
 		}
 		return fortifiedPrefabs;
 	}
@@ -190,16 +199,27 @@ public static class LowQualityMaterials
 		}
 		// The bundle material is already standing in for another original: use a copy, so each
 		// low quality material maps back to exactly one original.
-		lqMaterial = OriginalMaterials.ContainsKey(source) ? new Material(source) { name = source.name } : source;
+		// The copy gets its own name, so it can also be found by name.
+		lqMaterial = OriginalMaterials.ContainsKey(source) ? new Material(source) { name = source.name + "_" + originalName } : source;
 		LowQualityByOriginal[originalName] = lqMaterial;
 		OriginalMaterials[lqMaterial] = material;
+		OriginalsByLowQualityName[lqMaterial.name] = material;
 		FixShader(lqMaterial, material);
 		return lqMaterial;
 	}
 
 	private static Material GetOriginal(Material material)
 	{
-		return material && OriginalMaterials.TryGetValue(material, out Material original) ? original : null;
+		if (!material)
+		{
+			return null;
+		}
+		if (OriginalMaterials.TryGetValue(material, out Material original))
+		{
+			return original;
+		}
+		// A renderer whose material was instanced after the swap holds a copy, which only matches by name.
+		return OriginalsByLowQualityName.TryGetValue(CleanName(material.name), out original) ? original : null;
 	}
 
 	// Materials loaded straight from the bundle still use the placeholder shader, unlike the
