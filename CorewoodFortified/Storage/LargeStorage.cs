@@ -138,6 +138,8 @@ internal static class LargeStorage
 		private static IEnumerable<MethodBase> TargetMethods()
 		{
 			yield return AccessTools.Method(typeof(Inventory), "AddItem", new[] { typeof(ItemDrop.ItemData), typeof(int), typeof(int), typeof(int), typeof(bool) });
+			// Loading a saved inventory goes through this one, which cuts every stack down to the normal size
+			yield return AccessTools.Method(typeof(Inventory), "AddItem", new[] { typeof(int), typeof(int), typeof(float), typeof(Vector2i), typeof(bool), typeof(int), typeof(int), typeof(long), typeof(string), typeof(Dictionary<string, string>), typeof(int), typeof(bool), typeof(bool), typeof(bool) });
 			yield return AccessTools.Method(typeof(Inventory), nameof(Inventory.CanAddItem), new[] { typeof(ItemDrop.ItemData), typeof(int) });
 			yield return AccessTools.Method(typeof(Inventory), nameof(Inventory.FindFreeStackSpace));
 			yield return AccessTools.Method(typeof(Inventory), "FindFreeStackItem");
