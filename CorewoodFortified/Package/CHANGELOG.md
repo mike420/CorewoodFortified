@@ -7,11 +7,18 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.1</td>
+    <td>
+        <ul>
+            <li>Fixed stacks bigger than the normal size being cut back to the normal size whenever a Large Storage was loaded (reopening it, reloading the world, or another player taking over the chest), which lost the rest of the items.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.0</td>
     <td>
         <ul>
             <li>Fixed items disappearing from the Large Storage when Multi User Chest, or Azu AutoStore (which has its own copy of it), was installed. They worked out free space from the normal stack size and lost whatever was over it. The Large Storage now tells them to leave it alone.</li>
-            <li>Fixed stacks bigger than the normal size being cut back to the normal size whenever a Large Storage was loaded (reopening it, reloading the world, or another player taking over the chest), which lost the rest of the items.</li>
         </ul>
     </td>
   </tr>
