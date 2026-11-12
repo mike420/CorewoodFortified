@@ -7,6 +7,22 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.0</td>
+    <td>
+        <ul>
+            <li></li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>1.1.9</td>
+    <td>
+        <ul>
+            <li>Added more materials to the Low Quality toggle.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.1.8</td>
     <td>
         <ul>

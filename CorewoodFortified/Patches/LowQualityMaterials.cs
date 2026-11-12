@@ -32,6 +32,8 @@ public static class LowQualityMaterials
 		{ "corelogs", "corelogs_lq" },
 		{ "corelogs_worn", "corelogs_worn_lq" },
 		{ "corewood_wood_bark", "log_bark_lq" },
+		{ "log_bark", "log_bark_lq" },
+		{ "log_bark_worn", "log_bark_worn_lq" },
 		{ "plank_wood", "plank_wood_lq" },
 		{ "plank_wood_worn", "plank_wood_worn_lq" },
 		{ "seamless_wood", "seamless_wood_lq" },

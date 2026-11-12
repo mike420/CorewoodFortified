@@ -354,7 +354,7 @@ Settings are in `BepInEx/config/MagicMike.CorewoodFortified.cfg` (or press F7, i
 
 **Large Storage** (synced from the server)
 
-  * **Max Stack Size** (default `65535`): how many of an item one slot of a Large Storage can hold, from 100 to 65535. Lowering it never removes items already stored.
+  * **Max Stack Size** (default `1000`): how many of an item one slot of a Large Storage can hold, from 100 to 65535. Lowering it never removes items already stored.
   * **Recycle Return** (default `1`): how much of what an item was crafted from comes back when it is trashed, from 0 (nothing, trashed items are deleted) to 1 (all of it).
 
 **Large Storage** (each player's own)
@@ -490,7 +490,7 @@ Every volume goes from 0 (silent) to 1 (full).
 
 ### Automatic Install
 
-  * Plugin is created to be installed with r2modman or Gale.
+  * Plugin is created to be installed with Gale Mod Manager.
 For Nexus downloads you will need to install manually.
 
 ### Manual Install
