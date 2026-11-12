@@ -102,6 +102,25 @@ internal static class LargeStorage
 			&& target.m_stack + item.m_stack <= MaxStack(item.m_shared.m_maxStackSize, inventory);
 	}
 
+	// Multi User Chest, and the copy of it inside Azu AutoStore, work out free space from the normal stack size. Over a
+	// big stack that comes out negative and the items are lost, so the chest tells them to leave it alone
+	[HarmonyPatch(typeof(Container), "Awake")]
+	private static class MultiUserChestIgnorePatch
+	{
+		private static void Postfix(Container __instance)
+		{
+			if (__instance.m_name != ContainerName || !__instance.m_nview || !__instance.m_nview.IsValid() || !__instance.m_nview.IsOwner())
+			{
+				return;
+			}
+			ZDO zdo = __instance.m_nview.GetZDO();
+			if (!zdo.GetBool("MUC_Ignore", false))
+			{
+				zdo.Set("MUC_Ignore", true);
+			}
+		}
+	}
+
 	// The game puts armour and materials in the bottom row first. This chest is taller than its panel, so they would
 	// land out of sight below the scroll and look lost
 	[HarmonyPatch(typeof(Inventory), "FindEmptySlot")]
