@@ -11,6 +11,7 @@ namespace CorewoodFortified
     {
         public static ConfigEntry<bool> modEnabled;
         public static ConfigEntry<bool> disableHDTextures;
+        public static ConfigEntry<bool> mossyTextures;
         public static ConfigEntry<KeyboardShortcut> turretMoveKey;
         public static ConfigEntry<bool> enableElevators;
         public static ConfigEntry<bool> autoTriggers;
@@ -134,6 +135,8 @@ namespace CorewoodFortified
             modEnabled = config.BindConfigInOrder("General Settings", "Enable Plugin", defaultValue: true, "Enable the CorewoodFortified plugin.\n(Restart required. It is read before connecting to a server, so it is a local setting).\n", synced: false, sectionOrder: true, settingOrder: true);
             disableHDTextures = config.BindConfigInOrder("General Settings", "Disable HD", defaultValue: false, "Enabling this swaps the piece materials for low quality versions that look more vanilla like.\n", synced: false, sectionOrder: true, settingOrder: true);
             disableHDTextures.SettingChanged += (_, _) => LowQualityMaterials.OnSettingChanged();
+            mossyTextures = config.BindConfigInOrder("General Settings", "Mossy Textures", defaultValue: false, "If On, the wood, log and stone materials of the fortified pieces get a faint mossy overlay, picked at random for each material. Only materials used by CorewoodFortified pieces change. Not used while Disable HD is On.\n", synced: false, sectionOrder: true, settingOrder: true);
+            mossyTextures.SettingChanged += (_, _) => MossyTextures.OnSettingChanged();
             enableElevators =config.BindConfigInOrder("General Settings", "Enable Elevators", defaultValue: true, "If Off, elevators are hidden from the build menu and placed elevators do not move. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             autoTriggers = config.BindConfigInOrder("General Settings", "Automatic Elevators", defaultValue: true, "If On, elevators move automatically when a player steps on the platform. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             elevatorSpeed = config.BindConfigInOrder("General Settings", "Elevator Speed", defaultValue: 2f, "How fast elevator platforms move, in metres per second. A trip already under way keeps the speed it started with. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));

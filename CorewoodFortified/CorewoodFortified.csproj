@@ -57,6 +57,7 @@
     <Compile Include="Patches\LadderManager.cs" />
     <Compile Include="Patches\LegacyAutoJump.cs" />
     <Compile Include="Patches\LowQualityMaterials.cs" />
+    <Compile Include="Patches\MossyTextures.cs" />
     <Compile Include="Patches\MonoUpdatersPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translations.cs" />

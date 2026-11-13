@@ -88,6 +88,20 @@ public static class LowQualityMaterials
 		{
 			return;
 		}
+		// Mossy copies are swapped out first so the swap below sees the real materials, and put back after
+		MossyTextures.Suspend();
+		try
+		{
+			SwapAll(zNetScene, lowQuality);
+		}
+		finally
+		{
+			MossyTextures.Resume();
+		}
+	}
+
+	private static void SwapAll(ZNetScene zNetScene, bool lowQuality)
+	{
 		HashSet<string> prefabNames = GetFortifiedPrefabs();
 		foreach (GameObject prefab in zNetScene.m_prefabs)
 		{
@@ -181,6 +195,17 @@ public static class LowQualityMaterials
 				renderer.sharedMaterials = materials;
 			}
 		}
+	}
+
+	// True for the materials Disable HD knows about: the originals, and their low quality stand-ins when swapped in.
+	internal static bool IsListed(Material material)
+	{
+		if (!material)
+		{
+			return false;
+		}
+		string name = CleanName(material.name);
+		return LowQualityNames.ContainsKey(name) || LowQualityNames.ContainsValue(name) || OriginalsByLowQualityName.ContainsKey(name);
 	}
 
 	private static Material GetLowQuality(Material material)
