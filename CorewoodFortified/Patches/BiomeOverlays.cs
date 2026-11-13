@@ -39,7 +39,6 @@ public static class BiomeOverlays
 	{
 		"corewood_log_flat", "corewood_log_flat_worn", "corewood_logwall", "corewood_logwall2", "corewood_logwall_worn",
 		"corelogs", "corelogs_worn", "log_bark", "log_bark_worn",
-		"plank_wood", "plank_wood_worn", "seamless_wood", "texture_wood", "wood_parts",
 		"wood_planks", "wood_planks_worn", "stone_mat"
 	};
 
@@ -47,7 +46,7 @@ public static class BiomeOverlays
 	// "<low quality name>_<original name>", so they are matched by their start.
 	private static readonly string[] OverlayLowQualityNames =
 	{
-		"corewood_log_flat_lq", "corewood_log_flat_worn_lq", "corewood_logwall_lq", "corewood_logwall_worn_lq", "corelogs_lq", "corelogs_worn_lq", "log_bark_lq", "log_bark_worn_lq", "plank_wood_lq", "plank_wood_worn_lq", "seamless_wood_lq", "wood_parts_lq", "wood_planks_lq", "wood_planks_worn_lq", "stone_mat_lq"
+		"corewood_log_flat_lq", "corewood_log_flat_worn_lq", "corewood_logwall_lq", "corewood_logwall_worn_lq", "corelogs_lq", "corelogs_worn_lq", "log_bark_lq", "log_bark_worn_lq", "wood_planks_lq", "wood_planks_worn_lq", "stone_mat_lq"
 	};
 
 	// [0] mossy, [1] icy. Material -> the overlay material standing in for it
