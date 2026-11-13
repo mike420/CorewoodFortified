@@ -11,7 +11,7 @@ namespace CorewoodFortified
     {
         public static ConfigEntry<bool> modEnabled;
         public static ConfigEntry<bool> disableHDTextures;
-        public static ConfigEntry<bool> mossyTextures;
+        public static ConfigEntry<bool> biomeOverlays;
         public static ConfigEntry<KeyboardShortcut> turretMoveKey;
         public static ConfigEntry<bool> enableElevators;
         public static ConfigEntry<bool> autoTriggers;
@@ -135,8 +135,9 @@ namespace CorewoodFortified
             modEnabled = config.BindConfigInOrder("General Settings", "Enable Plugin", defaultValue: true, "Enable the CorewoodFortified plugin.\n(Restart required. It is read before connecting to a server, so it is a local setting).\n", synced: false, sectionOrder: true, settingOrder: true);
             disableHDTextures = config.BindConfigInOrder("General Settings", "Disable HD", defaultValue: false, "Enabling this swaps the piece materials for low quality versions that look more vanilla like.\n", synced: false, sectionOrder: true, settingOrder: true);
             disableHDTextures.SettingChanged += (_, _) => LowQualityMaterials.OnSettingChanged();
-            mossyTextures = config.BindConfigInOrder("General Settings", "Mossy Textures", defaultValue: false, "If On, the wood, log and stone materials of the fortified pieces get a faint mossy overlay, picked at random for each material. Only materials used by CorewoodFortified pieces change. It also works with the Disable HD materials.\n", synced: false, sectionOrder: true, settingOrder: true);
-            mossyTextures.SettingChanged += (_, _) => MossyTextures.OnSettingChanged();
+            biomeOverlays = config.BindConfigInOrder("General Settings", "Enable Biome Overlays", defaultValue: false, "If On, the wood, log and stone materials of the fortified pieces get a faint overlay that depends on the biome the piece stands in: ice and snow in the Mountain and the Deep North, moss everywhere else. Only materials used by CorewoodFortified pieces change.\n", synced: false, sectionOrder: true, settingOrder: true);
+            CarryOverRenamed(config, biomeOverlays, "Mossy Textures");
+            biomeOverlays.SettingChanged += (_, _) => BiomeOverlays.OnSettingChanged();
             enableElevators =config.BindConfigInOrder("General Settings", "Enable Elevators", defaultValue: true, "If Off, elevators are hidden from the build menu and placed elevators do not move. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             autoTriggers = config.BindConfigInOrder("General Settings", "Automatic Elevators", defaultValue: true, "If On, elevators move automatically when a player steps on the platform. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
             elevatorSpeed = config.BindConfigInOrder("General Settings", "Elevator Speed", defaultValue: 2f, "How fast elevator platforms move, in metres per second. A trip already under way keeps the speed it started with. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0.5f, 10f));
@@ -259,6 +260,30 @@ namespace CorewoodFortified
 
             // Decimal settings rounded (and kept in range) whichever editor sets them
             MagicMike.ModSettings.ConfigRounding.RoundAll(config);
+        }
+
+        // A setting that was renamed keeps the value it had under its old name
+        private static void CarryOverRenamed(ConfigFile config, ConfigEntry<bool> entry, string oldKey)
+        {
+            try
+            {
+                PropertyInfo property = typeof(ConfigFile).GetProperty("OrphanedEntries", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                Dictionary<ConfigDefinition, string> orphans = property?.GetValue(config) as Dictionary<ConfigDefinition, string>;
+                ConfigDefinition old = new ConfigDefinition(entry.Definition.Section, oldKey);
+                if (orphans != null && orphans.TryGetValue(old, out string value))
+                {
+                    if (Equals(entry.BoxedValue, entry.DefaultValue))
+                    {
+                        entry.SetSerializedValue(value);
+                    }
+                    orphans.Remove(old);
+                    config.Save();
+                }
+            }
+            catch (System.Exception e)
+            {
+                Jotunn.Logger.LogWarning("[CorewoodFortified] Could not carry over the old " + oldKey + " setting: " + e.Message);
+            }
         }
 
         private static readonly Dictionary<string, string[]> OldSections = new Dictionary<string, string[]>

@@ -10,7 +10,7 @@
     <td>1.2.2</td>
     <td>
         <ul>
-            <li>Added a Mossy Textures setting (default off). It puts a faint mossy overlay on the wood, log and stone materials of the Corewood Fortified pieces, one of three moss images picked for each material. Only materials used by this mod's pieces change, and it applies straight away, including to pieces already built. It also works with the Disable HD materials.</li>
+            <li>Added an Enable Biome Overlays setting (default off). It gives the wood, log and stone materials of the Corewood Fortified pieces a faint overlay that depends on the biome each piece stands in: ice and snow in the Mountain and the Deep North, moss everywhere else. Only materials used by this mod's pieces change. It also works with the Disable HD materials, and applies straight away, including to pieces already built.</li>
         </ul>
     </td>
   </tr>

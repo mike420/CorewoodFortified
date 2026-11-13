@@ -5,10 +5,12 @@ using UnityEngine;
 
 namespace CorewoodFortified;
 
-// Mossy Textures: swaps the wood, log and stone materials on the fortified pieces for "<name>_mossy" versions
-// in the bundle (made in Unity by Corewood Fortified > Build Mossy Materials: the original texture with one of
-// mm_bark_1..3 blended in faintly). Nothing is built at runtime. Only materials used by this mod's pieces change.
-public static class MossyTextures
+// Enable Biome Overlays: swaps the wood, log and stone materials on each fortified piece for a "<name>_icy" version if
+// the piece stands in the Mountain or Deep North, and a "<name>_mossy" version anywhere else. The versions are in the
+// bundle (made in Unity from textures built by Tools/make_overlay_textures.py). Nothing is built at runtime, and only
+// materials used by this mod's pieces change. The prefabs are left alone: each piece is decided by where it stands,
+// when it appears and when the setting is switched on.
+public static class BiomeOverlays
 {
 	[HarmonyPatch(typeof(ZNetScene), "Awake")]
 	private static class ZNetSceneAwakePatch
@@ -16,34 +18,48 @@ public static class MossyTextures
 		[HarmonyPriority(Priority.VeryLow)]
 		private static void Postfix()
 		{
-			// Prefabs keep their materials between worlds, so this has to be able to undo as well as apply.
 			Apply();
 		}
 	}
 
-	// Keep in step with Materials in MossyMaterialBuilder (Unity project)
-	private static readonly HashSet<string> MossyNames = new HashSet<string>
+	[HarmonyPatch(typeof(ZNetView), "Awake")]
+	private static class ZNetViewAwakePatch
+	{
+		private static void Postfix(ZNetView __instance)
+		{
+			if (applied && IsFortified(__instance.gameObject))
+			{
+				SwapPiece(__instance.gameObject);
+			}
+		}
+	}
+
+	// Keep in step with Materials in OverlayMaterialBuilder (Unity project)
+	private static readonly HashSet<string> OverlayNames = new HashSet<string>
 	{
 		"corewood_log_flat", "corewood_log_flat_worn", "corewood_logwall", "corewood_logwall2", "corewood_logwall_worn",
-		"corelogs", "corelogs_worn", "corewood_wood_bark", "log_bark", "log_bark_worn",
+		"corelogs", "corelogs_worn", "log_bark", "log_bark_worn",
 		"plank_wood", "plank_wood_worn", "seamless_wood", "texture_wood", "wood_parts",
 		"wood_planks", "wood_planks_worn", "stone_mat"
 	};
 
 	// The low quality versions, used while Disable HD is on. The copies Disable HD makes are named
 	// "<low quality name>_<original name>", so they are matched by their start.
-	private static readonly string[] MossyLowQualityNames =
+	private static readonly string[] OverlayLowQualityNames =
 	{
 		"corewood_log_flat_lq", "corewood_log_flat_worn_lq", "corewood_logwall_lq", "corewood_logwall_worn_lq", "corelogs_lq", "corelogs_worn_lq", "log_bark_lq", "log_bark_worn_lq", "plank_wood_lq", "plank_wood_worn_lq", "seamless_wood_lq", "wood_parts_lq", "wood_planks_lq", "wood_planks_worn_lq", "stone_mat_lq"
 	};
 
-	// Material -> the mossy material standing in for it
-	private static readonly Dictionary<Material, Material> MossyByMaterial = new Dictionary<Material, Material>();
+	// [0] mossy, [1] icy. Material -> the overlay material standing in for it
+	private static readonly Dictionary<Material, Material>[] OverlayByMaterial =
+	{
+		new Dictionary<Material, Material>(), new Dictionary<Material, Material>()
+	};
 
-	// Mossy material -> the material it replaced
-	private static readonly Dictionary<Material, Material> OriginalByMossy = new Dictionary<Material, Material>();
+	// Overlay material -> the material it replaced
+	private static readonly Dictionary<Material, Material> OriginalByOverlay = new Dictionary<Material, Material>();
 
-	// Mossy asset name -> the material loaded from the bundle (a second material needing it gets a copy)
+	// Overlay asset name -> the material loaded from the bundle (a second material needing it gets a copy)
 	private static readonly Dictionary<string, Material> AssetsByName = new Dictionary<string, Material>();
 
 	private static HashSet<string> fortifiedPrefabs;
@@ -60,26 +76,33 @@ public static class MossyTextures
 
 	public static void Apply()
 	{
-		bool wanted = MainConfig.mossyTextures.Value;
+		bool wanted = MainConfig.biomeOverlays.Value;
 		if (wanted == applied || !ZNetScene.instance)
 		{
 			return;
 		}
 		if (wanted && !CorewoodFortifiedMod.cwfortified)
 		{
-			Jotunn.Logger.LogWarning("Mossy Textures: asset bundle " + CorewoodFortifiedMod.newBundle + " is not loaded.");
+			Jotunn.Logger.LogWarning("Biome Overlays: asset bundle " + CorewoodFortifiedMod.newBundle + " is not loaded.");
 			return;
 		}
-		Process(wanted);
 		applied = wanted;
+		if (wanted)
+		{
+			SwapAllPieces();
+		}
+		else
+		{
+			Revert();
+		}
 	}
 
-	// Disable HD swaps materials by identity, so it asks for the moss to come off first and goes back on after.
+	// Disable HD swaps materials by identity, so it asks for the overlays to come off first and go back on after.
 	internal static void Suspend()
 	{
 		if (applied)
 		{
-			Process(false);
+			Revert();
 		}
 	}
 
@@ -87,7 +110,7 @@ public static class MossyTextures
 	{
 		if (applied)
 		{
-			Process(true);
+			SwapAllPieces();
 		}
 	}
 
@@ -97,70 +120,125 @@ public static class MossyTextures
 		public Renderer Renderer;
 		public int Index;
 		public Material Original;
-		public Material Mossy;
+		public Material Overlay;
 	}
 
 	private static readonly List<Swap> Swaps = new List<Swap>();
 
-	private static void Process(bool moss)
+	private static bool IsFortified(GameObject gameObject)
 	{
-		if (!moss)
+		return GetFortifiedPrefabs().Contains(Utils.GetPrefabName(gameObject));
+	}
+
+	private static HashSet<string> GetFortifiedPrefabs()
+	{
+		if (fortifiedPrefabs != null)
 		{
-			Revert();
-			return;
+			return fortifiedPrefabs;
 		}
-		int before = Swaps.Count;
-		HashSet<string> prefabNames = GetFortifiedPrefabs();
-		foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
+		fortifiedPrefabs = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+		if (CorewoodFortifiedMod.cwfortified)
 		{
-			if (prefab && prefabNames.Contains(prefab.name.ToLowerInvariant()))
+			foreach (string assetPath in CorewoodFortifiedMod.cwfortified.GetAllAssetNames())
 			{
-				SwapRenderers(prefab);
+				if (assetPath.EndsWith(".prefab"))
+				{
+					fortifiedPrefabs.Add(Path.GetFileNameWithoutExtension(assetPath));
+				}
 			}
+			fortifiedPrefabs.Add(ZiplineSetup.PostPrefab);
 		}
-		int prefabSlots = Swaps.Count - before;
+		return fortifiedPrefabs;
+	}
+
+	// Mountain and Deep North are icy, everywhere else is mossy
+	private static bool IsIcy(Vector3 position)
+	{
+		try
+		{
+			if (WorldGenerator.instance == null)
+			{
+				return false;
+			}
+			Heightmap.Biome biome = WorldGenerator.instance.GetBiome(position);
+			return biome == Heightmap.Biome.Mountain || biome == Heightmap.Biome.DeepNorth;
+		}
+		catch (System.Exception)
+		{
+			return false;
+		}
+	}
+
+	private static void SwapAllPieces()
+	{
+		int before = Swaps.Count, pieces = 0, icy = 0;
 		foreach (ZNetView nview in Object.FindObjectsByType<ZNetView>(FindObjectsSortMode.None))
 		{
-			if (prefabNames.Contains(Utils.GetPrefabName(nview.gameObject).ToLowerInvariant()))
+			if (IsFortified(nview.gameObject))
 			{
-				SwapRenderers(nview.gameObject);
+				pieces++;
+				if (SwapPiece(nview.gameObject))
+				{
+					icy++;
+				}
 			}
 		}
-		int instanceSlots = Swaps.Count - before - prefabSlots;
-		if (ZiplineVisuals.TrolleyPrefab)
+		Jotunn.Logger.LogInfo("[CorewoodFortified] Biome Overlays: swapped in " + (Swaps.Count - before) + " material slots on " + pieces + " pieces (" + icy + " icy).");
+	}
+
+	// Returns true if the piece got the icy overlay
+	private static bool SwapPiece(GameObject root)
+	{
+		bool icy = IsIcy(root.transform.position);
+		foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(includeInactive: true))
 		{
-			SwapRenderers(ZiplineVisuals.TrolleyPrefab);
+			Material[] materials = renderer.sharedMaterials;
+			bool changed = false;
+			for (int i = 0; i < materials.Length; i++)
+			{
+				Material original = materials[i];
+				Material overlay = GetOverlay(original, icy);
+				if (overlay)
+				{
+					materials[i] = overlay;
+					Swaps.Add(new Swap { Renderer = renderer, Index = i, Original = original, Overlay = overlay });
+					changed = true;
+				}
+			}
+			if (changed)
+			{
+				renderer.sharedMaterials = materials;
+			}
 		}
-		Jotunn.Logger.LogInfo("[CorewoodFortified] Mossy Textures: swapped in " + (Swaps.Count - before) + " material slots (" + prefabSlots + " on prefabs, " + instanceSlots + " on placed pieces).");
+		if (Swaps.Count > 4000 && Swaps.Count % 1000 == 0)
+		{
+			Swaps.RemoveAll(swap => !swap.Renderer);
+		}
+		return icy;
 	}
 
 	// The game can replace a slot's material with its own per-renderer copy, named "<name> (Instance)"
-	private static bool IsOurs(Material held, Material mossy)
+	private static bool IsOurs(Material held, Material overlay)
 	{
-		return held && (held == mossy || held.name == mossy.name + " (Instance)");
+		return held && (held == overlay || held.name == overlay.name + " (Instance)");
 	}
 
-	// Pieces already placed hold the game's own copies of the mossy materials ("<name> (Instance)"), which were not
+	// Pieces already placed hold the game's own copies of the overlay materials ("<name> (Instance)"), which were not
 	// recorded as swaps: find them by name and put the original back
-	private static int RevertPlacedPieces()
+	private static int RevertCopies()
 	{
-		if (!ZNetScene.instance)
-		{
-			return 0;
-		}
 		Dictionary<string, Material> originals = new Dictionary<string, Material>();
-		foreach (KeyValuePair<Material, Material> pair in OriginalByMossy)
+		foreach (KeyValuePair<Material, Material> pair in OriginalByOverlay)
 		{
 			if (pair.Key)
 			{
 				originals[pair.Key.name] = pair.Value;
 			}
 		}
-		HashSet<string> prefabNames = GetFortifiedPrefabs();
 		int count = 0;
 		foreach (ZNetView nview in Object.FindObjectsByType<ZNetView>(FindObjectsSortMode.None))
 		{
-			if (!prefabNames.Contains(Utils.GetPrefabName(nview.gameObject).ToLowerInvariant()))
+			if (!IsFortified(nview.gameObject))
 			{
 				continue;
 			}
@@ -188,97 +266,39 @@ public static class MossyTextures
 
 	private static void Revert()
 	{
-		int reverted = 0, gone = 0, outOfRange = 0, changed = 0;
-		string firstChange = null;
+		int reverted = 0;
 		foreach (Swap swap in Swaps)
 		{
 			if (!swap.Renderer)
 			{
-				gone++;
 				continue;
 			}
 			Material[] materials = swap.Renderer.sharedMaterials;
-			if (swap.Index >= materials.Length)
-			{
-				outOfRange++;
-			}
-			else if (IsOurs(materials[swap.Index], swap.Mossy))
+			if (swap.Index < materials.Length && IsOurs(materials[swap.Index], swap.Overlay))
 			{
 				materials[swap.Index] = swap.Original;
 				swap.Renderer.sharedMaterials = materials;
 				reverted++;
 			}
-			else
-			{
-				changed++;
-				if (firstChange == null)
-				{
-					firstChange = swap.Renderer.name + "[" + swap.Index + "] holds '" + (materials[swap.Index] ? materials[swap.Index].name : "null") + "', expected '" + swap.Mossy.name + "'";
-				}
-			}
 		}
-		int placed = RevertPlacedPieces();
-		Jotunn.Logger.LogInfo("[CorewoodFortified] Mossy Textures: swapped out " + reverted + " of " + Swaps.Count + " material slots (" + gone + " renderers gone, " + outOfRange + " slots missing, " + changed + " slots changed by something else), plus " + placed + " slots on placed pieces." + (firstChange != null ? " First: " + firstChange : ""));
+		int copies = RevertCopies();
+		Jotunn.Logger.LogInfo("[CorewoodFortified] Biome Overlays: swapped out " + reverted + " of " + Swaps.Count + " material slots, plus " + copies + " slots holding the game's copies.");
 		Swaps.Clear();
 	}
 
-	private static HashSet<string> GetFortifiedPrefabs()
+	private static Material GetOverlay(Material material, bool icy)
 	{
-		if (fortifiedPrefabs != null)
-		{
-			return fortifiedPrefabs;
-		}
-		fortifiedPrefabs = new HashSet<string>();
-		if (CorewoodFortifiedMod.cwfortified)
-		{
-			foreach (string assetPath in CorewoodFortifiedMod.cwfortified.GetAllAssetNames())
-			{
-				if (assetPath.EndsWith(".prefab"))
-				{
-					fortifiedPrefabs.Add(Path.GetFileNameWithoutExtension(assetPath).ToLowerInvariant());
-				}
-			}
-			fortifiedPrefabs.Add(ZiplineSetup.PostPrefab.ToLowerInvariant());
-		}
-		return fortifiedPrefabs;
-	}
-
-	private static void SwapRenderers(GameObject root)
-	{
-		foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(includeInactive: true))
-		{
-			Material[] materials = renderer.sharedMaterials;
-			bool changed = false;
-			for (int i = 0; i < materials.Length; i++)
-			{
-				Material original = materials[i];
-				Material mossy = GetMossy(original);
-				if (mossy)
-				{
-					materials[i] = mossy;
-					Swaps.Add(new Swap { Renderer = renderer, Index = i, Original = original, Mossy = mossy });
-					changed = true;
-				}
-			}
-			if (changed)
-			{
-				renderer.sharedMaterials = materials;
-			}
-		}
-	}
-
-	private static Material GetMossy(Material material)
-	{
-		if (!material || OriginalByMossy.ContainsKey(material))
+		if (!material || OriginalByOverlay.ContainsKey(material))
 		{
 			return null;
 		}
-		if (MossyByMaterial.TryGetValue(material, out Material cached))
+		Dictionary<Material, Material> cache = OverlayByMaterial[icy ? 1 : 0];
+		if (cache.TryGetValue(material, out Material cached))
 		{
 			return cached;
 		}
-		Material mossy = null;
-		string assetName = MossyAssetName(material.name.Replace(" (Instance)", "").Trim());
+		Material overlay = null;
+		string assetName = OverlayAssetName(material.name.Replace(" (Instance)", "").Trim(), icy);
 		if (assetName != null)
 		{
 			EnsureRealShader(material);
@@ -291,40 +311,41 @@ public static class MossyTextures
 				}
 				else
 				{
-					Jotunn.Logger.LogWarning("Mossy Textures: material '" + assetName + "' not found in " + CorewoodFortifiedMod.newBundle + ".");
+					Jotunn.Logger.LogWarning("Biome Overlays: material '" + assetName + "' not found in " + CorewoodFortifiedMod.newBundle + ".");
 				}
 				AssetsByName[assetName] = asset;
-				mossy = asset;
+				overlay = asset;
 			}
 			else if (asset)
 			{
 				// Already standing in for another material: this one gets its own copy, so each maps back to exactly one
-				mossy = new Material(asset) { name = asset.name + "_" + material.name };
+				overlay = new Material(asset) { name = asset.name + "_" + material.name };
 			}
 		}
-		MossyByMaterial[material] = mossy;
-		if (mossy)
+		cache[material] = overlay;
+		if (overlay)
 		{
-			OriginalByMossy[mossy] = material;
+			OriginalByOverlay[overlay] = material;
 		}
-		return mossy;
+		return overlay;
 	}
 
-	private static string MossyAssetName(string name)
+	private static string OverlayAssetName(string name, bool icy)
 	{
-		if (MossyNames.Contains(name))
+		string suffix = icy ? "_icy" : "_mossy";
+		if (OverlayNames.Contains(name))
 		{
-			return name + "_mossy";
+			return name + suffix;
 		}
 		string best = null;
-		foreach (string lq in MossyLowQualityNames)
+		foreach (string lq in OverlayLowQualityNames)
 		{
 			if ((name == lq || name.StartsWith(lq + "_")) && (best == null || lq.Length > best.Length))
 			{
 				best = lq;
 			}
 		}
-		return best == null ? null : best + "_mossy";
+		return best == null ? null : best + suffix;
 	}
 
 	private static Dictionary<string, Shader> loadedShaders;
@@ -377,7 +398,7 @@ public static class MossyTextures
 			}
 			else
 			{
-				Jotunn.Logger.LogWarning("Mossy Textures: shader '" + wanted + "' for '" + mossy.name + "' is not loaded in the game.");
+				Jotunn.Logger.LogWarning("Biome Overlays: shader '" + wanted + "' for '" + mossy.name + "' is not loaded in the game.");
 			}
 		}
 		if (wanted == originalName)
@@ -399,7 +420,7 @@ public static class MossyTextures
 		Shader real = FindShader(RealName(material.shader.name));
 		if (!real)
 		{
-			Jotunn.Logger.LogWarning("Mossy Textures: shader '" + RealName(material.shader.name) + "' for '" + material.name + "' is not loaded in the game.");
+			Jotunn.Logger.LogWarning("Biome Overlays: shader '" + RealName(material.shader.name) + "' for '" + material.name + "' is not loaded in the game.");
 			return;
 		}
 		int queue = material.renderQueue;

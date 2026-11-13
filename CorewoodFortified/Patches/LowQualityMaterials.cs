@@ -31,7 +31,6 @@ public static class LowQualityMaterials
         { "corewood_logwall_worn", "corewood_logwall_worn_lq" },
 		{ "corelogs", "corelogs_lq" },
 		{ "corelogs_worn", "corelogs_worn_lq" },
-		{ "corewood_wood_bark", "log_bark_lq" },
 		{ "log_bark", "log_bark_lq" },
 		{ "log_bark_worn", "log_bark_worn_lq" },
 		{ "plank_wood", "plank_wood_lq" },
@@ -89,14 +88,14 @@ public static class LowQualityMaterials
 			return;
 		}
 		// Mossy copies are swapped out first so the swap below sees the real materials, and put back after
-		MossyTextures.Suspend();
+		BiomeOverlays.Suspend();
 		try
 		{
 			SwapAll(zNetScene, lowQuality);
 		}
 		finally
 		{
-			MossyTextures.Resume();
+			BiomeOverlays.Resume();
 		}
 	}
 
@@ -218,7 +217,7 @@ public static class LowQualityMaterials
 		// It is about to leave the renderers, so Jotunn would never give it its real shader: do it now
 		if (LowQualityNames.ContainsKey(originalName))
 		{
-			MossyTextures.EnsureRealShader(material);
+			BiomeOverlays.EnsureRealShader(material);
 		}
 		if (LowQualityByOriginal.TryGetValue(originalName, out Material lqMaterial) && lqMaterial)
 		{
