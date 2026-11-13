@@ -30,17 +30,25 @@ public static class MossyTextures
 		"wood_planks", "wood_planks_worn", "stone_mat"
 	};
 
-	// Original material name -> its mossy material
-	private static readonly Dictionary<string, Material> MossyByName = new Dictionary<string, Material>();
+	// The low quality versions, used while Disable HD is on. The copies Disable HD makes are named
+	// "<low quality name>_<original name>", so they are matched by their start.
+	private static readonly string[] MossyLowQualityNames =
+	{
+		"corewood_log_flat_lq", "corewood_log_flat_worn_lq", "corewood_logwall_lq", "corewood_logwall_worn_lq", "corelogs_lq", "corelogs_worn_lq", "log_bark_lq", "log_bark_worn_lq", "plank_wood_lq", "plank_wood_worn_lq", "seamless_wood_lq", "wood_parts_lq", "wood_planks_lq", "wood_planks_worn_lq", "stone_mat_lq"
+	};
+
+	// Material -> the mossy material standing in for it
+	private static readonly Dictionary<Material, Material> MossyByMaterial = new Dictionary<Material, Material>();
 
 	// Mossy material -> the material it replaced
 	private static readonly Dictionary<Material, Material> OriginalByMossy = new Dictionary<Material, Material>();
 
+	// Mossy asset name -> the material loaded from the bundle (a second material needing it gets a copy)
+	private static readonly Dictionary<string, Material> AssetsByName = new Dictionary<string, Material>();
+
 	private static HashSet<string> fortifiedPrefabs;
 
 	private static bool applied;
-
-	private static int swapCount;
 
 	public static void OnSettingChanged()
 	{
@@ -83,29 +91,135 @@ public static class MossyTextures
 		}
 	}
 
+	// Every slot that was swapped, so it can be put back exactly
+	private sealed class Swap
+	{
+		public Renderer Renderer;
+		public int Index;
+		public Material Original;
+		public Material Mossy;
+	}
+
+	private static readonly List<Swap> Swaps = new List<Swap>();
+
 	private static void Process(bool moss)
 	{
-		swapCount = 0;
+		if (!moss)
+		{
+			Revert();
+			return;
+		}
+		int before = Swaps.Count;
 		HashSet<string> prefabNames = GetFortifiedPrefabs();
 		foreach (GameObject prefab in ZNetScene.instance.m_prefabs)
 		{
 			if (prefab && prefabNames.Contains(prefab.name.ToLowerInvariant()))
 			{
-				SwapRenderers(prefab, moss);
+				SwapRenderers(prefab);
 			}
 		}
+		int prefabSlots = Swaps.Count - before;
 		foreach (ZNetView nview in Object.FindObjectsByType<ZNetView>(FindObjectsSortMode.None))
 		{
 			if (prefabNames.Contains(Utils.GetPrefabName(nview.gameObject).ToLowerInvariant()))
 			{
-				SwapRenderers(nview.gameObject, moss);
+				SwapRenderers(nview.gameObject);
 			}
 		}
+		int instanceSlots = Swaps.Count - before - prefabSlots;
 		if (ZiplineVisuals.TrolleyPrefab)
 		{
-			SwapRenderers(ZiplineVisuals.TrolleyPrefab, moss);
+			SwapRenderers(ZiplineVisuals.TrolleyPrefab);
 		}
-		Jotunn.Logger.LogInfo("[CorewoodFortified] Mossy Textures: " + (moss ? "swapped in " : "swapped out ") + swapCount + " material slots.");
+		Jotunn.Logger.LogInfo("[CorewoodFortified] Mossy Textures: swapped in " + (Swaps.Count - before) + " material slots (" + prefabSlots + " on prefabs, " + instanceSlots + " on placed pieces).");
+	}
+
+	// The game can replace a slot's material with its own per-renderer copy, named "<name> (Instance)"
+	private static bool IsOurs(Material held, Material mossy)
+	{
+		return held && (held == mossy || held.name == mossy.name + " (Instance)");
+	}
+
+	// Pieces already placed hold the game's own copies of the mossy materials ("<name> (Instance)"), which were not
+	// recorded as swaps: find them by name and put the original back
+	private static int RevertPlacedPieces()
+	{
+		if (!ZNetScene.instance)
+		{
+			return 0;
+		}
+		Dictionary<string, Material> originals = new Dictionary<string, Material>();
+		foreach (KeyValuePair<Material, Material> pair in OriginalByMossy)
+		{
+			if (pair.Key)
+			{
+				originals[pair.Key.name] = pair.Value;
+			}
+		}
+		HashSet<string> prefabNames = GetFortifiedPrefabs();
+		int count = 0;
+		foreach (ZNetView nview in Object.FindObjectsByType<ZNetView>(FindObjectsSortMode.None))
+		{
+			if (!prefabNames.Contains(Utils.GetPrefabName(nview.gameObject).ToLowerInvariant()))
+			{
+				continue;
+			}
+			foreach (Renderer renderer in nview.GetComponentsInChildren<Renderer>(includeInactive: true))
+			{
+				Material[] materials = renderer.sharedMaterials;
+				bool changed = false;
+				for (int i = 0; i < materials.Length; i++)
+				{
+					if (materials[i] && originals.TryGetValue(materials[i].name.Replace(" (Instance)", "").Trim(), out Material original))
+					{
+						materials[i] = original;
+						changed = true;
+						count++;
+					}
+				}
+				if (changed)
+				{
+					renderer.sharedMaterials = materials;
+				}
+			}
+		}
+		return count;
+	}
+
+	private static void Revert()
+	{
+		int reverted = 0, gone = 0, outOfRange = 0, changed = 0;
+		string firstChange = null;
+		foreach (Swap swap in Swaps)
+		{
+			if (!swap.Renderer)
+			{
+				gone++;
+				continue;
+			}
+			Material[] materials = swap.Renderer.sharedMaterials;
+			if (swap.Index >= materials.Length)
+			{
+				outOfRange++;
+			}
+			else if (IsOurs(materials[swap.Index], swap.Mossy))
+			{
+				materials[swap.Index] = swap.Original;
+				swap.Renderer.sharedMaterials = materials;
+				reverted++;
+			}
+			else
+			{
+				changed++;
+				if (firstChange == null)
+				{
+					firstChange = swap.Renderer.name + "[" + swap.Index + "] holds '" + (materials[swap.Index] ? materials[swap.Index].name : "null") + "', expected '" + swap.Mossy.name + "'";
+				}
+			}
+		}
+		int placed = RevertPlacedPieces();
+		Jotunn.Logger.LogInfo("[CorewoodFortified] Mossy Textures: swapped out " + reverted + " of " + Swaps.Count + " material slots (" + gone + " renderers gone, " + outOfRange + " slots missing, " + changed + " slots changed by something else), plus " + placed + " slots on placed pieces." + (firstChange != null ? " First: " + firstChange : ""));
+		Swaps.Clear();
 	}
 
 	private static HashSet<string> GetFortifiedPrefabs()
@@ -129,7 +243,7 @@ public static class MossyTextures
 		return fortifiedPrefabs;
 	}
 
-	private static void SwapRenderers(GameObject root, bool moss)
+	private static void SwapRenderers(GameObject root)
 	{
 		foreach (Renderer renderer in root.GetComponentsInChildren<Renderer>(includeInactive: true))
 		{
@@ -137,12 +251,13 @@ public static class MossyTextures
 			bool changed = false;
 			for (int i = 0; i < materials.Length; i++)
 			{
-				Material replacement = moss ? GetMossy(materials[i]) : GetOriginal(materials[i]);
-				if (replacement)
+				Material original = materials[i];
+				Material mossy = GetMossy(original);
+				if (mossy)
 				{
-					materials[i] = replacement;
+					materials[i] = mossy;
+					Swaps.Add(new Swap { Renderer = renderer, Index = i, Original = original, Mossy = mossy });
 					changed = true;
-					swapCount++;
 				}
 			}
 			if (changed)
@@ -152,77 +267,145 @@ public static class MossyTextures
 		}
 	}
 
-	private static Material GetOriginal(Material material)
-	{
-		return material && OriginalByMossy.TryGetValue(material, out Material original) ? original : null;
-	}
-
 	private static Material GetMossy(Material material)
 	{
 		if (!material || OriginalByMossy.ContainsKey(material))
 		{
 			return null;
 		}
-		string name = material.name.Replace(" (Instance)", "").Trim();
-		if (!MossyNames.Contains(name))
+		if (MossyByMaterial.TryGetValue(material, out Material cached))
 		{
-			return null;
+			return cached;
 		}
-		if (!MossyByName.TryGetValue(name, out Material mossy))
+		Material mossy = null;
+		string assetName = MossyAssetName(material.name.Replace(" (Instance)", "").Trim());
+		if (assetName != null)
 		{
-			mossy = CorewoodFortifiedMod.cwfortified.LoadAsset<Material>(name + "_mossy");
-			if (mossy)
+			EnsureRealShader(material);
+			if (!AssetsByName.TryGetValue(assetName, out Material asset))
 			{
-				FixShader(mossy, material);
+				asset = CorewoodFortifiedMod.cwfortified.LoadAsset<Material>(assetName);
+				if (asset)
+				{
+					FixShader(asset, material);
+				}
+				else
+				{
+					Jotunn.Logger.LogWarning("Mossy Textures: material '" + assetName + "' not found in " + CorewoodFortifiedMod.newBundle + ".");
+				}
+				AssetsByName[assetName] = asset;
+				mossy = asset;
 			}
-			else
+			else if (asset)
 			{
-				Jotunn.Logger.LogWarning("Mossy Textures: material '" + name + "_mossy' not found in " + CorewoodFortifiedMod.newBundle + ".");
+				// Already standing in for another material: this one gets its own copy, so each maps back to exactly one
+				mossy = new Material(asset) { name = asset.name + "_" + material.name };
 			}
-			MossyByName[name] = mossy;
-			if (mossy)
-			{
-				OriginalByMossy[mossy] = material;
-			}
+		}
+		MossyByMaterial[material] = mossy;
+		if (mossy)
+		{
+			OriginalByMossy[mossy] = material;
 		}
 		return mossy;
 	}
 
+	private static string MossyAssetName(string name)
+	{
+		if (MossyNames.Contains(name))
+		{
+			return name + "_mossy";
+		}
+		string best = null;
+		foreach (string lq in MossyLowQualityNames)
+		{
+			if ((name == lq || name.StartsWith(lq + "_")) && (best == null || lq.Length > best.Length))
+			{
+				best = lq;
+			}
+		}
+		return best == null ? null : best + "_mossy";
+	}
+
 	private static Dictionary<string, Shader> loadedShaders;
 
-	// Straight from the bundle a material still has a placeholder ("JVLmock_...") shader. If it uses the same one as the
-	// original, take the original's (already the real one). If it was given a different one in Unity, keep that choice
-	// and look up the real shader of the same name.
+	private const string Mock = "JVLmock_";
+
+	private static string RealName(string name)
+	{
+		return name.StartsWith(Mock) ? name.Substring(Mock.Length) : name;
+	}
+
+	private static Shader FindShader(string name)
+	{
+		if (loadedShaders != null && loadedShaders.TryGetValue(name, out Shader found) && found)
+		{
+			return found;
+		}
+		loadedShaders = new Dictionary<string, Shader>();
+		foreach (Shader shader in Resources.FindObjectsOfTypeAll<Shader>())
+		{
+			loadedShaders[shader.name] = shader;
+		}
+		return loadedShaders.TryGetValue(name, out found) ? found : null;
+	}
+
+	// Straight from the bundle a material has a placeholder ("JVLmock_...") shader, which draws wrongly. Give it the real
+	// shader of the same name, whichever one it was given in Unity. When it is the same kind of shader as the material it
+	// stands in for, take that material's queue and keywords too.
 	private static void FixShader(Material mossy, Material original)
 	{
 		string own = mossy.shader ? mossy.shader.name : "";
-		if (original.shader && (own == original.shader.name || own == "" || own == "Hidden/InternalErrorShader"))
+		string originalName = original.shader ? RealName(original.shader.name) : "";
+		if (own == "" || own == "Hidden/InternalErrorShader")
 		{
+			own = originalName;
 			mossy.shader = original.shader;
-			mossy.renderQueue = original.renderQueue;
-			mossy.shaderKeywords = original.shaderKeywords;
-			return;
 		}
-		const string Mock = "JVLmock_";
-		if (!own.StartsWith(Mock))
+		string wanted = RealName(own);
+		if (wanted == originalName && original.shader && !original.shader.name.StartsWith(Mock))
 		{
-			return;
+			// The material it stands in for already renders with the real shader: use exactly that one
+			mossy.shader = original.shader;
 		}
-		if (loadedShaders == null)
+		else if (own.StartsWith(Mock))
 		{
-			loadedShaders = new Dictionary<string, Shader>();
-			foreach (Shader shader in Resources.FindObjectsOfTypeAll<Shader>())
+			Shader real = FindShader(wanted);
+			if (real)
 			{
-				loadedShaders[shader.name] = shader;
+				mossy.shader = real;
+			}
+			else
+			{
+				Jotunn.Logger.LogWarning("Mossy Textures: shader '" + wanted + "' for '" + mossy.name + "' is not loaded in the game.");
 			}
 		}
-		if (loadedShaders.TryGetValue(own.Substring(Mock.Length), out Shader real))
+		if (wanted == originalName)
 		{
-			mossy.shader = real;
+			mossy.renderQueue = original.renderQueue;
+			mossy.shaderKeywords = original.shaderKeywords;
 		}
-		else
+	}
+
+	// A material still holding its placeholder ("JVLmock_...") shader only gets the real one when Jotunn goes over the
+	// materials on the pieces, and a material swapped out for a mossy one is missed: it would come back drawing wrongly
+	// (see-through). So give it the real shader before it is swapped out.
+	internal static void EnsureRealShader(Material material)
+	{
+		if (!material.shader || !material.shader.name.StartsWith(Mock))
 		{
-			Jotunn.Logger.LogWarning("Mossy Textures: shader '" + own.Substring(Mock.Length) + "' for '" + mossy.name + "' is not loaded in the game.");
+			return;
 		}
+		Shader real = FindShader(RealName(material.shader.name));
+		if (!real)
+		{
+			Jotunn.Logger.LogWarning("Mossy Textures: shader '" + RealName(material.shader.name) + "' for '" + material.name + "' is not loaded in the game.");
+			return;
+		}
+		int queue = material.renderQueue;
+		string[] keywords = material.shaderKeywords;
+		material.shader = real;
+		material.renderQueue = queue;
+		material.shaderKeywords = keywords;
 	}
 }

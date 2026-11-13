@@ -215,6 +215,11 @@ public static class LowQualityMaterials
 			return null;
 		}
 		string originalName = CleanName(material.name);
+		// It is about to leave the renderers, so Jotunn would never give it its real shader: do it now
+		if (LowQualityNames.ContainsKey(originalName))
+		{
+			MossyTextures.EnsureRealShader(material);
+		}
 		if (LowQualityByOriginal.TryGetValue(originalName, out Material lqMaterial) && lqMaterial)
 		{
 			return lqMaterial;
