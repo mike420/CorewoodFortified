@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.3</td>
+    <td>
+        <ul>
+            <li>Added a Drawbridge Opens For Ships setting (default on). A large drawbridge now opens by itself when a ship comes within 50 m and closes again once none is within 50 m. It waits while a player is on or near the bridge, and only closes a bridge it opened itself.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.2</td>
     <td>
         <ul>

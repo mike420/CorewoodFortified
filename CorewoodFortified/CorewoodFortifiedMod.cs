@@ -18,7 +18,7 @@ namespace CorewoodFortified;
 public class CorewoodFortifiedMod : BaseUnityPlugin
 {
     public const string PluginName = "CorewoodFortified";
-    public const string PluginVersion = "1.2.2";
+    public const string PluginVersion = "1.2.3";
     public const string PluginAuthor = "MagicMike";
     internal const string PluginGUID = "MagicMike.CorewoodFortified";
     internal const string PluginCopy = "Copyright © MagicMike 2026";
