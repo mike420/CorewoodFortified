@@ -42,6 +42,109 @@ internal sealed class DrawbridgeMirror : MonoBehaviour, IPlaced
 		All.Remove(this);
 	}
 
+	// How close a ship has to be for the drawbridge to open, and how close a player has to be to be using it.
+	private const float ShipRange = 50f;
+
+	private const float PlayerRange = 10f;
+
+	private static readonly int AutoOpenedKey = "CWF_AutoOpened".GetStableHashCode();
+
+	private float m_nextCheck;
+
+	private void Update()
+	{
+		if (Time.time < m_nextCheck)
+		{
+			return;
+		}
+		m_nextCheck = Time.time + 1f;
+		if (!m_door || !m_nview || !m_nview.IsValid() || !m_nview.IsOwner() || !MainConfig.drawbridgeOpensForShips.Value)
+		{
+			return;
+		}
+		AutoOpenClose();
+	}
+
+	// Of the two halves, only one decides, so they never fight over the state.
+	private bool IsPrimary()
+	{
+		DrawbridgeMirror partner = GetPartner();
+		if (!partner || !partner.m_nview || !partner.m_nview.IsValid())
+		{
+			return true;
+		}
+		ZDOID mine = m_nview.GetZDO().m_uid;
+		ZDOID theirs = partner.m_nview.GetZDO().m_uid;
+		return mine.ID != theirs.ID ? mine.ID < theirs.ID : mine.UserID < theirs.UserID;
+	}
+
+	// Opens when a ship comes within range and closes again once none is, but only when no player is
+	// on or near the bridge, and only closes a bridge it opened itself, not one a player opened.
+	private void AutoOpenClose()
+	{
+		if (!IsPrimary() || !TryGetJoinWorld(out Vector3 join))
+		{
+			return;
+		}
+		ZDO zdo = m_nview.GetZDO();
+		bool open = zdo.GetInt(ZDOVars.s_state) != 0;
+		bool autoOpened = zdo.GetBool(AutoOpenedKey);
+		if (!open)
+		{
+			if (autoOpened)
+			{
+				zdo.Set(AutoOpenedKey, false);
+			}
+			if (ShipNear(join) && !PlayerNear(join))
+			{
+				zdo.Set(AutoOpenedKey, true);
+				m_nview.InvokeRPC("UseDoor", true);
+			}
+		}
+		else if (autoOpened && !ShipNear(join) && !PlayerNear(join))
+		{
+			zdo.Set(AutoOpenedKey, false);
+			m_nview.InvokeRPC("UseDoor", true);
+		}
+	}
+
+	private bool TryGetJoinWorld(out Vector3 join)
+	{
+		join = default;
+		Vector3? local = GetJoin(Utils.GetPrefabName(gameObject));
+		if (!local.HasValue)
+		{
+			return false;
+		}
+		join = transform.TransformPoint(local.Value);
+		return true;
+	}
+
+	private static bool ShipNear(Vector3 point)
+	{
+		foreach (Ship ship in Ship.s_currentShips)
+		{
+			if (ship && Utils.DistanceXZ(ship.transform.position, point) < ShipRange)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private static bool PlayerNear(Vector3 point)
+	{
+		foreach (Player player in Player.GetAllPlayers())
+		{
+			if (player && Utils.DistanceXZ(player.transform.position, point) < PlayerRange
+				&& Mathf.Abs(player.transform.position.y - point.y) < 8f)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	// Where the other half goes for a half at this position and rotation.
 	private static bool TryGetMirror(GameObject half, out Vector3 position, out Quaternion rotation)
 	{

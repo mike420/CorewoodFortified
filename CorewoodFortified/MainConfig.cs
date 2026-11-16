@@ -60,6 +60,7 @@ namespace CorewoodFortified
         public static ConfigEntry<float> ladderSlideStamina;
 
         public static ConfigEntry<bool> enableAutoDocking;
+        public static ConfigEntry<bool> drawbridgeOpensForShips;
 
         public static ConfigEntry<bool> enableTurrets;
         public static ConfigEntry<int> turretScanArc;
@@ -240,6 +241,8 @@ namespace CorewoodFortified
             ladderSlideStamina = config.BindConfigInOrder("Ladders", "Slide Stamina", defaultValue: 2f, "Stamina used per second while sliding down, up to 25% less with the Climbing skill. 0 = free. Out of stamina, you climb down at the normal speed. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 30f));
 
             enableAutoDocking = config.BindConfigInOrder("Docks", "Auto Docking", defaultValue: true, "If On, a ship bigger than the raft that sails towards a dock capstan from in front of it, within 30 m, is brought in by itself, without turning, and held with its hull 6 m out from the capstan. Raise the speed from the helm to sail off again. If anything is in the way, everyone on board is told docking is blocked. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
+
+            drawbridgeOpensForShips = config.BindConfigInOrder("Docks", "Drawbridge Opens For Ships", defaultValue: true, "If On, a large drawbridge opens by itself when a ship comes within 50 m and closes again once none is within 50 m. It waits while a player is on or near the bridge, and only closes a bridge it opened itself. Synced from the server.", synced: true, sectionOrder: true, settingOrder: true);
 
             gateSoundVolume = config.BindConfigInOrder("Sounds", "Gate Sound Volume", defaultValue: 1f, "Volume of the fortified lift gate and drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
             largeDrawbridgeSoundVolume = config.BindConfigInOrder("Sounds", "Large Drawbridge Sound Volume", defaultValue: 1f, "Volume of the large and roofed fortified drawbridge sounds, from 0 (silent) to 1 (full).", synced: false, sectionOrder: true, settingOrder: true, acceptableValues: new AcceptableValueRange<float>(0f, 1f));
