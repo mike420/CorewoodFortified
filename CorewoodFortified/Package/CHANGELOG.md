@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.4</td>
+    <td>
+        <ul>
+            <li>Made the icy Biome Overlays fainter, so the ice no longer covers as much of the wood and stone.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.3</td>
     <td>
         <ul>

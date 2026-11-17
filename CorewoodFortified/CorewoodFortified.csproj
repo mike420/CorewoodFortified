@@ -50,6 +50,7 @@
     </EmbeddedResource>
     <None Include="Assets\Translations\**\CorewoodFortified.json" Exclude="Assets\Translations\English\CorewoodFortified.json" />
     <None Include="Resources\corewood_fortified" />
+    <None Include="Resources\corewood_fortified_overlays" Condition="Exists('Resources\corewood_fortified_overlays')" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Nexus\README.txt" />
@@ -219,6 +220,7 @@
     <Error Text="DLL not found in target directory." Condition="!Exists('$(TargetDir)$(AssemblyName).dll')" />
     <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="$(MOD_DEPLOYPATH)\CorewoodFortified" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="$(ProjectDir)Resources\corewood_fortified" DestinationFolder="$(MOD_DEPLOYPATH)\CorewoodFortified" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ProjectDir)Resources\corewood_fortified_overlays" DestinationFolder="$(MOD_DEPLOYPATH)\CorewoodFortified" OverwriteReadOnlyFiles="true" SkipUnchangedFiles="true" Condition="Exists('$(ProjectDir)Resources\corewood_fortified_overlays')" />
   </Target>
   <Target Name="CopyOutputAssets" AfterTargets="CopyOutputDLL">
     <Error Text="Assets directory not found." Condition="!Exists('$(AssetsDir)')" />
@@ -271,6 +273,7 @@ System.IO.File.WriteAllText(ManifestFile, content);
       <LanguageFiles Include="$(AssetsDir)\Translations\**\CorewoodFortified.json" />
       <PluginFiles Include="$(TargetDir)$(AssemblyName).dll" Condition="Exists('$(TargetDir)$(AssemblyName).dll')" />
       <PluginFiles Include="$(ProjectDir)Resources\corewood_fortified" />
+      <PluginFiles Include="$(ProjectDir)Resources\corewood_fortified_overlays" Condition="Exists('$(ProjectDir)Resources\corewood_fortified_overlays')" />
       <PackageFiles Include="$(ProjectDir)Package\CHANGELOG.md" Condition="Exists('$(ProjectDir)Package\CHANGELOG.md')" />
       <PackageFiles Include="$(ProjectDir)Package\README.md" Condition="Exists('$(ProjectDir)Package\README.md')" />
       <PackageFiles Include="$(ProjectDir)Package\manifest.json" Condition="Exists('$(ProjectDir)Package\manifest.json')" />

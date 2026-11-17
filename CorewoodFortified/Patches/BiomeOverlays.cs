@@ -7,7 +7,8 @@ namespace CorewoodFortified;
 
 // Enable Biome Overlays: swaps the wood, log and stone materials on each fortified piece for a "<name>_icy" version if
 // the piece stands in the Mountain or Deep North, and a "<name>_mossy" version anywhere else. The versions are in the
-// bundle (made in Unity from textures built by Tools/make_overlay_textures.py). Nothing is built at runtime, and only
+// corewood_fortified_overlays bundle (made in Unity from textures built by Tools/make_overlay_textures.py), which is only
+// loaded when the setting is on. Nothing is built at runtime, and only
 // materials used by this mod's pieces change. The prefabs are left alone: each piece is decided by where it stands,
 // when it appears and when the setting is switched on.
 public static class BiomeOverlays
@@ -32,6 +33,25 @@ public static class BiomeOverlays
 				SwapPiece(__instance.gameObject);
 			}
 		}
+	}
+
+	// The overlay materials are in their own bundle, loaded the first time the setting is switched on
+	public const string OverlayBundleName = "corewood_fortified_overlays";
+
+	private static AssetBundle overlayBundle;
+
+	private static AssetBundle GetOverlayBundle()
+	{
+		if (!overlayBundle)
+		{
+			string path = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), OverlayBundleName);
+			overlayBundle = File.Exists(path) ? AssetBundle.LoadFromFile(path) : null;
+			if (!overlayBundle)
+			{
+				Jotunn.Logger.LogError("Biome Overlays: failed to load asset bundle " + OverlayBundleName + " (expected at " + path + ").");
+			}
+		}
+		return overlayBundle;
 	}
 
 	// Keep in step with Materials in OverlayMaterialBuilder (Unity project)
@@ -80,9 +100,9 @@ public static class BiomeOverlays
 		{
 			return;
 		}
-		if (wanted && !CorewoodFortifiedMod.cwfortified)
+		if (wanted && !GetOverlayBundle())
 		{
-			Jotunn.Logger.LogWarning("Biome Overlays: asset bundle " + CorewoodFortifiedMod.newBundle + " is not loaded.");
+			Jotunn.Logger.LogWarning("Biome Overlays: asset bundle " + OverlayBundleName + " is not loaded.");
 			return;
 		}
 		applied = wanted;
@@ -303,14 +323,14 @@ public static class BiomeOverlays
 			EnsureRealShader(material);
 			if (!AssetsByName.TryGetValue(assetName, out Material asset))
 			{
-				asset = CorewoodFortifiedMod.cwfortified.LoadAsset<Material>(assetName);
+				asset = GetOverlayBundle().LoadAsset<Material>(assetName);
 				if (asset)
 				{
 					FixShader(asset, material);
 				}
 				else
 				{
-					Jotunn.Logger.LogWarning("Biome Overlays: material '" + assetName + "' not found in " + CorewoodFortifiedMod.newBundle + ".");
+					Jotunn.Logger.LogWarning("Biome Overlays: material '" + assetName + "' not found in " + OverlayBundleName + ".");
 				}
 				AssetsByName[assetName] = asset;
 				overlay = asset;
