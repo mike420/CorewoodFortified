@@ -45,7 +45,8 @@ public static class LowQualityMaterials
         { "straw_roof", "straw_roof_lq" },
         { "straw_roof_alpha", "straw_roof_alpha_lq" },
         { "straw_roof_worn", "straw_roof_worn_lq" },
-        { "straw_roof_worn_alpha", "straw_roof_worn_alpha_lq" }
+        { "straw_roof_worn_alpha", "straw_roof_worn_alpha_lq" },
+        { "turfroof", "turfroof_lq" }
     };
 
 	private static Dictionary<string, Material> lowQualityMaterials;

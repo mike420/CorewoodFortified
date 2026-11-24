@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "Das Ende einer Holzbrücke auf Holzpfosten, die bis zum Boden hinabreichen.",
   "piece_mm_corewood_hut_01": "Dorfhütte",
   "piece_mm_corewood_hut_01_description": "Eine kleine Blockhütte, fertig gebaut für ein Dorf.",
+  "piece_mm_corewood_hut_02": "Dorfhütte II",
+  "piece_mm_corewood_hut_02_description": "Eine weitere kleine Blockhütte, fertig gebaut für ein Dorf.",
   "piece_mm_corewood_hut_door": "Dorfhüttentür",
   "piece_mm_corewood_hut_door_description": "Eine stabile Holztür, passend für die Dorfhütte."
 }

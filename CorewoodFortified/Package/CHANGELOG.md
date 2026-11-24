@@ -7,6 +7,23 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.6</td>
+    <td>
+    <ul>
+      <li>Removed Nexus links.</li>
+      <li>Added Village Hut II, a second small log hut built at the Workbench from Core Wood, Wood and Stone. Its turf roof grows the game's own grass, like the grass round it.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>1.2.5</td>
+    <td>
+        <ul>
+            <li>Updated readme and links.</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.4</td>
     <td>
         <ul>

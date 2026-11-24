@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "The end of a wooden bridge, on log posts that reach down to the ground below.",
   "piece_mm_corewood_hut_01": "Village Hut",
   "piece_mm_corewood_hut_01_description": "A small log hut, ready-built for a village.",
+  "piece_mm_corewood_hut_02": "Village Hut II",
+  "piece_mm_corewood_hut_02_description": "Another small log hut, ready-built for a village.",
   "piece_mm_corewood_hut_door": "Village Hut Door",
   "piece_mm_corewood_hut_door_description": "A sturdy wooden door made to fit the Village Hut."
 }

@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "Le bout d'un pont en bois, sur des poteaux de rondins qui descendent jusqu'au sol.",
   "piece_mm_corewood_hut_01": "Hutte de village",
   "piece_mm_corewood_hut_01_description": "Une petite hutte en rondins, toute prête pour un village.",
+  "piece_mm_corewood_hut_02": "Hutte de village II",
+  "piece_mm_corewood_hut_02_description": "Une autre petite hutte en rondins, toute prête pour un village.",
   "piece_mm_corewood_hut_door": "Porte de hutte de village",
   "piece_mm_corewood_hut_door_description": "Une solide porte en bois faite pour la hutte de village."
 }

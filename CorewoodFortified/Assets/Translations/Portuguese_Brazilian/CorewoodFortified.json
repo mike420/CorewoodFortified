@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "O fim de uma ponte de madeira, sobre postes de tora que descem até o chão.",
   "piece_mm_corewood_hut_01": "Cabana de vila",
   "piece_mm_corewood_hut_01_description": "Uma pequena cabana de toras, pronta para uma vila.",
+  "piece_mm_corewood_hut_02": "Cabana de vila II",
+  "piece_mm_corewood_hut_02_description": "Outra pequena cabana de toras, pronta para uma vila.",
   "piece_mm_corewood_hut_door": "Porta da cabana de vila",
   "piece_mm_corewood_hut_door_description": "Uma porta de madeira resistente feita para a cabana de vila."
 }

@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "Aşağıdaki zemine kadar inen kütük direkler üzerinde ahşap köprü ucu.",
   "piece_mm_corewood_hut_01": "Köy Kulübesi",
   "piece_mm_corewood_hut_01_description": "Bir köy için hazır yapılmış küçük bir kütük kulübe.",
+  "piece_mm_corewood_hut_02": "Köy Kulübesi II",
+  "piece_mm_corewood_hut_02_description": "Bir köy için hazır yapılmış başka bir küçük kütük kulübe.",
   "piece_mm_corewood_hut_door": "Köy Kulübesi Kapısı",
   "piece_mm_corewood_hut_door_description": "Köy kulübesine uyacak şekilde yapılmış sağlam bir ahşap kapı."
 }

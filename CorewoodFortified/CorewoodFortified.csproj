@@ -154,6 +154,7 @@
     <EmbeddedResource Include="Assets\Images\*.png">
       <LogicalName>CorewoodFortified.Images.%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
+    <Compile Include="Prefabs\TurfRoofGrass.cs" />
     <Compile Include="Traps\EntranceTrap.cs" />
     <Compile Include="Traps\GroundTrap.cs" />
     <Compile Include="Traps\GroundTrapGrass.cs" />

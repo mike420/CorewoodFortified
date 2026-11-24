@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "Конец деревянного моста на бревенчатых опорах, доходящих до земли.",
   "piece_mm_corewood_hut_01": "Деревенская хижина",
   "piece_mm_corewood_hut_01_description": "Небольшая бревенчатая хижина, готовая для деревни.",
+  "piece_mm_corewood_hut_02": "Деревенская хижина II",
+  "piece_mm_corewood_hut_02_description": "Ещё одна небольшая бревенчатая хижина, готовая для деревни.",
   "piece_mm_corewood_hut_door": "Дверь деревенской хижины",
   "piece_mm_corewood_hut_door_description": "Прочная деревянная дверь для деревенской хижины."
 }

@@ -303,6 +303,8 @@
   "piece_mm_corewood_wooden_bridge_end_description": "El final de un puente de madera, sobre postes de troncos que llegan hasta el suelo.",
   "piece_mm_corewood_hut_01": "Cabaña de aldea",
   "piece_mm_corewood_hut_01_description": "Una pequeña cabaña de troncos, lista para una aldea.",
+  "piece_mm_corewood_hut_02": "Cabaña de aldea II",
+  "piece_mm_corewood_hut_02_description": "Otra pequeña cabaña de troncos, lista para una aldea.",
   "piece_mm_corewood_hut_door": "Puerta de cabaña de aldea",
   "piece_mm_corewood_hut_door_description": "Una robusta puerta de madera hecha para la cabaña de aldea."
 }
