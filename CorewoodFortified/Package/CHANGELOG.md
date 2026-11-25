@@ -7,6 +7,14 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.8</td>
+    <td>
+    <ul>
+      <li>Valheim 1.0.30 font fix.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.7</td>
     <td>
     <ul>
