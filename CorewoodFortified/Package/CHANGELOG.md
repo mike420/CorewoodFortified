@@ -13,7 +13,7 @@
       <li>Fixed auto docking sometimes pushing a ship slowly away from a Dock Capstan when sailing off, with no control at the helm, until "Docking Blocked!" showed. Seen with mods that show and hide parts of a ship.</li>
       <li>A ship being brought in to a capstan is now let go if it takes longer than a minute or ends up out of range.</li>
       <li>Raising or lowering the speed at the helm now lets a ship go while it is still being brought in, not only once it is docked.</li>
-      <li>Thinner grass on the Village Hut II turf roof.</li>
+      <li>Added Village Hut II, a second small log hut built at the Workbench from Core Wood, Wood and Stone. Its turf roof grows the game's own grass, like the grass round it.</li>
     </ul>
     </td>
   </tr>
@@ -22,7 +22,6 @@
     <td>
     <ul>
       <li>Removed Nexus links.</li>
-      <li>Added Village Hut II, a second small log hut built at the Workbench from Core Wood, Wood and Stone. Its turf roof grows the game's own grass, like the grass round it.</li>
     </ul>
     </td>
   </tr>
