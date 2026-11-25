@@ -14,6 +14,9 @@ internal sealed class TurfRoofGrass : MonoBehaviour
 	// How far the blades lean from upright towards the roof's slope, 0 upright to 1 square to the roof
 	private const float Lean = 0.5f;
 
+	// How thick the grass is next to the biome's thickest grass on the ground
+	private const float Thickness = 0.7f;
+
 	// Faces steeper than this, or facing down, get no grass
 	private const float MinUp = 0.2f;
 
@@ -122,7 +125,7 @@ internal sealed class TurfRoofGrass : MonoBehaviour
 		int grown = 0;
 		foreach (Face face in faces)
 		{
-			float expected = density * face.area;
+			float expected = density * Thickness * face.area;
 			// The face cut into rows x rows small triangles, a blade in each, some left out to keep the thickness right
 			int rows = Mathf.Max(1, Mathf.CeilToInt(Mathf.Sqrt(expected)));
 			float keep = expected / (rows * rows);

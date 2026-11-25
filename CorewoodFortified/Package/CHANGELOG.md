@@ -7,6 +7,17 @@
 </thead>
 <tbody>
   <tr>
+    <td>1.2.7</td>
+    <td>
+    <ul>
+      <li>Fixed auto docking sometimes pushing a ship slowly away from a Dock Capstan when sailing off, with no control at the helm, until "Docking Blocked!" showed. Seen with mods that show and hide parts of a ship.</li>
+      <li>A ship being brought in to a capstan is now let go if it takes longer than a minute or ends up out of range.</li>
+      <li>Raising or lowering the speed at the helm now lets a ship go while it is still being brought in, not only once it is docked.</li>
+      <li>Thinner grass on the Village Hut II turf roof.</li>
+    </ul>
+    </td>
+  </tr>
+  <tr>
     <td>1.2.6</td>
     <td>
     <ul>

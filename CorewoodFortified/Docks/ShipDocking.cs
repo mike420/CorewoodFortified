@@ -9,7 +9,8 @@ namespace CorewoodFortified;
 // hull is 6 m out from the capstan's attach points, and held there. Once there it is anchored, as a ship is when everyone has left it: it does not drift or turn, but still
 // rides the waves, and waves slamming into it do it no damage. If a dock lies alongside it once it is there, within
 // 15 m, it is moved sideways up to that dock, stopping just short of it. Pressing forward or back at the helm lets it go again, and it is not caught by that capstan again
-// until it has sailed out of range. If anything is in the way the ship is left alone, and everyone on board is told.
+// until it has sailed out of range. If anything is in the way the ship is left alone, and everyone on board is told, as
+// they are if bringing it in takes too long or it somehow ends up out of range.
 //
 // Only the game that owns the ship moves it, as it does all of the ship's physics. Which capstan it is docked at is kept
 // on the ship, so whoever owns it next keeps holding it there. That is only cleared when the ship is let go or its capstan
@@ -52,6 +53,16 @@ internal sealed class ShipDocking : MonoBehaviour
 	private const float CapstanWait = 30f;
 
 	private const float BlockedCheckInterval = 0.25f;
+
+	// A ship being brought in is let go if that takes longer than this, in seconds, or if it ends up this much further
+	// from the capstan than it can be caught from, whatever has gone wrong
+	private const float MaxDockingTime = 60f;
+
+	private const float GiveUpMargin = 10f;
+
+	// How long after a ship is caught a press at the helm is ignored, as one is easily made to slow down just as it is
+	// caught. After that a press lets the ship go even while it is still being brought in
+	private const float LetGoGrace = 2f;
 
 	private const float BlockedMessageInterval = 3f;
 
@@ -115,6 +126,12 @@ internal sealed class ShipDocking : MonoBehaviour
 	private bool m_sideChecked;
 
 	private Collider[] m_hull;
+
+	// How far the hull reaches from the ship's middle towards the dock, fixed when the ship is caught, as its heading is
+	private float m_reach;
+
+	// When the ship was caught, for how long it has been brought in
+	private float m_caughtAt;
 
 
 	// The capstan the ship was last let go from, which cannot catch it again until it has left its range
@@ -191,6 +208,13 @@ internal sealed class ShipDocking : MonoBehaviour
 		m_ship.m_sailForce = Vector3.zero;
 		m_ship.m_windChangeVelocity = Vector3.zero;
 		GetTarget(m_capstan, out Vector3 target, out Quaternion rotation);
+		if (m_state == State.Docking && (Time.time - m_caughtAt > MaxDockingTime || !InRange(m_capstan, Range + GiveUpMargin)))
+		{
+			m_leftCapstan = m_capstan;
+			Release();
+			SayBlocked();
+			return;
+		}
 		// Moving over to a dock alongside was already found clear by the sweep that found the dock
 		if (m_state == State.Docking && !m_sideChecked && Time.time >= m_nextBlockedCheck)
 		{
@@ -224,11 +248,12 @@ internal sealed class ShipDocking : MonoBehaviour
 		}
 	}
 
-	// Someone at the helm pressed forward or back, so the ship is theirs again. Presses while it is still being brought
-	// in are ignored, as one is easily made to slow down just as it is caught
+	// Someone at the helm pressed forward or back, so the ship is theirs again. Presses just after it is caught are
+	// ignored, as one is easily made to slow down just as it is caught
 	private void LetGo()
 	{
-		if ((m_state != State.Docked && !m_waiting) || !m_nview.IsValid() || !m_nview.IsOwner())
+		bool canLetGo = m_state == State.Docked || m_waiting || (m_state == State.Docking && Time.time - m_caughtAt >= LetGoGrace);
+		if (!canLetGo || !m_nview.IsValid() || !m_nview.IsOwner())
 		{
 			return;
 		}
@@ -277,6 +302,8 @@ internal sealed class ShipDocking : MonoBehaviour
 		SetCapstan(best);
 		m_state = State.Docking;
 		m_heading = FlatHeading();
+		m_reach = HullReach(best.Front);
+		m_caughtAt = Time.time;
 		SetSideShift(Vector3.zero, false);
 		m_ship.m_speed = Ship.Speed.Stop;
 		SaveCapstan(m_nview.GetZDO(), best);
@@ -293,6 +320,8 @@ internal sealed class ShipDocking : MonoBehaviour
 			SetCapstan(capstan);
 			m_state = State.Docking;
 			m_heading = FlatHeading();
+			m_reach = HullReach(capstan.Front);
+			m_caughtAt = Time.time;
 			ZDO zdo = m_nview.GetZDO();
 			m_sideShift = zdo.GetVec3(s_sideShiftKey, Vector3.zero);
 			m_sideChecked = zdo.GetBool(s_sideCheckedKey);
@@ -421,7 +450,7 @@ internal sealed class ShipDocking : MonoBehaviour
 	// In front of the capstan's dock and near enough to it
 	// The 30 m is to the nearest part of the hull, not the ship's middle, so a long ship coming in bow first is caught
 	// when its bow is 30 m off, not half a ship nearer
-	private bool InRange(DockCapstan capstan)
+	private bool InRange(DockCapstan capstan, float range = Range)
 	{
 		Vector3 dockPoint = capstan.DockPoint;
 		Vector3 offset = Vector3.ProjectOnPlane(Centre() - dockPoint, Vector3.up);
@@ -430,7 +459,7 @@ internal sealed class ShipDocking : MonoBehaviour
 			return false;
 		}
 		Vector3 nearest = Vector3.ProjectOnPlane(NearestHullPoint(dockPoint) - dockPoint, Vector3.up);
-		return nearest.magnitude <= Range;
+		return nearest.magnitude <= range;
 	}
 
 	// The point of the ship's solid colliders nearest the given point. Hull mesh colliders that are not convex cannot be
@@ -439,13 +468,14 @@ internal sealed class ShipDocking : MonoBehaviour
 	{
 		if (m_hull == null)
 		{
-			m_hull = GetComponentsInChildren<Collider>();
+			// Inactive ones too, as other mods show and hide parts of a ship, and only those that are active are measured
+			m_hull = GetComponentsInChildren<Collider>(includeInactive: true);
 		}
 		Vector3 nearest = Centre();
 		float nearestDistance = float.MaxValue;
 		foreach (Collider collider in m_hull)
 		{
-			if (!collider || collider.isTrigger || !collider.enabled)
+			if (!IsHullCollider(collider))
 			{
 				continue;
 			}
@@ -460,15 +490,36 @@ internal sealed class ShipDocking : MonoBehaviour
 		return nearest;
 	}
 
+	// A solid part of the ship itself. A collider that is switched off or hidden has no place in the world to measure to:
+	// its bounds lie at the world's origin. Things with a body of their own that happen to be parented to the ship, which
+	// do not move with it, are left out too
+	internal static bool IsHullCollider(Collider collider, Rigidbody body)
+	{
+		return collider && !collider.isTrigger && collider.enabled && collider.gameObject.activeInHierarchy
+			&& (!body || collider.attachedRigidbody == body);
+	}
+
+	private bool IsHullCollider(Collider collider)
+	{
+		return IsHullCollider(collider, m_body);
+	}
+
+	// How far the hull reaches from the ship's middle towards a dock whose front faces the given way, as it lies now
+	private float HullReach(Vector3 front)
+	{
+		Vector3 centre = Centre();
+		Vector3 nearest = NearestHullPoint(centre - front * 1000f);
+		return Mathf.Max(0f, Vector3.Dot(centre - nearest, front));
+	}
+
 	// Straight out in front of the capstans, with the part of the hull nearest the dock 6 m out from the attach points,
 	// and the ship on the heading it came in on
 	private void GetTarget(DockCapstan capstan, out Vector3 target, out Quaternion rotation)
 	{
 		Vector3 centre = Centre();
 		Vector3 front = capstan.Front;
-		// How far the hull reaches from the ship's middle towards the dock, as it lies now
-		Vector3 nearest = NearestHullPoint(centre - front * 1000f);
-		float reach = Mathf.Max(0f, Vector3.Dot(centre - nearest, front));
+		// Worked out once when the ship is caught, so the target cannot move with the ship whatever happens to its parts
+		float reach = m_state == State.Free ? HullReach(front) : m_reach;
 		target = capstan.DockPoint + front * (DockDistance + reach);
 		if (m_state != State.Free)
 		{

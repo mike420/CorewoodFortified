@@ -115,7 +115,7 @@ internal sealed class MooringRopes : MonoBehaviour
 		float nearest = float.MaxValue;
 		foreach (Collider collider in colliders)
 		{
-			if (!collider || collider.isTrigger || !collider.enabled)
+			if (!ShipDocking.IsHullCollider(collider, m_body))
 			{
 				continue;
 			}

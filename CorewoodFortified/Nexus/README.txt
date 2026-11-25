@@ -103,7 +103,7 @@ Once placed, each post reaches down to the ground below it, so a dock can be bui
 [*][b]Dock End[/b]: 6 Core Wood, 10 Wood
 [/list]
 
-A ship bigger than the raft that sails towards a Dock Capstan from in front of it, within 30 m, is brought in by itself, without turning, and held with its hull 6 m out from the capstan, tied to the capstan by two ropes, and takes no damage from waves while docked. If a dock lies alongside the ship once it is there, within 15 m, the ship is moved sideways up to it, stopping just short. Raise the speed from the helm to sail off again. If anything is in the way you are told docking is blocked. Auto Docking can be turned off in the Docks config section.
+A ship bigger than the raft that sails towards a Dock Capstan from in front of it, within 30 m, is brought in by itself, without turning, and held with its hull 6 m out from the capstan, tied to the capstan by two ropes, and takes no damage from waves while docked. If a dock lies alongside the ship once it is there, within 15 m, the ship is moved sideways up to it, stopping just short. Raise the speed from the helm to sail off again, which also works while the ship is still being brought in. If anything is in the way you are told docking is blocked. Auto Docking can be turned off in the Docks config section.
 
 [list]
 [*][b]Drawbridge Opens For Ships[/b] (default On): a large drawbridge opens by itself when a ship comes within 50 m and closes once none is within 50 m. It waits while a player is on or near the bridge, and only closes a bridge it opened itself. Synced from the server.
